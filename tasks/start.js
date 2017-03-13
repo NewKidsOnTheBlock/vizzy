@@ -3,13 +3,15 @@
 var childProcess = require('child_process');
 var electron = require('electron');
 var gulp = require('gulp');
+var connect = require('electron-connect').server.create();
 
 gulp.task('start', ['build', 'watch'], function () {
-    childProcess.spawn(electron, ['.'], {
-        stdio: 'inherit'
-    })
-    .on('close', function () {
-        // User closed the app. Kill the host process.
-        process.exit();
-    });
+    // Start browser process
+    connect.start();
+
+    // Restart browser process
+    gulp.watch('./app/app.js', connect.restart);
+
+    // Reload renderer process
+    gulp.watch(['./app/app.html'], connect.reload);
 });

@@ -2,26 +2,22 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Electron Boilerplate</title>
+    <title>Vizzy</title>
 
     <link href="stylesheets/main.css" rel="stylesheet" type="text/css">
 
     <script src="helpers/context_menu.js"></script>
     <script src="helpers/external_links.js"></script>
 
-    <script src="app.js"></script>
+    <script>require('electron-connect').client.create()</script>
+
 </head>
 <body>
 
-    <div class="container">
-        <h1 id="greet"></h1>
-        <p class="subtitle">
-            Welcome to <a href="http://electron.atom.io" class="js-external-link">Electron</a> app running on this magnificent <strong id="platform-info"></strong> machine.
-        </p>
-        <p class="subtitle">
-            You are in <strong id="env-name"></strong> environment.
-        </p>
+    <div class="app">
+        <h1>{{hello}}</h1>
     </div>
 
+    <script src="app.js"></script>
 </body>
 </html>
