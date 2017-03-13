@@ -15,7 +15,35 @@
 <body>
 
     <div class="app">
-        <h1>{{hello}}</h1>
+        <div class="vizzy">
+            <h1>Welcome to Vizzy!</h1>
+            <p>Please show us which directory you store your local music files in so Vizzy may use them for playback.</p>
+            <h2 class="reg-button" v-on:click="openFileExplorer()">Locate Music</h2>
+        </div>
+        <div class="music-bar">
+            <div class="music-tracker">
+                <div class="inside-tracker">
+
+                </div>
+            </div>
+            <div class="music-controls">
+                <div class="song-info">
+                    <img class="album-img" src="./img/albumPlaceHolder.png"/>
+                    <div class="info">
+                        <h5>Song Name</h5>
+                        <p>Artist Name</p>
+                    </div>
+                </div>
+                <div class="music-controls">
+
+                </div>
+                <div class="music-options">
+
+                </div>
+            </div>
+        </div>
+
+        <audio class="vizzy-audio"></audio>
     </div>
 
     <script src="app.js"></script>

@@ -15,6 +15,8 @@ var env = jetpack.cwd(__dirname).read('env.json', 'json');
 
 // Use new ES6 modules syntax for everything.
 const Vue = require('vue/dist/vue.common.js');
+const {dialog} = require('electron').remote;
+console.log(dialog);
 
 const app = new Vue({
     el: ".app",
@@ -22,7 +24,11 @@ const app = new Vue({
         hello: 'Hello Vue App',
     },
     methods: {
-
+        openFileExplorer: function() {
+            dialog.showOpenDialog({properties: ['openDirectory']}, function(folder) {
+                console.log(folder);
+            });
+        }
     }
 });
 

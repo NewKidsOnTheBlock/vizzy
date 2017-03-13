@@ -7,6 +7,8 @@ import { remote } from 'electron'; // native electron module
 import jetpack from 'fs-jetpack'; // module loaded from npm
 import env from './env';
 const Vue = require('vue/dist/vue.common.js');
+const {dialog} = require('electron').remote;
+console.log(dialog);
 
 const app = new Vue({
     el: ".app",
@@ -14,6 +16,10 @@ const app = new Vue({
         hello: 'Hello Vue App',
     },
     methods: {
-
+        openFileExplorer: function() {
+            dialog.showOpenDialog({properties: ['openDirectory']}, function(folder) {
+                console.log(folder);
+            });
+        }
     }
 });

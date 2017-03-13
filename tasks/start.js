@@ -13,5 +13,5 @@ gulp.task('start', ['build', 'watch'], function () {
     gulp.watch('./app/app.js', connect.restart);
 
     // Reload renderer process
-    gulp.watch(['./app/app.html'], connect.reload);
+    gulp.watch(['./app/app.html', './app/stylesheets/main.css'], connect.reload);
 });

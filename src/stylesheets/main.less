@@ -1,25 +1,70 @@
+@import 'fonts.less';
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
 html, body {
     width: 100%;
     height: 100%;
-    margin: 0;
-    padding: 0;
 }
 
-body {
+.app {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: sans-serif;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
 }
 
-a {
-    text-decoration: none;
+.vizzy {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
 }
 
-.container {
-    text-align: center;
-}
+//Music Bar Styles --------------------------------------------------------
 
-.subtitle {
-    color: gray;
+.music-bar {
+    display: flex;
+    height: 100px;
+    flex-direction: column;
+
+    .music-tracker {
+        background-color: #eee;
+        height: 10px;
+        width: 100%;
+    }
+
+    .music-controls {
+        display: flex;
+        flex: 1;
+        flex-direction: row;
+        align-items: center;
+
+        .song-info {
+            display: flex;
+            flex: 1;
+            flex-direction: row;
+            align-items: center;
+
+            .album-img {
+                height: 90px;
+                width: auto;
+            }
+
+            .info {
+                flex: 1;
+                margin-left: 20px;
+            }
+        }
+
+        .music-controls {
+            flex: 2;
+        }
+
+        .music-options {
+            flex: 1;
+        }
+    }
 }
