@@ -1,3 +1,5 @@
+@import 'colors.less';
+
 @font-face {
     font-family: 'OpenSans';
     src: url('./fonts/OpenSans-Regular.ttf');
@@ -36,6 +38,21 @@ h4 {
 h5 {
     font-family: 'NunitoBold';
     font-size: 18px;
+}
+
+.panel-btn {
+    border: 3px solid @vizzy-blue;
+    border-radius: 5px;
+    color: @vizzy-blue;
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 30px;
+}
+
+.panel-btn:hover {
+    background-color: @vizzy-blue;
+    color: white;
+    cursor: pointer;
 }
 
 h6 {

@@ -16,9 +16,11 @@
 
     <div class="app">
         <div class="vizzy">
-            <h1>Welcome to Vizzy!</h1>
-            <p>Please show us which directory you store your local music files in so Vizzy may use them for playback.</p>
-            <h2 class="reg-button" v-on:click="openFileExplorer()">Locate Music</h2>
+            <div class="music-select">
+                <h1>Welcome to Vizzy!</h1>
+                <p>Please show us which directory you store your local music files in so Vizzy may use them for playback.</p>
+                <h2 class="panel-btn" v-on:click="openFileExplorer()">Locate Music</h2>
+            </div>
         </div>
         <div class="music-bar">
             <div class="music-tracker">
