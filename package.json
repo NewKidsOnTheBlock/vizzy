@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "fs-jetpack": "^0.10.2",
+    "musicmetadata": "^2.0.5",
     "vue": "^2.2.3"
   },
   "devDependencies": {

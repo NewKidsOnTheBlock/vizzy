@@ -5,7 +5,9 @@
 import os from 'os'; // native node.js module
 import { remote } from 'electron'; // native electron module
 import jetpack from 'fs-jetpack'; // module loaded from npm
+import fs from 'fs';
 import env from './env';
+import mm from 'musicmetadata';
 const Vue = require('vue/dist/vue.common.js');
 const {dialog} = require('electron').remote;
 console.log(dialog);
@@ -14,12 +16,56 @@ const app = new Vue({
     el: ".app",
     data: {
         hello: 'Hello Vue App',
+        audio: document.getElementById('vizzy-audio'),
+        library: [],
+        currentSong: {path: './'},
     },
     methods: {
         openFileExplorer: function() {
-            dialog.showOpenDialog({properties: ['openDirectory']}, function(folder) {
-                console.log(folder);
+            dialog.showOpenDialog({properties: ['openDirectory']}, function(files) {
+                var musicFolder = files[0];
+                getMusicData(musicFolder, function() {
+                    console.log(app.library);
+                    app.currentSong = app.library[0];
+                    app.audio.play();
+                });
             });
         }
     }
 });
+
+//Basic object for a song
+var Song = function(data, path) {
+    this.artist = data.artist[0];
+    this.album = data.album;
+    this.title = data.title;
+    this.number = data.track.no;
+    this.albumImg = data.picture[0].data;
+    this.albumImgExtension = data.picture[0].format;
+
+    this.path = path;
+}
+
+//Function that will get music data, and populate the library with song objects
+var getMusicData = function(path, callback) {
+    console.log(fs.lstatSync(path).isDirectory());
+    var fileList = jetpack.list(path);
+    for(var i = 0; i < fileList.length; i++) {
+        var file = path + "\\" + fileList[i];
+
+        if(fs.lstatSync(file).isDirectory()) {
+            getMusicData(file);
+        }
+        else if(file.includes('.mp3')) {
+            var stream = fs.createReadStream(file);
+            mm(stream, function(err, data) {
+                stream.close();
+                app.library.push(new Song(data, file));
+
+                if(callback) {
+                    callback();
+                }
+            });
+        }
+    }
+}
