@@ -10,7 +10,6 @@ import env from './env';
 import jsmediatags from 'jsmediatags';
 const Vue = require('vue/dist/vue.common.js');
 const {dialog} = require('electron').remote;
-console.log(dialog);
 
 const app = new Vue({
     el: ".app",
@@ -18,22 +17,52 @@ const app = new Vue({
         hello: 'Hello Vue App',
         audio: '',
         musicInit: false,
+        isPlaying: false,
         library: [],
-        currentSong: {path: './'},
+        currentSong: {artist: 'No song', title: 'No title', path: './'},
+        index: 0
     },
     methods: {
         openFileExplorer: function() {
             dialog.showOpenDialog({properties: ['openDirectory']}, function(files) {
                 var musicFolder = files[0];
                 searchDir(musicFolder, function() {
-                    console.log(app.library);
                 });
             });
         },
         play: function() {
-            console.log(this.audio);
             this.audio.play();
-            console.log('play');
+            app.isPlaying = true;
+        },
+        pause: function() {
+            this.audio.pause();
+            app.isPlaying = false;
+        },
+        prev: function() {
+            if(this.index === 0) {
+                this.index = this.library.length - 1;
+            }
+            else {
+                this.index--;
+            }
+            this.currentSong = this.library[this.index];
+            setTimeout(function() {
+                app.pause();
+                app.play();
+            },100);
+        },
+        next: function() {
+            if(this.index === this.library.length - 1) {
+                this.index = 0;
+            }
+            else {
+                this.index++;
+            }
+            this.currentSong = this.library[this.index];
+            setTimeout(function() {
+                app.pause();
+                app.play();
+            },100);
         }
     },
     mounted: function() {
@@ -63,8 +92,8 @@ var slash = (function() {
 
 var getMusicData = function(path) {
     jsmediatags.read(path, {
-        onSuccess: function(tag) {
-            app.library.push(new Song(tag, path));
+        onSuccess: function(data) {
+            app.library.push(new Song(data.tags, path));
 
             if(!app.musicInit) {
                 app.currentSong = app.library[0];

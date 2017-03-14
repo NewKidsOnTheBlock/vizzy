@@ -44,7 +44,7 @@ html, body {
         width: 100%;
     }
 
-    .music-controls {
+    .music-info {
         display: flex;
         flex: 1;
         flex-direction: row;
@@ -55,6 +55,22 @@ html, body {
             flex: 1;
             flex-direction: row;
             align-items: center;
+
+			h5 {
+				display: -webkit-box;
+				-webkit-line-clamp: 1;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+
+			p {
+				display: -webkit-box;
+				-webkit-line-clamp: 1;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
 
             .album-img {
                 height: 90px;
@@ -68,7 +84,26 @@ html, body {
         }
 
         .music-controls {
-            flex: 2;
+			display: flex;
+            flex: 1;
+			justify-content: center;
+			align-items: center;
+			flex-direction: row;
+
+			svg {
+				display: inline-block;
+				fill: @vizzy-yellow;
+				height: 60px;
+				margin: 0px 5px;
+			}
+
+			.navigation {
+				height: 40px;
+			}
+
+			svg:hover circle {
+				fill: #dfb53e;
+			}
         }
 
         .music-options {

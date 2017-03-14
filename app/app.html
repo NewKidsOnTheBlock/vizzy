@@ -28,16 +28,22 @@
 
                 </div>
             </div>
-            <div class="music-controls">
+            <div class="music-info">
                 <div class="song-info">
                     <img class="album-img" src="./img/albumPlaceHolder.png"/>
                     <div class="info">
-                        <h5>Song Name</h5>
-                        <p>Artist Name</p>
+                        <h5>{{currentSong.title}}</h5>
+                        <p>{{currentSong.artist}}</p>
                     </div>
                 </div>
                 <div class="music-controls">
-                    <p v-on:click="play()">play</p>
+                    <svg v-on:click="prev()" class="navigation" id="prev" viewBox="0 0 67 67"><title>prev</title><circle cx="33.5" cy="33.5" r="33.5"/><polygon points="29.49 33.5 46.9 43.55 46.9 23.45 29.49 33.5" style="fill:#fff"/><path d="M307.79,245.58l17.4,10a1.26,1.26,0,0,0,1.88-1.08v-20.1a1.26,1.26,0,0,0-1.88-1.08l-17.4,10a1.25,1.25,0,0,0,1.26,2.16l17.4-10-1.88-1.08v20.1l1.88-1.08-17.4-10A1.25,1.25,0,0,0,307.79,245.58Z" transform="translate(-278.93 -211)" style="fill:#fff"/><rect x="299.11" y="232.69" width="4.76" height="23.63" rx="1" ry="1" transform="translate(324.06 278) rotate(-180)" style="fill:#fff; stroke:#fff; stroke-miterlimit:10;stroke-width:0.5px"/></svg>
+
+                    <svg v-if="isPlaying" v-on:click="pause()" id="pause" viewBox="0 0 67 67"><circle cx="33.5" cy="33.5" r="33.5"/><rect x="22.58" y="18.5" width="8.03" height="30" rx="2" ry="2" style="fill:#fff"/><rect x="36.39" y="18.5" width="8.03" height="30" rx="2" ry="2" style="fill:#fff"/></svg>
+
+                    <svg v-if="!isPlaying" v-on:click="play()" id="play" viewBox="0 0 67 67"><circle cx="33.5" cy="33.5" r="33.5"/><polygon points="47.59 33.5 24.92 46.59 24.92 20.41 47.59 33.5" style="fill:#fff"/><path d="M400.7,241.26L378,254.35l5.64,3.24V231.41L378,234.65l22.67,13.09c4.19,2.42,8-4.06,3.79-6.48l-22.67-13.09a3.79,3.79,0,0,0-5.64,3.24v26.18a3.79,3.79,0,0,0,5.64,3.24l22.67-13.09C408.66,245.33,404.89,238.84,400.7,241.26Z" transform="translate(-355 -211)" style="fill:#fff"/></svg>
+
+                    <svg v-on:click="next()" class="navigation" id="next" viewBox="0 0 67 67"><circle cx="33.5" cy="33.5" r="33.5"/><polygon points="37.51 33.5 20.11 43.55 20.11 23.45 37.51 33.5" style="fill:#fff"/><path d="M466.78,243.42l-17.4,10,1.88,1.08v-20.1l-1.88,1.08,17.4,10a1.25,1.25,0,0,0,1.26-2.16l-17.4-10a1.26,1.26,0,0,0-1.88,1.08v20.1a1.26,1.26,0,0,0,1.88,1.08l17.4-10A1.25,1.25,0,0,0,466.78,243.42Z" transform="translate(-429.91 -211)" style="fill:#fff"/><rect x="42.05" y="21.69" width="4.76" height="23.63" rx="1" ry="1" style="fill:#fff;stroke:#fff;stroke-miterlimit:10;stroke-width:0.5px"/></svg>
                 </div>
                 <div class="music-options">
 
