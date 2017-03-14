@@ -7,7 +7,7 @@ import { remote } from 'electron'; // native electron module
 import jetpack from 'fs-jetpack'; // module loaded from npm
 import fs from 'fs';
 import env from './env';
-import mm from 'musicmetadata';
+import jsmediatags from 'jsmediatags';
 const Vue = require('vue/dist/vue.common.js');
 const {dialog} = require('electron').remote;
 console.log(dialog);
@@ -16,7 +16,8 @@ const app = new Vue({
     el: ".app",
     data: {
         hello: 'Hello Vue App',
-        audio: document.getElementById('vizzy-audio'),
+        audio: '',
+        musicInit: false,
         library: [],
         currentSong: {path: './'},
     },
@@ -24,48 +25,77 @@ const app = new Vue({
         openFileExplorer: function() {
             dialog.showOpenDialog({properties: ['openDirectory']}, function(files) {
                 var musicFolder = files[0];
-                getMusicData(musicFolder, function() {
+                searchDir(musicFolder, function() {
                     console.log(app.library);
-                    app.currentSong = app.library[0];
-                    app.audio.play();
                 });
             });
+        },
+        play: function() {
+            console.log(this.audio);
+            this.audio.play();
+            console.log('play');
         }
+    },
+    mounted: function() {
+        this.audio = document.getElementById('vizzy-audio');
+        console.log(this.audio);
     }
 });
 
 //Basic object for a song
 var Song = function(data, path) {
-    this.artist = data.artist[0];
+    this.artist = data.artist;
     this.album = data.album;
     this.title = data.title;
-    this.number = data.track.no;
-    this.albumImg = data.picture[0].data;
-    this.albumImgExtension = data.picture[0].format;
+    // this.number = data.track.no;
+    // this.albumImg = data.picture[0].data;
+    // this.albumImgExtension = data.picture[0].format;
 
     this.path = path;
 }
 
+var slash = (function() {
+    if(process.platform === 'darwin') {
+        return '/';
+    }
+    else return '\\'
+})();
+
+var getMusicData = function(path) {
+    jsmediatags.read(path, {
+        onSuccess: function(tag) {
+            app.library.push(new Song(tag, path));
+
+            if(!app.musicInit) {
+                app.currentSong = app.library[0];
+                app.musicInit = true;
+            }
+        },
+        onError: function(error) {
+            console.log(':(', error.type, error.info);
+        }
+    });
+}
+
 //Function that will get music data, and populate the library with song objects
-var getMusicData = function(path, callback) {
+var searchDir = function(path, callback) {
     console.log(fs.lstatSync(path).isDirectory());
     var fileList = jetpack.list(path);
     for(var i = 0; i < fileList.length; i++) {
-        var file = path + "\\" + fileList[i];
+        var file = path + slash + fileList[i];
 
         if(fs.lstatSync(file).isDirectory()) {
+            searchDir(file);
+        }
+        else if(file.substr(file.length - 4) === '.mp3') {
             getMusicData(file);
         }
-        else if(file.includes('.mp3')) {
-            var stream = fs.createReadStream(file);
-            mm(stream, function(err, data) {
-                stream.close();
-                app.library.push(new Song(data, file));
-
-                if(callback) {
-                    callback();
-                }
-            });
+        else {
+            console.log(file);
         }
+    }
+
+    if(callback) {
+        callback();
     }
 }

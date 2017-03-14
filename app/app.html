@@ -37,7 +37,7 @@
                     </div>
                 </div>
                 <div class="music-controls">
-
+                    <p v-on:click="play()">play</p>
                 </div>
                 <div class="music-options">
 
@@ -45,7 +45,7 @@
             </div>
         </div>
 
-        <audio id="vizzy-audio" v-bind:src="currentSong.path" autoplay></audio>
+        <audio id="vizzy-audio" v-bind:src="currentSong.path"></audio>
     </div>
 
     <script src="app.js"></script>
