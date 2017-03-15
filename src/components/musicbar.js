@@ -1,15 +1,8 @@
-(function () {'use strict';
-
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var os = require('os');
-var electron = require('electron');
-var fs = _interopDefault(require('fs'));
-var jsmediatags = _interopDefault(require('jsmediatags'));
-var jetpack = _interopDefault(require('fs-jetpack'));
-
-const Vue$1 = require('vue/dist/vue.common.js');
-const { dialog, app: app$1 } = require('electron').remote;
+const Vue = require('vue/dist/vue.common.js');
+import jsmediatags from 'jsmediatags';
+import fs from 'fs';
+import jetpack from 'fs-jetpack'; // module loaded from npm
+const { dialog, app } = require('electron').remote;
 
 //Basic object for a song
 var Song = function(data, path) {
@@ -35,9 +28,9 @@ var Song = function(data, path) {
     // this.albumImgExtension = data.picture[0].format;
 
     this.path = path;
-};
+}
 
-const musicBar = Vue$1.component('music-bar', {
+const musicBar = Vue.component('music-bar', {
     template: '#music-bar',
     props: ['musicInit'],
     data: function() {
@@ -62,7 +55,7 @@ const musicBar = Vue$1.component('music-bar', {
             index: 0,
             percentageTime: 0,
             dragging: "none",
-            directory: app$1.getPath('userData'),
+            directory: app.getPath('userData'),
             userPrefs: {},
         }
     },
@@ -85,7 +78,7 @@ const musicBar = Vue$1.component('music-bar', {
                         console.log(':(', error.type, error.info);
                         reject();
                     }
-                });
+                })
             });
         },
         searchDir: function(path, promises, callback) {
@@ -112,7 +105,7 @@ const musicBar = Vue$1.component('music-bar', {
             var musicBar = this;
             dialog.showOpenDialog({properties: ['openDirectory']}, function(files) {
                 var musicFolder = files[0];
-                var promises = [];
+                var promises = []
                 musicBar.searchDir(musicFolder, promises, function() {
                     Promise.all(promises).then(function() {
                         musicBar.currentSong = musicBar.library[0];
@@ -197,7 +190,7 @@ const musicBar = Vue$1.component('music-bar', {
         this.audio = document.getElementById('vizzy-audio');
         this.audio.onended = function() {
             musicBar.next();
-        };
+        }
 
         var tracker = document.getElementById('tracker');
         var container = document.getElementById('drag-container');
@@ -211,7 +204,7 @@ const musicBar = Vue$1.component('music-bar', {
         container.addEventListener('mousemove', function() {
             if (musicBar.dragging === "block") {
                 musicBar.updateTracker();
-            }
+            };
         }, false);
 
         container.addEventListener('mouseup', function() {
@@ -231,32 +224,6 @@ const musicBar = Vue$1.component('music-bar', {
     }
 });
 
-var musicBar$1 = {
+export default {
     musicBar
-};
-
-// Here is the starting point for your application code.
-// All stuff below is just to show you how it works. You can delete all of it.
-
-// Use new ES6 modules syntax for everything.
-const Vue = require('vue/dist/vue.common.js');
-console.log(musicBar$1);
-
-const app = new Vue({
-    el: ".app",
-    data: {
-        musicInit: false,
-    },
-    methods: {
-        musicInitialize: function() {
-            this.musicInit = true;
-            console.log('hi');
-        }
-    },
-    mounted: function() {
-
-    }
-});
-
-}());
-//# sourceMappingURL=app.js.map
+}

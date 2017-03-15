@@ -1,15 +1,15 @@
 {
-  "name": "electron-boilerplate",
-  "productName": "Electron Boilerplate",
-  "description": "Starter for your Electron application",
+  "name": "Vizzy",
+  "productName": "Vizzy",
+  "description": "Editor for music visualizations",
   "version": "0.0.0",
-  "author": "Mr. Gumby <mr.gumby@example.com>",
-  "copyright": "© 2016, Gumby inc.",
-  "homepage": "http://example.com",
+  "author": "Corey Robinson, Matthew Mawby, Skyler, Madrone Goldman, Skyler Tagney-Centor",
+  "copyright": "© 2017, NKB",
+  "homepage": "http://vizzy.com",
   "license": "MIT",
   "main": "app/background.js",
   "build": {
-    "appId": "com.example.electron-boilerplate",
+    "appId": "com.example.vizzy",
     "files": [
       "app/**/*",
       "node_modules/**/*",
