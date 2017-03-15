@@ -141,7 +141,14 @@ const musicBar = Vue$1.component('music-bar', {
             else {
                 this.index--;
             }
-            this.currentSong = this.library[this.index];
+
+            var song = this.library[this.index];
+            if(jetpack.exists(song.path)) {
+                this.currentSong = song;
+            }
+            else {
+                this.prev();
+            }
             var musicBar = this;
             setTimeout(function() {
                 musicBar.pause();
@@ -155,7 +162,15 @@ const musicBar = Vue$1.component('music-bar', {
             else {
                 this.index++;
             }
-            this.currentSong = this.library[this.index];
+
+            var song = this.library[this.index];
+            if(jetpack.exists(song.path)) {
+                this.currentSong = song;
+            }
+            else {
+                console.log('file does not exist skipping');
+                this.next();
+            }
             var musicBar = this;
             setTimeout(function() {
                 musicBar.pause();
@@ -184,7 +199,6 @@ const musicBar = Vue$1.component('music-bar', {
                 console.log('preferences exist!');
             }
             else {
-
                 console.log('preferences do not exist');
             }
         }
@@ -246,11 +260,14 @@ const app = new Vue({
     el: ".app",
     data: {
         musicInit: false,
+        state: {
+            home: false,
+            editor: true,
+        }
     },
     methods: {
         musicInitialize: function() {
             this.musicInit = true;
-            console.log('hi');
         }
     },
     mounted: function() {

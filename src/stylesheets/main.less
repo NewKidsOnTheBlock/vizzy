@@ -17,15 +17,52 @@ html, body {
     flex-direction: column;
 }
 
+//Vizzy Editor Styles -------------------------------------------
+
 .vizzy {
+	display: flex;
 	flex: 1;
 	width: 100%;
+
+	.editor {
+		display: flex;
+		flex: 1;
+		flex-direction: row;
+
+		div {
+			position: relative;
+		}
+
+		.shape-selector {
+			height: 100%;
+			width: 200px;
+			border-right: solid @vizzy-lightBlack 1px;
+			background-color: white;
+			z-index: 2;
+		}
+
+		.canvas-container {
+			flex: 1;
+			background-color: @vizzy-lightBlack;
+			z-index: 1;
+		}
+
+		.shape-editor {
+			height: 100%;
+			width: 200px;
+			border-left: solid @vizzy-lightBlack 1px;
+			background-color: white;
+			z-index: 2;
+		}
+	}
 }
 
 //Music Bar Styles --------------------------------------------------------
 .music-bar-container {
 	display: flex;
 	flex-direction: column;
+	position: relative;
+	z-index: 3;
 
 	.music-select {
 		display: flex;
@@ -150,4 +187,10 @@ html, body {
             flex: 1;
         }
     }
+}
+
+//Helper styles ---------------------------------------------------
+
+.panel-shadow {
+	box-shadow: 0 0 10px -1px rgba(0,0,0,.75);
 }

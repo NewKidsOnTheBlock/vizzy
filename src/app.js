@@ -15,11 +15,14 @@ const app = new Vue({
     el: ".app",
     data: {
         musicInit: false,
+        state: {
+            home: false,
+            editor: true,
+        }
     },
     methods: {
         musicInitialize: function() {
             this.musicInit = true;
-            console.log('hi');
         }
     },
     mounted: function() {

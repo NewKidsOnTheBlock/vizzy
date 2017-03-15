@@ -68,12 +68,42 @@ body {
   flex-direction: column;
 }
 .vizzy {
+  display: flex;
   flex: 1;
   width: 100%;
+}
+.vizzy .editor {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+}
+.vizzy .editor div {
+  position: relative;
+}
+.vizzy .editor .shape-selector {
+  height: 100%;
+  width: 200px;
+  border-right: solid #ced2d2 1px;
+  background-color: white;
+  z-index: 2;
+}
+.vizzy .editor .canvas-container {
+  flex: 1;
+  background-color: #ced2d2;
+  z-index: 1;
+}
+.vizzy .editor .shape-editor {
+  height: 100%;
+  width: 200px;
+  border-left: solid #ced2d2 1px;
+  background-color: white;
+  z-index: 2;
 }
 .music-bar-container {
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 3;
 }
 .music-bar-container .music-select {
   display: flex;
@@ -180,4 +210,7 @@ body {
 }
 .music-bar .music-info .music-options {
   flex: 1;
+}
+.panel-shadow {
+  box-shadow: 0 0 10px -1px rgba(0, 0, 0, 0.75);
 }

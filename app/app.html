@@ -16,13 +16,24 @@
 
     <div class="app">
         <div v-if="musicInit" class="vizzy">
+            <div v-if="state.home" class="home-screen">
 
+            </div>
+            <div v-if="state.editor" class="editor">
+                <div class="shape-selector panel-shadow">
+                </div>
+                <div class="canvas-container">
+
+                </div>
+                <div class="shape-editor panel-shadow">
+                </div>
+            </div>
         </div>
         <music-bar v-on:init="musicInitialize()"></music-bar>
     </div>
 
     <template id="music-bar">
-        <div class="music-bar-container" v-bind:style="{ flex: flexOpt }">
+        <div class="music-bar-container panel-shadow" v-bind:style="{ flex: flexOpt }">
             <div v-if="!musicLoaded" class="music-select">
                 <h1>Welcome to Vizzy!</h1>
                 <p>Please show us which directory you store your local music files in so Vizzy may use them for playback.</p>
