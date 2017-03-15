@@ -43,7 +43,7 @@ const musicBar = Vue$1.component('music-bar', {
     data: function() {
         return {
             slash: (function() {
-                if(process.platform === 'darwin') {
+                if(process.platform === 'darwin' || process.platform === 'linux') {
                     return '/';
                 }
                 else return '\\'
