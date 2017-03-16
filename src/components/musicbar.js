@@ -206,6 +206,18 @@ const musicBar = Vue.component('music-bar', {
             musicBar.next();
         }
 
+        //initialize audio context & audio nodes
+        var audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        var source = audioContext.createMediaElementSource(this.audio);
+        var analyze = audioContext.createAnalyser();
+        analyze.fftsize=2048;
+        analyze.smoothingTimeConstant=.95; //smoothing time is important for vizualization
+
+        //connect audio nodes
+        source.connect(analyze);
+        analyze.connect(audioContext.destination);
+
+
         var tracker = document.getElementById('tracker');
         var container = document.getElementById('drag-container');
 
@@ -225,16 +237,28 @@ const musicBar = Vue.component('music-bar', {
             musicBar.dragging = 'none';
         }, false);
 
+        function musicData(){
+            var buffer = analyze.frequencyBinCount;
+            var data = new Uint8Array(buffer);
+            analyze.getByteFrequencyData(data);
+            console.log(data[22]);
+        }
+
         function updateTime() {
             if(musicBar.isPlaying) {
                 var currentTime = musicBar.audio.currentTime;
                 var duration = musicBar.audio.duration;
                 musicBar.percentageTime = (currentTime/duration) * 100;
             }
-            window.requestAnimationFrame(updateTime);
+            window.requestAnimationFrame(refresh);
         }
 
-        window.requestAnimationFrame(updateTime);
+        function refresh(){
+            updateTime();
+            musicData();
+        }
+
+        window.requestAnimationFrame(refresh);
     }
 });
 
