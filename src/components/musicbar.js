@@ -211,7 +211,7 @@ const musicBar = Vue.component('music-bar', {
         var source = audioContext.createMediaElementSource(this.audio);
         var analyze = audioContext.createAnalyser();
         analyze.fftsize=2048;
-        analyze.smoothingTimeConstant=.95; //smoothing time is important for vizualization
+        analyze.smoothingTimeConstant=.5; //smoothing time is important for vizualization
 
         //connect audio nodes
         source.connect(analyze);
