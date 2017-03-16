@@ -26,6 +26,9 @@ var Song = function(data, path) {
     else {
         this.picture = './img/albumPlaceHolder.png';
     }
+    // this.number = data.track.no;
+    // this.albumImg = data.picture[0].data;
+    // this.albumImgExtension = data.picture[0].format;
 
     this.path = path;
 }
@@ -216,6 +219,18 @@ const musicBar = Vue.component('music-bar', {
             musicBar.next();
         }
 
+        //initialize audio context & audio nodes
+        var audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        var source = audioContext.createMediaElementSource(this.audio);
+        var analyze = audioContext.createAnalyser();
+        analyze.fftsize=2048;
+        analyze.smoothingTimeConstant=.5; //smoothing time is important for vizualization
+
+        //connect audio nodes
+        source.connect(analyze);
+        analyze.connect(audioContext.destination);
+
+
         var tracker = document.getElementById('tracker');
         var container = document.getElementById('drag-container');
 
@@ -235,16 +250,43 @@ const musicBar = Vue.component('music-bar', {
             musicBar.dragging = 'none';
         }, false);
 
+        function musicData(){
+            var buffer = analyze.frequencyBinCount;
+            var data = new Uint8Array(buffer);
+            analyze.getByteFrequencyData(data);
+
+            //find the dominant frequency bin
+            var max = 0;
+            var index = -1;
+            for (var i = 0; i < buffer; i++){
+                if (data[i]>max){
+                    max = data[i];
+                    index = i;
+                }
+            }
+            //calculate the dominant frequency
+            var frequency = (index * 44100)/ 2048.0;
+
+            return {
+                'frequency': frequency
+            };
+        }
+
         function updateTime() {
             if(musicBar.isPlaying) {
                 var currentTime = musicBar.audio.currentTime;
                 var duration = musicBar.audio.duration;
                 musicBar.percentageTime = (currentTime/duration) * 100;
             }
-            window.requestAnimationFrame(updateTime);
+            window.requestAnimationFrame(refresh);
         }
 
-        window.requestAnimationFrame(updateTime);
+        function refresh(){
+            updateTime();
+            console.log(musicData());
+        }
+
+        window.requestAnimationFrame(refresh);
     }
 });
 
