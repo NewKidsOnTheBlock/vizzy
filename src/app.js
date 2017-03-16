@@ -27,5 +27,44 @@ const app = new Vue({
     },
     mounted: function() {
 
+        //initialize audio context & audio nodes
+        var audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        var source = audioContext.createMediaElementSource(document.getElementById('vizzy-audio'));
+        var analyze = audioContext.createAnalyser();
+        analyze.fftsize=2048;
+        analyze.smoothingTimeConstant=.5; //smoothing time is important for vizualization
+
+        //connect audio nodes
+        source.connect(analyze);
+        analyze.connect(audioContext.destination);
+
+        function musicData(){
+            var buffer = analyze.frequencyBinCount;
+            var data = new Uint8Array(buffer);
+            analyze.getByteFrequencyData(data);
+
+            //find the dominant frequency bin
+            var max = 0;
+            var index = -1;
+            for (var i = 0; i < buffer; i++){
+                if (data[i]>max){
+                    max = data[i];
+                    index = i;
+                }
+            }
+            //calculate the dominant frequency
+            var frequency = (index * 44100)/ 2048.0;
+
+            return {
+                'frequency': frequency
+            };
+        }
+
+        function refresh(){
+            console.log(musicData());
+            window.requestAnimationFrame(refresh);
+        }
+
+        window.requestAnimationFrame(refresh);
     }
 });
