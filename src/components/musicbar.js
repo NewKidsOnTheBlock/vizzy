@@ -241,7 +241,22 @@ const musicBar = Vue.component('music-bar', {
             var buffer = analyze.frequencyBinCount;
             var data = new Uint8Array(buffer);
             analyze.getByteFrequencyData(data);
-            console.log(data[22]);
+
+            //find the dominant frequency bin
+            var max = 0;
+            var index = -1;
+            for (var i = 0; i < buffer; i++){
+                if (data[i]>max){
+                    max = data[i];
+                    index = i;
+                }
+            }
+            //calculate the dominant frequency
+            var frequency = (index * 44100)/ 2048.0;
+
+            return {
+                'frequency': frequency
+            };
         }
 
         function updateTime() {
@@ -255,7 +270,7 @@ const musicBar = Vue.component('music-bar', {
 
         function refresh(){
             updateTime();
-            musicData();
+            console.log(musicData());
         }
 
         window.requestAnimationFrame(refresh);
