@@ -2,13 +2,16 @@ const Vue = require('vue/dist/vue.common.js');
 import jsmediatags from 'jsmediatags';
 import fs from 'fs';
 import jetpack from 'fs-jetpack'; // module loaded from npm
+import firstBy from '../helpers/thenBy.js';
 const { dialog, app } = require('electron').remote;
 
+console.log(app.getPath('userData'));
 //Basic object for a song
 var Song = function(data, path) {
-    this.artist = data.artist;
-    this.album = data.album;
-    this.title = data.title;
+    this.artist = data.artist || 'Unknown Artist';
+    this.album = data.album || 'Unknown Album';
+    this.title = data.title || 'Unknown Title';
+    this.track = parseInt(data.track) || 0;
 
     var image = data.picture;
     if(image) {
@@ -101,6 +104,14 @@ const musicBar = Vue.component('music-bar', {
                 callback(promises);
             }
         },
+        sortLibrary: function() {
+            this.library.sort(
+                firstBy(function (v) { return v.artist })
+                .thenBy("album")
+                .thenBy("track")
+            );
+            console.log(this.library);
+        },
         openFileExplorer: function() {
             var musicBar = this;
             dialog.showOpenDialog({properties: ['openDirectory']}, function(files) {
@@ -108,6 +119,7 @@ const musicBar = Vue.component('music-bar', {
                 var promises = []
                 musicBar.searchDir(musicFolder, promises, function() {
                     Promise.all(promises).then(function() {
+                        musicBar.sortLibrary();
                         musicBar.currentSong = musicBar.library[0];
                         musicBar.musicLoaded = true;
                         musicBar.flexOpt = 'none';
@@ -185,6 +197,7 @@ const musicBar = Vue.component('music-bar', {
                 var prefs = JSON.parse(jetpack.read(this.directory + this.slash + 'vizzyPrefs.json', ['jsonWithDates']));
                 console.log(prefs);
                 this.library = prefs.library;
+                this.sortLibrary();
                 this.currentSong = this.library[0];
                 this.musicLoaded = true;
                 this.flexOpt = 'none';

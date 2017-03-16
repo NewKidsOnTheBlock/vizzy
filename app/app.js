@@ -8,14 +8,70 @@ var fs = _interopDefault(require('fs'));
 var jsmediatags = _interopDefault(require('jsmediatags'));
 var jetpack = _interopDefault(require('fs-jetpack'));
 
+/***
+   Copyright 2013 Teun Duynstee
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+var firstBy = (function() {
+
+    function identity(v){return v;}
+
+    function ignoreCase(v){return typeof(v)==="string" ? v.toLowerCase() : v;}
+
+    function makeCompareFunction(f, opt){
+        opt = typeof(opt)==="number" ? {direction:opt} : opt||{};
+        if(typeof(f)!="function"){
+            var prop = f;
+            // make unary function
+            f = function(v1){return !!v1[prop] ? v1[prop] : "";};
+        }
+        if(f.length === 1) {
+            // f is a unary function mapping a single item to its sort score
+            var uf = f;
+            var preprocess = opt.ignoreCase?ignoreCase:identity;
+            f = function(v1,v2) {return preprocess(uf(v1)) < preprocess(uf(v2)) ? -1 : preprocess(uf(v1)) > preprocess(uf(v2)) ? 1 : 0;};
+        }
+        if(opt.direction === -1) return function(v1,v2){return -f(v1,v2)};
+        return f;
+    }
+
+    /* adds a secondary compare function to the target function (`this` context)
+       which is applied in case the first one returns 0 (equal)
+       returns a new compare function, which has a `thenBy` method as well */
+    function tb(func, opt) {
+        var x = typeof(this) == "function" ? this : false;
+        var y = makeCompareFunction(func, opt);
+        var f = x ? function(a, b) {
+                        return x(a,b) || y(a,b);
+                    }
+                  : y;
+        f.thenBy = tb;
+        return f;
+    }
+    return tb;
+})();
+
 const Vue$1 = require('vue/dist/vue.common.js');
 const { dialog, app: app$1 } = require('electron').remote;
 
+console.log(app$1.getPath('userData'));
 //Basic object for a song
 var Song = function(data, path) {
-    this.artist = data.artist;
-    this.album = data.album;
-    this.title = data.title;
+    this.artist = data.artist || 'Unknown Artist';
+    this.album = data.album || 'Unknown Album';
+    this.title = data.title || 'Unknown Title';
+    this.track = parseInt(data.track) || 0;
 
     var image = data.picture;
     if(image) {
@@ -108,6 +164,14 @@ const musicBar = Vue$1.component('music-bar', {
                 callback(promises);
             }
         },
+        sortLibrary: function() {
+            this.library.sort(
+                firstBy(function (v) { return v.artist })
+                .thenBy("album")
+                .thenBy("track")
+            );
+            console.log(this.library);
+        },
         openFileExplorer: function() {
             var musicBar = this;
             dialog.showOpenDialog({properties: ['openDirectory']}, function(files) {
@@ -115,6 +179,7 @@ const musicBar = Vue$1.component('music-bar', {
                 var promises = [];
                 musicBar.searchDir(musicFolder, promises, function() {
                     Promise.all(promises).then(function() {
+                        musicBar.sortLibrary();
                         musicBar.currentSong = musicBar.library[0];
                         musicBar.musicLoaded = true;
                         musicBar.flexOpt = 'none';
@@ -192,6 +257,7 @@ const musicBar = Vue$1.component('music-bar', {
                 var prefs = JSON.parse(jetpack.read(this.directory + this.slash + 'vizzyPrefs.json', ['jsonWithDates']));
                 console.log(prefs);
                 this.library = prefs.library;
+                this.sortLibrary();
                 this.currentSong = this.library[0];
                 this.musicLoaded = true;
                 this.flexOpt = 'none';

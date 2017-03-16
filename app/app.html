@@ -39,6 +39,27 @@
                 <p>Please show us which directory you store your local music files in so Vizzy may use them for playback.</p>
                 <h2 class="panel-btn" v-on:click="openFileExplorer()">Locate Music</h2>
             </div>
+            <div class="music-viewer-container">
+                <div class="music-viewer panel-shadow">
+                    <div class="viewer-options">
+                        <div class="viewer-state">
+
+                        </div>
+                        <div class="music-header">
+                            <div><h5>Title</h5></div>
+                            <div><h5>Artist</h5></div>
+                            <div><h5>Album</h5></div>
+                        </div>
+                    </div>
+                    <div class="music">
+                        <div v-for="(song, index) in library" class="song">
+                            <div class="title"><p>{{song.title}}</p></div>
+                            <div class="artist"><p>{{song.artist}}</p></div>
+                            <div class="album"><p>{{song.album}}</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="music-bar">
                 <div id="tracker" class="music-tracker">
                     <div id="drag-container" class="drag-container" v-bind:style="{ display: dragging }"></div>
