@@ -27,6 +27,20 @@ var devMenuTemplate = {
         click: function () {
             electron.app.quit();
         }
+    },{
+        label: 'Clear preferences',
+        accelerator: 'CmdOrCtrl+D',
+        click: function () {
+            var slash = (function() {
+                if(process.platform === 'darwin' || process.platform === 'linux') {
+                    return '/';
+                }
+                else return '\\'
+            })();
+            var path$$1 = electron.app.getPath('userData');
+            path$$1 = path$$1 + slash + 'vizzyPrefs.json';
+            jetpack.remove(path$$1);
+        }
     }]
 };
 

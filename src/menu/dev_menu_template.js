@@ -1,4 +1,5 @@
 import { app, BrowserWindow } from 'electron';
+import jetpack from 'fs-jetpack';
 
 export var devMenuTemplate = {
     label: 'Development',
@@ -19,6 +20,20 @@ export var devMenuTemplate = {
         accelerator: 'CmdOrCtrl+Q',
         click: function () {
             app.quit();
+        }
+    },{
+        label: 'Clear preferences',
+        accelerator: 'CmdOrCtrl+D',
+        click: function () {
+            var slash = (function() {
+                if(process.platform === 'darwin' || process.platform === 'linux') {
+                    return '/';
+                }
+                else return '\\'
+            })();
+            var path = app.getPath('userData');
+            path = path + slash + 'vizzyPrefs.json';
+            jetpack.remove(path);
         }
     }]
 };
