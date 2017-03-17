@@ -49,6 +49,8 @@ const musicBar = Vue.component('music-bar', {
             audio: '',
             isPlaying: false,
             library: [],
+            libraryView: 'none',
+            libraryHeight: (window.innerHeight - 100) + 'px',
             currentSong: {
                 artist: 'No song',
                 title: 'No title',
@@ -155,10 +157,7 @@ const musicBar = Vue.component('music-bar', {
                 this.prev();
             }
             var musicBar = this;
-            setTimeout(function() {
-                musicBar.pause();
-                musicBar.play();
-            },100);
+            this.reset();
         },
         next: function() {
             if(this.index === this.library.length - 1) {
@@ -176,6 +175,13 @@ const musicBar = Vue.component('music-bar', {
                 console.log('file does not exist skipping');
                 this.next();
             }
+            this.reset();
+        },
+        setCurrentSong: function(i) {
+            this.currentSong = this.library[i];
+            this.reset();
+        },
+        reset: function() {
             var musicBar = this;
             setTimeout(function() {
                 musicBar.pause();
@@ -207,7 +213,7 @@ const musicBar = Vue.component('music-bar', {
             else {
                 console.log('preferences do not exist');
             }
-        }
+        },
     },
     mounted: function () {
         this.checkPrefs();

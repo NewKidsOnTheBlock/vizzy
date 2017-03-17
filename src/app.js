@@ -61,7 +61,7 @@ const app = new Vue({
         }
 
         function refresh(){
-            console.log(musicData());
+            //console.log(musicData())
             window.requestAnimationFrame(refresh);
         }
 
