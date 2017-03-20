@@ -123,6 +123,7 @@ html, body {
 				box-shadow: 0 5px 3px -5px rgba(0,0,0,.75);
 				display: flex;
 				flex-direction: row;
+				margin-bottom: 5px;
 				width: 100%;
 				padding: 0 5px;
 
@@ -133,11 +134,13 @@ html, body {
 		}
 
 		.music {
+			box-sizing: border-box;
 			flex: 1;
 			width: 100%;
 			overflow-y: auto;
 
 			.song {
+				box-sizing: border-box;
 				border-bottom: 1px @vizzy-lightBlack solid;
 				display: flex;
 				flex-direction: row;
@@ -310,4 +313,19 @@ html, body {
 
 .blue {
 	color: @vizzy-blue;
+}
+
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 3px;
+	border: 3px solid @vizzy-blue;
+	padding: 1px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: @vizzy-blue;
 }
