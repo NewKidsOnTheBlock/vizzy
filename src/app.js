@@ -52,20 +52,50 @@ var dummyCanvas = {
 const app = new Vue({
     el: ".app",
     data: {
+        vizzies: [0,0,0,0,0,0,0,0],
         canvas: dummyCanvas,
         musicInit: false,
         state: {
-            home: false,
-            editor: true,
+            home: true,
+            editor: false,
         },
-        selectedShape: ''
+        selectedShape: {
+            shape: null,
+            pos: null,
+            or: null,
+            siz: null,
+            col: null,
+        }
     },
     methods: {
         musicInitialize: function() {
             this.musicInit = true;
         },
+        moveState: function(page) {
+            console.log(this.state);
+            for (var property in this.state) {
+                if (this.state.hasOwnProperty(property)) {
+                    console.log(property);
+                    if(property === page) {
+                        this.state[property] = true;
+                    }
+                    else {
+                        this.state[property] = false;
+                    }
+                }
+            }
+        },
         selectShape: function(i) {
-            this.selectedShape = this.canvas.shapes[i];
+            this.selectedShape.shape = this.canvas.shapes[i];
+        },
+        toggleShapePanel: function(type) {
+
+            if(this.selectedShape[type]) {
+                this.selectedShape[type] = null;
+            }
+            else {
+                this.selectedShape[type] = 'block';
+            }
         }
     },
     mounted: function() {

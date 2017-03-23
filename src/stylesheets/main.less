@@ -8,6 +8,7 @@
 html, body {
     width: 100%;
     height: 100%;
+	overflow-x: hidden;
 }
 
 .app {
@@ -15,6 +16,8 @@ html, body {
     width: 100%;
     height: 100%;
     flex-direction: column;
+	overflow-x: hidden;
+	position: relative;
 }
 
 //Vizzy Editor Styles -------------------------------------------
@@ -22,7 +25,126 @@ html, body {
 .vizzy {
 	display: flex;
 	flex: 1;
+	position: relative;
 	width: 100%;
+	overflow-x: hidden;
+
+	.home {
+		display: flex;
+		padding: 20px;
+		overflow: auto;
+		flex-direction: column;
+		width: 100%;
+
+		.vizzy-select-options {
+			padding-left: 15px;
+		}
+
+		.vizzies {
+			display: flex;
+			width: 100%;
+			flex-direction: row;
+			flex-wrap: wrap;
+
+			.vizzy-container {
+				box-sizing: border-box;
+				padding: 15px;
+				width: 33%;
+
+				.vizzy-picture {
+					display: flex;
+					flex-direction: column;
+					height: 0;
+					border: 1px solid @vizzy-lightBlack;
+					margin-bottom: 10px;
+					padding-bottom: 60%;
+					position: relative;
+					width: 100%;
+
+					.vizzy-options {
+						display: block;
+						position: absolute;
+						top: 0;
+						left: 0;
+						right: 0;
+						bottom: 0;
+						visibility: hidden;
+
+						.vizzy-options-wrapper {
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							width: 100%;
+							height: 100%;
+
+							h3 {
+								margin: 0 5px;
+							}
+						}
+					}
+				}
+
+				.vizzy-picture:hover {
+					.vizzy-options {
+						visibility: visible;
+					}
+				}
+			}
+		}
+	}
+
+	.editor-container {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+
+		.editor-nav {
+			background-color: @vizzy-blue;
+			padding: 15px;
+			position: relative;
+			z-index: 50;
+
+			.path {
+				h3 {
+					display: inline-block;
+					color: white;
+				}
+
+				h3:hover {
+					cursor: pointer;
+					text-decoration: underline;
+				}
+			}
+		}
+	}
+
+	.canvas-container {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: row;
+
+		.canvas {
+			background-color: white;
+			width: 100%;
+			padding-bottom: 56.25%;
+			position: relative;
+			border: 1px solid @vizzy-lightBlack;
+
+			.stretchVG {
+				position: absolute;
+				top: 0;
+				left: 0;
+				bottom: 0;
+				right: 0;
+
+				.vizzy-svg {
+					width: 100%;
+					height: 100%;
+				}
+			}
+		}
+	}
 
 	.editor {
 		display: flex;
@@ -32,7 +154,7 @@ html, body {
 		> div {
 			box-sizing: border-box;
 			position: relative;
-			padding: 15px;
+
 		}
 
 		.shape-selector {
@@ -40,21 +162,39 @@ html, body {
 			width: 200px;
 			border-right: solid @vizzy-lightBlack 1px;
 			background-color: white;
+			padding: 15px;
 			z-index: 2;
+
+			h3:hover {
+				cursor: pointer;
+			}
 		}
 
 		.canvas-container {
 			flex: 1;
 			background-color: @vizzy-lightBlack;
+			padding: 15px;
 			z-index: 1;
 		}
 
-		.shape-editor {
+		.shape-editor-container {
 			height: 100%;
 			width: 200px;
 			border-left: solid @vizzy-lightBlack 1px;
 			background-color: white;
 			z-index: 2;
+			overflow: auto;
+
+			.shape-editor {
+				> div {
+					padding: 15px;
+					border-bottom: solid @vizzy-lightBlack 1px;
+				}
+
+				>div:hover {
+					cursor: pointer;
+				}
+			}
 		}
 	}
 }
@@ -64,7 +204,7 @@ html, body {
 	display: flex;
 	flex-direction: column;
 	position: relative;
-	z-index: 3;
+	z-index: 99;
 
 	.music-select {
 		display: flex;
@@ -317,17 +457,30 @@ html, body {
 	color: @vizzy-blue;
 }
 
+.slide-enter-active,.slide-leave-active  {
+  	transition: all .5s;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+  	z-index: 2;
+}
+
+.slide-enter, .slide-leave-to
+/* .slide-fade-leave-active for <2.1.8 */ {
+  	transform: translateX(500px);
+	opacity: 0;
+}
+
 ::-webkit-scrollbar {
-    width: 15px;
+    width: 5px;
 }
 
 ::-webkit-scrollbar-track {
     border-radius: 3px;
-	border: 3px solid @vizzy-blue;
 	padding: 1px;
 }
 
 ::-webkit-scrollbar-thumb {
-    border-radius: 3px;
+    border-radius: 5px;
     background-color: @vizzy-blue;
 }

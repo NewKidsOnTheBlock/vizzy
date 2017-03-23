@@ -51,6 +51,27 @@ p {
   color: white;
   cursor: pointer;
 }
+.agree-btn {
+  background-color: #bced09;
+  border-radius: 5px;
+  color: white;
+  padding: 10px 15px;
+  margin: 0;
+}
+.agree-btn:hover {
+  background-color: #a9d408;
+  cursor: pointer;
+}
+.edit-btn {
+  background-color: #f9cb40;
+  border-radius: 5px;
+  color: white;
+  padding: 10px 15px;
+}
+.edit-btn:hover {
+  background-color: #f7be0f;
+  cursor: pointer;
+}
 .small {
   padding: 0px 5px;
 }
@@ -62,17 +83,118 @@ html,
 body {
   width: 100%;
   height: 100%;
+  overflow-x: hidden;
 }
 .app {
   display: flex;
   width: 100%;
   height: 100%;
   flex-direction: column;
+  overflow-x: hidden;
+  position: relative;
 }
 .vizzy {
   display: flex;
   flex: 1;
+  position: relative;
   width: 100%;
+  overflow-x: hidden;
+}
+.vizzy .home {
+  display: flex;
+  padding: 20px;
+  overflow: auto;
+  flex-direction: column;
+  width: 100%;
+}
+.vizzy .home .vizzy-select-options {
+  padding-left: 15px;
+}
+.vizzy .home .vizzies {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.vizzy .home .vizzies .vizzy-container {
+  box-sizing: border-box;
+  padding: 15px;
+  width: 33%;
+}
+.vizzy .home .vizzies .vizzy-container .vizzy-picture {
+  display: flex;
+  flex-direction: column;
+  height: 0;
+  border: 1px solid #ced2d2;
+  margin-bottom: 10px;
+  padding-bottom: 60%;
+  position: relative;
+  width: 100%;
+}
+.vizzy .home .vizzies .vizzy-container .vizzy-picture .vizzy-options {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  visibility: hidden;
+}
+.vizzy .home .vizzies .vizzy-container .vizzy-picture .vizzy-options .vizzy-options-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+.vizzy .home .vizzies .vizzy-container .vizzy-picture .vizzy-options .vizzy-options-wrapper h3 {
+  margin: 0 5px;
+}
+.vizzy .home .vizzies .vizzy-container .vizzy-picture:hover .vizzy-options {
+  visibility: visible;
+}
+.vizzy .editor-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.vizzy .editor-container .editor-nav {
+  background-color: #2f52e0;
+  padding: 15px;
+  position: relative;
+  z-index: 50;
+}
+.vizzy .editor-container .editor-nav .path h3 {
+  display: inline-block;
+  color: white;
+}
+.vizzy .editor-container .editor-nav .path h3:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.vizzy .canvas-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+.vizzy .canvas-container .canvas {
+  background-color: white;
+  width: 100%;
+  padding-bottom: 56.25%;
+  position: relative;
+  border: 1px solid #ced2d2;
+}
+.vizzy .canvas-container .canvas .stretchVG {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+.vizzy .canvas-container .canvas .stretchVG .vizzy-svg {
+  width: 100%;
+  height: 100%;
 }
 .vizzy .editor {
   display: flex;
@@ -82,32 +204,44 @@ body {
 .vizzy .editor > div {
   box-sizing: border-box;
   position: relative;
-  padding: 15px;
 }
 .vizzy .editor .shape-selector {
   height: 100%;
   width: 200px;
   border-right: solid #ced2d2 1px;
   background-color: white;
+  padding: 15px;
   z-index: 2;
+}
+.vizzy .editor .shape-selector h3:hover {
+  cursor: pointer;
 }
 .vizzy .editor .canvas-container {
   flex: 1;
   background-color: #ced2d2;
+  padding: 15px;
   z-index: 1;
 }
-.vizzy .editor .shape-editor {
+.vizzy .editor .shape-editor-container {
   height: 100%;
   width: 200px;
   border-left: solid #ced2d2 1px;
   background-color: white;
   z-index: 2;
+  overflow: auto;
+}
+.vizzy .editor .shape-editor-container .shape-editor > div {
+  padding: 15px;
+  border-bottom: solid #ced2d2 1px;
+}
+.vizzy .editor .shape-editor-container .shape-editor > div:hover {
+  cursor: pointer;
 }
 .music-bar-container {
   display: flex;
   flex-direction: column;
   position: relative;
-  z-index: 3;
+  z-index: 99;
 }
 .music-bar-container .music-select {
   display: flex;
@@ -318,15 +452,27 @@ body {
 .blue {
   color: #2f52e0;
 }
+.slide-enter-active,
+.slide-leave-active {
+  transition: all .5s;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+.slide-enter,
+.slide-leave-to {
+  transform: translateX(500px);
+  opacity: 0;
+}
 ::-webkit-scrollbar {
-  width: 15px;
+  width: 5px;
 }
 ::-webkit-scrollbar-track {
   border-radius: 3px;
-  border: 3px solid #2f52e0;
   padding: 1px;
 }
 ::-webkit-scrollbar-thumb {
-  border-radius: 3px;
+  border-radius: 5px;
   background-color: #2f52e0;
 }

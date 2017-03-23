@@ -16,21 +16,83 @@
 
     <div class="app">
         <div v-if="musicInit" class="vizzy">
-            <div v-if="state.home" class="home-screen">
-
-            </div>
-            <div v-if="state.editor" class="editor">
-                <div class="shape-selector panel-shadow">
-                    <h3 v-for="(shape, i) in canvas.shapes" v-on:click="selectShape(i)">{{shape.id}}</h3>
-                </div>
-                <div class="canvas-container">
-                </div>
-                <div class="shape-editor panel-shadow">
-                    <div v-if="selectedShape">
-                        <h3>{{selectedShape.id}}</h3>
+            <transition name="slide">
+                <div v-if="state.home" class="home">
+                    <div class="vizzy-select-options">
+                        <h1 class="blue">Your Vizzies</h1>
+                    </div>
+                    <div class="vizzies">
+                        <div class="vizzy-container" v-for="vizzy in vizzies">
+                            <div class="vizzy-picture">
+                                <div class="vizzy-options">
+                                    <div class="vizzy-options-wrapper">
+                                        <h3 class="agree-btn">play</h3>
+                                        <h3 class="edit-btn" v-on:click="moveState('editor')">edit</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <h2>Vizzy</h2>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </transition>
+            <transition name="slide">
+                <div v-if="state.editor" class="editor-container">
+                    <div class="editor-nav panel-shadow">
+                        <div class="path">
+                            <h3 v-on:click="moveState('home')">Home </h3>
+                            <h3>\Vizzy Name</h3>
+                        </div>
+                    </div>
+                    <div class="editor">
+                        <div class="shape-selector">
+                            <h3 v-for="(shape, i) in canvas.shapes" v-on:click="selectShape(i)">{{shape.id}}</h3>
+                        </div>
+                        <div class="canvas-container">
+                            <div class="canvas">
+                                <div class="stretchVG">
+                                    <svg class="vizzy-svg"></svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="shape-editor-container">
+                            <div class="shape-editor" v-if="selectedShape.shape">
+                                <div class="name">
+                                    <h3>{{selectedShape.shape.id}}</h3>
+                                </div>
+                                <div class="position" v-on:click="toggleShapePanel('pos')">
+                                    <h6>position</h6>
+                                </div>
+                                <div v-bind:style="{display: selectedShape.pos || 'none'}">
+                                    <p>X-axis</p>
+                                    <p>Y-axis</p>
+                                </div>
+                                <div class="orientation" v-on:click="toggleShapePanel('or')">
+                                    <h6>orientation</h6>
+                                </div>
+                                <div v-bind:style="{display: selectedShape.or || 'none'}">
+                                    <p>Rotation</p>
+                                </div>
+                                <div class="size" v-on:click="toggleShapePanel('siz')">
+                                    <h6>size</h6>
+                                </div>
+                                <div v-bind:style="{display: selectedShape.siz || 'none'}">
+                                    <p>Width</p>
+                                    <p>Height</p>
+                                </div>
+                                <div class="color" v-on:click="toggleShapePanel('col')">
+                                    <h6>color</h6>
+                                </div>
+                                <div v-bind:style="{display: selectedShape.col || 'none'}">
+                                    <p>Hue</p>
+                                    <p>Opacity</p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </transtion>
         </div>
         <music-bar v-on:init="musicInitialize()"></music-bar>
     </div>
