@@ -10,7 +10,7 @@ gulp.task('start', ['build', 'watch'], function () {
     connect.start();
 
     // Restart browser process
-    gulp.watch('./app/app.js', connect.restart);
+    gulp.watch('./app/app.js', connect.reload);
 
     // Reload renderer process
     gulp.watch(['./app/app.html', './app/stylesheets/main.css'], connect.reload);

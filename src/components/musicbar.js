@@ -82,12 +82,6 @@ const musicBar = Vue.component('music-bar', {
             userPrefs: {},
         }
     },
-    //Fires when
-    events: {
-        fireOpenFileExplorer: function() {
-            this.openFileExplorer();
-        }
-    },
     //Methods the music bar uses
     methods: {
         //Gets our music data from file handed to it

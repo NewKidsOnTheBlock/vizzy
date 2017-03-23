@@ -79,8 +79,10 @@ body {
   flex: 1;
   flex-direction: row;
 }
-.vizzy .editor div {
+.vizzy .editor > div {
+  box-sizing: border-box;
   position: relative;
+  padding: 15px;
 }
 .vizzy .editor .shape-selector {
   height: 100%;

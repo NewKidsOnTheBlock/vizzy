@@ -21,11 +21,14 @@
             </div>
             <div v-if="state.editor" class="editor">
                 <div class="shape-selector panel-shadow">
+                    <h3 v-for="(shape, i) in canvas.shapes" v-on:click="selectShape(i)">{{shape.id}}</h3>
                 </div>
                 <div class="canvas-container">
-
                 </div>
                 <div class="shape-editor panel-shadow">
+                    <div v-if="selectedShape">
+                        <h3>{{selectedShape.id}}</h3>
+                    </div>
                 </div>
             </div>
         </div>

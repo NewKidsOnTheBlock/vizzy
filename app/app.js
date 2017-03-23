@@ -93,106 +93,140 @@ var Song = function(data, path) {
     this.path = path;
 };
 
+//Starting the view component
 const musicBar = Vue$1.component('music-bar', {
+    //Giving it an ID from our html for the template
     template: '#music-bar',
+    //Getting the music initialized from the main application
     props: ['musicInit'],
+    //All the data our component uses
     data: function() {
         return {
+            //Getting a forward slash or backslash depending on operating system
             slash: (function() {
                 if(process.platform === 'darwin' || process.platform === 'linux') {
                     return '/';
                 }
                 else return '\\'
             })(),
+            //Our flex option for taking up the whole page
             flexOpt: 1,
+            //Bool for if our music is loaded
             musicLoaded: false,
-            audio: '',
+            //creating placeholder for our html audio
+            audio: null,
+            //Bool for is the player is playing
             isPlaying: false,
+            //Array for our library
             library: [],
+            //String to set the style of the library view, defaults to none
             libraryView: 'none',
+            //Finding how big our library should be
             libraryHeight: (window.innerHeight - 100) + 'px',
+            //Object for current song to display in music bar
             currentSong: {
                 artist: 'No song',
                 title: 'No title',
                 picture: './img/albumPlaceHolder.png',
                 path: './'
             },
+            //Our index for songs
             index: 0,
+            //Our percentage of time in the song
             percentageTime: 0,
+            //String to set the style of a dragging div in order to drag through songs
             dragging: "none",
+            //Getting our directory
             directory: app$1.getPath('userData'),
+            //Empty object for user prefs
             userPrefs: {},
         }
     },
-    events: {
-        fireOpenFileExplorer: function() {
-            this.openFileExplorer();
-        }
-    },
+    //Methods the music bar uses
     methods: {
+        //Gets our music data from file handed to it
         getMusicData: function(path) {
+            //Setting a variable for the application
             var musicBar = this;
+            //Hands back a promise to be resolved
             return new Promise(function(resolve, reject) {
+                //using jsmediatags to read our music file data
                 jsmediatags.read(path, {
                     onSuccess: function(data) {
-                        console.log(data.tags);
                         musicBar.library.push(new Song(data.tags, path));
+                        //Resolve the promise
                         resolve();
                     },
                     onError: function(error) {
-                        console.log(':(', error.type, error.info);
                         reject();
                     }
                 });
             });
         },
+        //Function to search our directory, takes a path, an empty array for promises, and a callback function
         searchDir: function(path, promises, callback) {
+            //Getting an array of our files
             var fileList = jetpack.list(path);
             for(var i = 0; i < fileList.length; i++) {
+                //Getting the path of the file in list
                 var file = path + this.slash + fileList[i];
 
+                //If the file we are given is actually a folder
                 if(fs.lstatSync(file).isDirectory()) {
+                    //Recurse and run search directory again
                     this.searchDir(file, promises);
                 }
+                //If the file is an mp3
                 else if(file.substr(file.length - 4) === '.mp3') {
+                    //Push returned data to our promise array
                     promises.push(this.getMusicData(file));
-                }
-                else {
-
                 }
             }
 
+            //If there is a callback
             if(callback) {
+                //Run our callback function
                 callback(promises);
             }
         },
+        //Function to sort our library
         sortLibrary: function() {
             this.library.sort(
                 firstBy(function (v) { return v.artist })
                 .thenBy("album")
                 .thenBy("track")
             );
-            console.log(this.library);
         },
+        //Function that opens our file explorer
         openFileExplorer: function() {
+            //Settign up a variable for our application
             var musicBar = this;
+            //Open up a file explorer
             dialog.showOpenDialog({properties: ['openDirectory']}, function(files) {
+                //Getting the path to our files
                 var musicFolder = files[0];
+                //Creating an empty array for promises
                 var promises = [];
+                //Run our search directory function, give it a callback
                 musicBar.searchDir(musicFolder, promises, function() {
+                    //This checks all of the promises that were added to our promise array
                     Promise.all(promises).then(function() {
+                        //Run all of the necessary functions to start the music bar up
                         musicBar.sortLibrary();
                         musicBar.currentSong = musicBar.library[0];
                         musicBar.musicLoaded = true;
                         musicBar.flexOpt = 'none';
+                        //Sending a message to our main application that the music bar is ready to go
                         musicBar.$emit('init');
+                        //Saving a library preference to our user preferences
                         musicBar.userPrefs.library = musicBar.library;
+                        //Save our user preferences to our applications directory
                         jetpack.write(musicBar.directory + musicBar.slash + 'vizzyPrefs.json', musicBar.userPrefs);
-                        console.log('done');
                     });
                 });
             });
         },
+        //The next functions are self explanatory. This is referring to the application itself.
         play: function() {
             this.audio.play();
             this.isPlaying = true;
@@ -248,8 +282,10 @@ const musicBar = Vue$1.component('music-bar', {
                 musicBar.play();
             },100);
         },
+        //Updating the song tracker
         updateTracker: function() {
             if(this.musicLoaded) {
+                //Getting the x position of the mouse
                 var x = event.clientX;
                 var width = window.innerWidth;
 
@@ -258,6 +294,7 @@ const musicBar = Vue$1.component('music-bar', {
                 this.audio.currentTime = this.audio.duration * percentage;
             }
         },
+        //Check if our preferences exist
         checkPrefs: function() {
             if(jetpack.exists(this.directory + this.slash + 'vizzyPrefs.json')) {
                 var prefs = JSON.parse(jetpack.read(this.directory + this.slash + 'vizzyPrefs.json', ['jsonWithDates']));
@@ -268,13 +305,10 @@ const musicBar = Vue$1.component('music-bar', {
                 this.musicLoaded = true;
                 this.flexOpt = 'none';
                 this.$emit('init');
-                console.log('preferences exist!');
-            }
-            else {
-                console.log('preferences do not exist');
             }
         },
     },
+    //This runs when the application is mounted
     mounted: function () {
         this.checkPrefs();
 
@@ -289,7 +323,6 @@ const musicBar = Vue$1.component('music-bar', {
         var container = document.getElementById('drag-container');
 
         tracker.addEventListener('mousedown', function() {
-            console.log('mouse down');
             musicBar.updateTracker();
             musicBar.dragging = 'block';
         }, false);
@@ -317,29 +350,68 @@ const musicBar = Vue$1.component('music-bar', {
     }
 });
 
-var musicBar$1 = {
-    musicBar
-};
-
 // Here is the starting point for your application code.
 // All stuff below is just to show you how it works. You can delete all of it.
 
 // Use new ES6 modules syntax for everything.
 const Vue = require('vue/dist/vue.common.js');
-console.log(musicBar$1);
+var dummyCanvas = {
+    shapes: [
+        {
+            id: "Circle",
+            minWidth: 10,
+            maxWidth: 20,
+            minHeight: 10,
+            maxHeight: 20,
+        },
+        {
+            id: "Circle 1",
+            minWidth: 10,
+            maxWidth: 20,
+            minHeight: 10,
+            maxHeight: 20,
+        },
+        {
+            id: "Circle 2",
+            minWidth: 10,
+            maxWidth: 20,
+            minHeight: 10,
+            maxHeight: 20,
+        },
+        {
+            id: "Circle 3",
+            minWidth: 10,
+            maxWidth: 20,
+            minHeight: 10,
+            maxHeight: 20,
+        },
+        {
+            id: "Circle 4",
+            minWidth: 10,
+            maxWidth: 20,
+            minHeight: 10,
+            maxHeight: 20,
+        },
+    ]
+};
 
 const app = new Vue({
     el: ".app",
     data: {
+        canvas: dummyCanvas,
         musicInit: false,
         state: {
             home: false,
             editor: true,
-        }
+        },
+        selectedShape: ''
     },
     methods: {
         musicInitialize: function() {
             this.musicInit = true;
+        },
+        selectShape: function(i) {
+            this.selectedShape = this.canvas.shapes[i];
         }
     },
     mounted: function() {

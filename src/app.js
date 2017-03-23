@@ -9,20 +9,63 @@ import fs from 'fs';
 const Vue = require('vue/dist/vue.common.js');
 import musicBar from './components/musicbar';
 
-console.log(musicBar);
+var dummyCanvas = {
+    shapes: [
+        {
+            id: "Circle",
+            minWidth: 10,
+            maxWidth: 20,
+            minHeight: 10,
+            maxHeight: 20,
+        },
+        {
+            id: "Circle 1",
+            minWidth: 10,
+            maxWidth: 20,
+            minHeight: 10,
+            maxHeight: 20,
+        },
+        {
+            id: "Circle 2",
+            minWidth: 10,
+            maxWidth: 20,
+            minHeight: 10,
+            maxHeight: 20,
+        },
+        {
+            id: "Circle 3",
+            minWidth: 10,
+            maxWidth: 20,
+            minHeight: 10,
+            maxHeight: 20,
+        },
+        {
+            id: "Circle 4",
+            minWidth: 10,
+            maxWidth: 20,
+            minHeight: 10,
+            maxHeight: 20,
+        },
+    ]
+}
 
 const app = new Vue({
     el: ".app",
     data: {
+        canvas: dummyCanvas,
         musicInit: false,
         state: {
             home: false,
             editor: true,
-        }
+        },
+        selectedShape: ''
     },
     methods: {
         musicInitialize: function() {
             this.musicInit = true;
+        },
+        selectShape: function(i) {
+            this.selectedShape = this.canvas.shapes[i];
         }
     },
     mounted: function() {
