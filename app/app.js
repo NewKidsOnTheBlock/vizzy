@@ -355,51 +355,13 @@ const musicBar = Vue$1.component('music-bar', {
 
 // Use new ES6 modules syntax for everything.
 const Vue = require('vue/dist/vue.common.js');
-var dummyCanvas = {
-    shapes: [
-        {
-            id: "Circle",
-            minWidth: 10,
-            maxWidth: 20,
-            minHeight: 10,
-            maxHeight: 20,
-        },
-        {
-            id: "Circle 1",
-            minWidth: 10,
-            maxWidth: 20,
-            minHeight: 10,
-            maxHeight: 20,
-        },
-        {
-            id: "Circle 2",
-            minWidth: 10,
-            maxWidth: 20,
-            minHeight: 10,
-            maxHeight: 20,
-        },
-        {
-            id: "Circle 3",
-            minWidth: 10,
-            maxWidth: 20,
-            minHeight: 10,
-            maxHeight: 20,
-        },
-        {
-            id: "Circle 4",
-            minWidth: 10,
-            maxWidth: 20,
-            minHeight: 10,
-            maxHeight: 20,
-        },
-    ]
-};
+var Canvas = require('../src/components/canvas.js').Canvas;
 
 const app = new Vue({
     el: ".app",
     data: {
         vizzies: [0,0,0,0,0,0,0,0],
-        canvas: dummyCanvas,
+        canvas: new Canvas(),
         musicInit: false,
         state: {
             home: true,

@@ -46,6 +46,9 @@
                     </div>
                     <div class="editor">
                         <div class="shape-selector">
+                            <div class="create-container">
+                                <h4 class="agree-btn">Create Shape</h4>
+                            </div>
                             <div class="shape" v-for="(shape, i) in canvas.shapes" v-bind:class="{ selected: shape.isSelected }" v-on:click="selectShape(i)">
                                 <h3>{{shape.id}}</h3>
                             </div>

@@ -212,6 +212,9 @@ body {
   background-color: white;
   z-index: 2;
 }
+.vizzy .editor .shape-selector .create-container {
+  padding: 15px 15px;
+}
 .vizzy .editor .shape-selector .shape {
   padding: 5px 15px;
 }

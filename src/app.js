@@ -9,6 +9,8 @@ import fs from 'fs';
 const Vue = require('vue/dist/vue.common.js');
 import musicBar from './components/musicbar';
 
+var Canvas = require('../src/components/canvas.js').Canvas;
+
 var dummyCanvas = {
     shapes: [
         {
@@ -53,7 +55,7 @@ const app = new Vue({
     el: ".app",
     data: {
         vizzies: [0,0,0,0,0,0,0,0],
-        canvas: dummyCanvas,
+        canvas: new Canvas(),
         musicInit: false,
         state: {
             home: true,

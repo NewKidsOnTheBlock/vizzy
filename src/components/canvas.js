@@ -1,7 +1,9 @@
-var Canvas = function() {
+exports.Canvas = function() {
 	this.shapes = [];
 	this.canvasWidth = 1920; 
 	this.canvasHeight = 1080;
+	this.screenCanvasWidth;
+	this.screenCanvasHeight;
 
 	//Add shape to the canvas
 	this.add = function(shape){
@@ -17,8 +19,8 @@ var Canvas = function() {
 
 	//Will resize to canvas
 	this.resize = function(width, height){
-		canvasWidth = width;
-		canvasHeight = height;
+		this.screenCanvasWidth = width;
+		this.screenCanvasHeight = height;
 	}
 
 
