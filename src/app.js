@@ -85,8 +85,12 @@ const app = new Vue({
                 }
             }
         },
-        selectShape: function(i) {
-            this.selectedShape.shape = this.canvas.shapes[i];
+        selectShape: function(index) {
+            this.selectedShape.shape = this.canvas.shapes[index];
+            for (var i = 0; i < this.canvas.shapes.length; i++) {
+                this.canvas.shapes[i].isSelected = false;
+            }
+            this.canvas.shapes[index].isSelected = true;
         },
         toggleShapePanel: function(type) {
 

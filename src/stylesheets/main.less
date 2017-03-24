@@ -162,10 +162,20 @@ html, body {
 			width: 200px;
 			border-right: solid @vizzy-lightBlack 1px;
 			background-color: white;
-			padding: 15px;
 			z-index: 2;
 
-			h3:hover {
+			.shape {
+				padding: 5px 15px
+			}
+
+			.shape.selected {
+				background-color: @vizzy-green;
+				color: white;
+			}
+
+			.shape:hover {
+				background-color: @vizzy-green;
+				color: white;
 				cursor: pointer;
 			}
 		}
@@ -457,7 +467,13 @@ html, body {
 	color: @vizzy-blue;
 }
 
-.slide-enter-active,.slide-leave-active  {
+.slide-enter-active {
+	transition: all .5s;
+	position: relative;
+	z-index: 1;
+}
+
+.slide-leave-active  {
   	transition: all .5s;
 	position: absolute;
 	width: 100%;

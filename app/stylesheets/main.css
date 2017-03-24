@@ -210,10 +210,18 @@ body {
   width: 200px;
   border-right: solid #ced2d2 1px;
   background-color: white;
-  padding: 15px;
   z-index: 2;
 }
-.vizzy .editor .shape-selector h3:hover {
+.vizzy .editor .shape-selector .shape {
+  padding: 5px 15px;
+}
+.vizzy .editor .shape-selector .shape.selected {
+  background-color: #bced09;
+  color: white;
+}
+.vizzy .editor .shape-selector .shape:hover {
+  background-color: #bced09;
+  color: white;
   cursor: pointer;
 }
 .vizzy .editor .canvas-container {
@@ -452,7 +460,11 @@ body {
 .blue {
   color: #2f52e0;
 }
-.slide-enter-active,
+.slide-enter-active {
+  transition: all .5s;
+  position: relative;
+  z-index: 1;
+}
 .slide-leave-active {
   transition: all .5s;
   position: absolute;
