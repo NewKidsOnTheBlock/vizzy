@@ -74,7 +74,6 @@ const app = new Vue({
             this.musicInit = true;
         },
         moveState: function(page) {
-            console.log(this.state);
             for (var property in this.state) {
                 if (this.state.hasOwnProperty(property)) {
                     console.log(property);
@@ -86,6 +85,14 @@ const app = new Vue({
                     }
                 }
             }
+            var app = this;
+            window.setTimeout(function() {
+                if(page === 'editor') {
+                    var svgCanvas = document.getElementById('svg');
+                    app.canvas.resize(svgCanvas.clientWidth, svgCanvas.clientHeight);
+                };
+            },0);
+            
         },
         selectShape: function(index) {
             this.selectedShape.shape = this.canvas.shapes[index];
