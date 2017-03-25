@@ -1,11 +1,10 @@
-const Vue = require('vue/dist/vue.common.js');
-import jsmediatags from 'jsmediatags';
-import fs from 'fs';
-import jetpack from 'fs-jetpack'; // module loaded from npm
-import firstBy from '../helpers/thenBy.js';
-const { dialog, app } = require('electron').remote;
+var Vue = require('vue/dist/vue.common.js');
+var jsmediatags = require('jsmediatags');
+var fs = require('fs');
+var jetpack = require('fs-jetpack'); // module loaded from npm
+var firstBy = require('../helpers/thenBy.js').firstBy;
+var { dialog, app } = require('electron').remote;
 
-console.log(app.getPath('userData'));
 //Basic object for a song
 var Song = function(data, path) {
     this.artist = data.artist || 'Unknown Artist';
@@ -34,7 +33,7 @@ var Song = function(data, path) {
 }
 
 //Starting the view component
-const musicBar = Vue.component('music-bar', {
+exports.musicBar = Vue.component('music-bar', {
     //Giving it an ID from our html for the template
     template: '#music-bar',
     //Getting the music initialized from the main application
@@ -289,7 +288,3 @@ const musicBar = Vue.component('music-bar', {
         window.requestAnimationFrame(updateTime);
     }
 });
-
-export default {
-    musicBar
-}

@@ -5,51 +5,12 @@
 import os from 'os'; // native node.js module
 import { remote } from 'electron'; // native electron module
 import fs from 'fs';
+var d3 = require('d3');
 
 const Vue = require('vue/dist/vue.common.js');
-import musicBar from './components/musicbar';
+var musicBar = require('../src/components/musicbar').musicBar;
 
 var Canvas = require('../src/components/canvas.js').Canvas;
-
-var dummyCanvas = {
-    shapes: [
-        {
-            id: "Circle",
-            minWidth: 10,
-            maxWidth: 20,
-            minHeight: 10,
-            maxHeight: 20,
-        },
-        {
-            id: "Circle 1",
-            minWidth: 10,
-            maxWidth: 20,
-            minHeight: 10,
-            maxHeight: 20,
-        },
-        {
-            id: "Circle 2",
-            minWidth: 10,
-            maxWidth: 20,
-            minHeight: 10,
-            maxHeight: 20,
-        },
-        {
-            id: "Circle 3",
-            minWidth: 10,
-            maxWidth: 20,
-            minHeight: 10,
-            maxHeight: 20,
-        },
-        {
-            id: "Circle 4",
-            minWidth: 10,
-            maxWidth: 20,
-            minHeight: 10,
-            maxHeight: 20,
-        },
-    ]
-}
 
 const app = new Vue({
     el: ".app",
@@ -74,6 +35,10 @@ const app = new Vue({
             this.musicInit = true;
         },
         moveState: function(page) {
+            if(this.state.editor) {
+                //If we are leaving our editor state clear our svgs
+                this.canvas.clearShapeSvg();
+            }
             for (var property in this.state) {
                 if (this.state.hasOwnProperty(property)) {
                     console.log(property);
@@ -88,8 +53,10 @@ const app = new Vue({
             var app = this;
             window.setTimeout(function() {
                 if(page === 'editor') {
+                    var svg = d3.select('svg');
                     var svgCanvas = document.getElementById('svg');
                     app.canvas.resize(svgCanvas.clientWidth, svgCanvas.clientHeight);
+                    app.canvas.setDomCanvas(svg);
                 };
             },0);
             
@@ -109,6 +76,9 @@ const app = new Vue({
             else {
                 this.selectedShape[type] = 'block';
             }
+        },
+        addShape: function() {
+            this.canvas.add();
         }
     },
     mounted: function() {
@@ -142,12 +112,17 @@ const app = new Vue({
             var frequency = (index * 44100)/ 2048.0;
 
             return {
-                'frequency': frequency
+                'frequency': data[0]
             };
         }
 
+        var app = this;
+
         function refresh(){
-            //console.log(musicData())
+            //Only runs update if we are in the editor or play mode
+            if(app.state.editor || app.state.play) {
+                app.canvas.update(musicData());
+            }
             window.requestAnimationFrame(refresh);
         }
 

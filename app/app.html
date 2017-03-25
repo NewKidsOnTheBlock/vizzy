@@ -47,7 +47,7 @@
                     <div class="editor">
                         <div class="shape-selector">
                             <div class="create-container">
-                                <h4 class="agree-btn">Create Shape</h4>
+                                <h4 class="agree-btn" v-on:click="addShape">Create Shape</h4>
                             </div>
                             <div class="shape" v-for="(shape, i) in canvas.shapes" v-bind:class="{ selected: shape.isSelected }" v-on:click="selectShape(i)">
                                 <h3>{{shape.id}}</h3>
@@ -70,7 +70,11 @@
                                 </div>
                                 <div v-bind:style="{display: selectedShape.pos || 'none'}">
                                     <p>X-axis</p>
+                                    <input v-model.number="selectedShape.shape.position.minX"></input>
+                                    <input v-model.number="selectedShape.shape.position.maxX"></input>
                                     <p>Y-axis</p>
+                                    <input v-model.number="selectedShape.shape.position.minY"></input>
+                                    <input v-model.number="selectedShape.shape.position.maxY"></input>
                                 </div>
                                 <div class="orientation" v-on:click="toggleShapePanel('or')">
                                     <h6>orientation</h6>
@@ -83,7 +87,11 @@
                                 </div>
                                 <div v-bind:style="{display: selectedShape.siz || 'none'}">
                                     <p>Width</p>
+                                    <input v-model.number="selectedShape.shape.minWidth"></input>
+                                    <input v-model.number="selectedShape.shape.maxWidth"></input>
                                     <p>Height</p>
+                                    <input v-model.number="selectedShape.shape.minHeight" v-on:input="log(selectedShape.shape.minHeight)" number></input>
+                                    <input v-model.number="selectedShape.shape.maxHeight"></input>
                                 </div>
                                 <div class="color" v-on:click="toggleShapePanel('col')">
                                     <h6>color</h6>

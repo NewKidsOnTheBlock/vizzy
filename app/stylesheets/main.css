@@ -343,7 +343,7 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  -webkit-user-select: none;
+  user-select: none;
   padding-right: 15px;
 }
 .music-viewer-container .music-viewer .music .song .title p {
@@ -414,7 +414,7 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  -webkit-user-select: none;
+  user-select: none;
 }
 .music-bar .music-info .song-info p {
   display: -webkit-box;
@@ -422,7 +422,7 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  -webkit-user-select: none;
+  user-select: none;
 }
 .music-bar .music-info .song-info .album-img {
   height: 93px;
