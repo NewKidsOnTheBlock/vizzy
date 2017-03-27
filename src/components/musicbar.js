@@ -175,7 +175,10 @@ exports.musicBar = Vue.component('music-bar', {
             this.isPlaying = false;
         },
         prev: function() {
-            if(this.index === 0) {
+            if(this.library.length == 1 || (this.audio.currentTime / this.audio.duration) > 0.11){
+                this.audio.currentTime = 0;
+            }
+            else if(this.index === 0) {
                 this.index = this.library.length - 1;
             }
             else {
@@ -193,7 +196,10 @@ exports.musicBar = Vue.component('music-bar', {
             this.reset();
         },
         next: function() {
-            if(this.index === this.library.length - 1) {
+            if(this.library.length == 1 ){
+                this.audio.currentTime = 0;
+            }
+            else if(this.index === this.library.length - 1) {
                 this.index = 0;
             }
             else {
