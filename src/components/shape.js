@@ -4,10 +4,14 @@ exports.Shape = function(name, canvas, canvasScale) {
 	// public member variables
     this.id = name;
     this.position = {
-        minX: 30,
+     /* minX: 30,
         maxX: 50,
         minY: 30,
-        maxY: 50
+        maxY: 50 */
+        minX: 1000, //These initial values were better for testing on my machine with 
+        maxX: 1000, //the app at half size. Original values commented out above
+        minY: 500,
+        maxY: 500 
     };
     this.type = "square";
     this.color = "blue";
@@ -24,6 +28,7 @@ exports.Shape = function(name, canvas, canvasScale) {
     var y = 20;
     var height = 10;
     var width = 15;
+    var colorHex = "#0000ff";
     //Our d3 object
     var d3Obj = canvas.append('ellipse')
                     .attr('rx', this.minWidth)
@@ -33,7 +38,7 @@ exports.Shape = function(name, canvas, canvasScale) {
     //This helps us scale our shapes to our canvas size                
     var scale = canvasScale;
 
-    //Public functions
+    //Public functionsheight
     //This function is used to clear our d3object when the editor is exited, just in case
     this.cleard3 = function() {
         d3Obj = null;
@@ -62,13 +67,15 @@ exports.Shape = function(name, canvas, canvasScale) {
 
         updateSize(freq);
         updatePos(freq);
+        updateCol(freq);
 
         //Update our d3Obj if it is available
         if(d3Obj) {
             d3Obj.attr('rx', width)
                 .attr('ry', height)
                 .attr('cx', x)
-                .attr('cy', y);
+                .attr('cy', y)
+                .style('fill',colorHex);
         };
 
     }
@@ -83,6 +90,53 @@ exports.Shape = function(name, canvas, canvasScale) {
     var updatePos = function(data) {
         x = scale.x * (shape.position.minX + ((shape.position.maxX-shape.position.minX) * data));
         y = scale.y * (shape.position.minY + ((shape.position.maxY-shape.position.minY) * data));
+    }
+
+    //helper function for updateCol
+    function decimalToHexString(number){
+        if (number < 0){
+            number = 0xFFFFFFFF + number + 1;
+        }
+
+    return number.toString(16).toUpperCase();
+    }
+
+    //Function to update the color, default to frequency
+    var updateCol = function(data) {
+        bigData = data * 100000000;
+        littleData = bigData % 16777215;
+        
+        // can do something like this \/ to have more control over the colors
+       /* littleData = bigData % 225;
+
+        if(bigData > 50000000){
+             r = (littleData + 75) % 255;
+             g = (littleData*.3);
+             b = (littleData*.5);
+             rHex = decimalToHexString(r);
+             gHex = decimalToHexString(g);
+             bHex = decimalToHexString(b);
+        }
+        else if(bigData > 35000000){
+             b = (littleData + 75) % 255;
+             g = (littleData*.5);
+             r = (littleData*.3) ;
+             rHex = decimalToHexString(r);
+             gHex = decimalToHexString(g);
+             bHex = decimalToHexString(b);
+
+        }
+        else{
+             g = (littleData +75) % 255;
+             b = (littleData*.5);
+             r = (littleData*.3);
+             rHex = decimalToHexString(r);
+             gHex = decimalToHexString(g);
+             bHex = decimalToHexString(b);
+        }
+        colorHex = rHex + bHex + gHex;*/
+
+        colorHex = decimalToHexString(littleData);     
     }
 
 }
