@@ -14,7 +14,16 @@ exports.Shape = function(name, canvas, canvasScale) {
         maxY: 500 
     };
     this.type = "square";
-    this.color = "blue";
+    this.minColor = {
+        red: 255,
+        green: 0,
+        blue: 0
+    };
+    this.maxColor = {
+        red: 0,
+        green: 255,
+        blue: 0
+    }
     this.rotation = 0;
     this.minWidth = 15;
     this.maxWidth = 30;
@@ -29,6 +38,11 @@ exports.Shape = function(name, canvas, canvasScale) {
     var height = 10;
     var width = 15;
     var colorHex = "#0000ff";
+    var color = {
+        red: 255,
+        green: 0,
+        blue: 0
+    }
     //Our d3 object
     var d3Obj = canvas.append('ellipse')
                     .attr('rx', this.minWidth)
@@ -75,7 +89,7 @@ exports.Shape = function(name, canvas, canvasScale) {
                 .attr('ry', height)
                 .attr('cx', x)
                 .attr('cy', y)
-                .style('fill',colorHex);
+                .style('fill', d3.rgb(color.red, color.green, color.blue));
         };
 
     }
@@ -105,6 +119,12 @@ exports.Shape = function(name, canvas, canvasScale) {
     var updateCol = function(data) {
         bigData = data * 100000000;
         littleData = bigData % 16777215;
+
+        color.red = shape.minColor.red + ((shape.maxColor.red-shape.minColor.red) * data);
+        color.green = shape.minColor.green + ((shape.maxColor.green-shape.minColor.green) * data);
+        color.blue = shape.minColor.blue + ((shape.maxColor.blue-shape.minColor.blue) * data);
+        console.log(color);
+
         
         // can do something like this \/ to have more control over the colors
        /* littleData = bigData % 225;

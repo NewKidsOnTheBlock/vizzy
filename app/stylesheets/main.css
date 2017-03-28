@@ -93,6 +93,9 @@ body {
   overflow-x: hidden;
   position: relative;
 }
+ellipse {
+  transition: all .1s;
+}
 .vizzy {
   display: flex;
   flex: 1;
