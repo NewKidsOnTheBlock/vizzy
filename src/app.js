@@ -11,6 +11,7 @@ const Vue = require('vue/dist/vue.common.js');
 var musicBar = require('../src/components/musicbar').musicBar;
 
 var Canvas = require('../src/components/canvas.js').Canvas;
+var musicData = require('../src/components/musicdata.js').musicData;
 
 const app = new Vue({
     el: ".app",
@@ -91,7 +92,7 @@ const app = new Vue({
             var minBlue = this.selectedShape.shape.minColor.blue;
 
             this.selectedShape.minColor = "rgb(" + minRed + ',' + minGreen + ',' + minBlue + ')';
-            
+
             var maxRed = this.selectedShape.shape.maxColor.red;
             var maxGreen = this.selectedShape.shape.maxColor.green;
             var maxBlue = this.selectedShape.shape.maxColor.blue;
@@ -114,47 +115,16 @@ const app = new Vue({
         source.connect(analyze);
         analyze.connect(audioContext.destination);
 
-        function musicData(){
-            var buffer = analyze.frequencyBinCount;
-            var data = new Uint8Array(buffer);
-            analyze.getByteFrequencyData(data);
-
-            //find the dominant frequency bin
-            var max = 0;
-            var index = -1;
-            var average = 0.0;
-            var beat = 0;
-
-            for (var i = 0; i < data.length; i++){
-                if (data[i]>max){
-                    max = data[i];
-                    index = i;
-                }
-                average += data[i];
-            }
-            
-            //calculate the dominant frequency
-            var frequency = (index * 44100)/ 1024.0;
-            average = (average/data.length)/255.0;
-
-            if(frequency < 330 && average >= .2){
-                //subtract threshold from freq so lower frequencies rate higher
-                beat = (Math.abs(frequency-330.0) * average)/330.0; //divide total by maximum possible value (freq thresh)
-            }
-
-            return {
-                'frequency': data[0],
-                'loudness': average,
-                'beat': beat
-            };
-        }
+        var mdata = new musicData(audioContext, analyze);
 
         var app = this;
 
         function refresh(){
             //Only runs update if we are in the editor or play mode
             if(app.state.editor || app.state.player) {
-                app.canvas.update(musicData());
+                mdata.update().then((ret) => {
+                    app.canvas.update(ret);
+                });
             }
             window.requestAnimationFrame(refresh);
         }
