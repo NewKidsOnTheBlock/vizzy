@@ -35,7 +35,10 @@ const app = new Vue({
             minColor: null,
             maxColor: null
         },
-        minColorSelected: true
+        editor: {
+            editId: false,
+            minColorSelected: true
+        }
     },
     methods: {
         musicInitialize: function() {

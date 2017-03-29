@@ -77,10 +77,13 @@
                         <div class="shape-editor-container">
                             <div class="shape-editor" v-if="selectedShape.shape">
                                 <div class="name">
-                                    <h3>{{selectedShape.shape.id}}</h3>
+                                    <h4 v-if="!editor.editId">{{selectedShape.shape.id}}&ensp;<i v-on:click="editor.editId=true" class="fa fa-pencil" aria-hidden="true"></i></h4>
+                                    <div v-else>
+                                        <input type="text" v-model="selectedShape.shape.id" v-on:keyup.enter="editor.editId=false"></input><i v-on:click="editor.editId=false" class="fa fa-check-square" aria-hidden="true"></i>
+                                    </div>
                                 </div>
                                 <div class="position" v-on:click="toggleShapePanel('pos')">
-                                    <h6>position</h6>
+                                    <h6>position&ensp;<i v-if="!selectedShape.pos" class="fa fa-caret-right" aria-hidden="true"></i><i v-else class="fa fa-caret-down" aria-hidden="true"></i></h6>
                                 </div>
                                 <div class="shape-attribute" v-bind:style="{display: selectedShape.pos || 'none'}">
                                     <p>X-axis:</p>
@@ -93,7 +96,7 @@
                                     <input type="text" v-model.number="selectedShape.shape.position.maxY"></input>
                                 </div>
                                 <div class="orientation" v-on:click="toggleShapePanel('or')">
-                                    <h6>orientation</h6>
+                                    <h6>orientation&ensp;<i v-if="!selectedShape.or" class="fa fa-caret-right" aria-hidden="true"></i><i v-else class="fa fa-caret-down" aria-hidden="true"></i></h6>
                                 </div>
                                 <div class="shape-attribute" v-bind:style="{display: selectedShape.or || 'none'}">
                                     <p>Angle:</p>
@@ -102,7 +105,7 @@
                                     <input type="text" v-model.number="selectedShape.shape.maxAngle"></input>
                                 </div>
                                 <div class="size" v-on:click="toggleShapePanel('siz')">
-                                    <h6>size</h6>
+                                    <h6>size&ensp;<i v-if="!selectedShape.siz" class="fa fa-caret-right" aria-hidden="true"></i><i v-else class="fa fa-caret-down" aria-hidden="true"></i></h6>
                                 </div>
                                 <div class="shape-attribute" v-bind:style="{display: selectedShape.siz || 'none'}">
                                     <p>Width:</p>
@@ -115,26 +118,18 @@
                                     <input type="text" v-model.number="selectedShape.shape.maxHeight"></input>
                                 </div>
                                 <div class="color" v-on:click="toggleShapePanel('col')">
-                                    <h6>color</h6>
+                                    <h6>color&ensp;<i v-if="!selectedShape.col" class="fa fa-caret-right" aria-hidden="true"></i><i v-else class="fa fa-caret-down" aria-hidden="true"></i></h6>
                                 </div>
                                 <div class="shape-attribute" v-bind:style="{display: selectedShape.col || 'none'}">
                                     <p>Hue</p>
                                     <div class="colors">
-                                        <div class="color">
-                                            <div>
-                                                <div v-bind:class="{selected: minColorSelected}" v-bind:style="{backgroundColor: selectedShape.minColor}" v-on:click="minColorSelected=true">
-                                                </div>
-                                            </div>
+                                        <div class="color" v-bind:class="{selected: editor.minColorSelected}" v-bind:style="{backgroundColor: selectedShape.minColor}" v-on:click="editor.minColorSelected=true">
                                         </div>
                                         <i class="fa fa-arrows-h fa-2x" aria-hidden="true"></i>
-                                        <div class="color">
-                                            <div>
-                                                <div v-bind:class="{selected: !minColorSelected}" v-bind:style="{backgroundColor: selectedShape.maxColor}" v-on:click="minColorSelected=false">
-                                                </div>
-                                            </div>
+                                        <div class="color" v-bind:class="{selected: !editor.minColorSelected}" v-bind:style="{backgroundColor: selectedShape.maxColor}" v-on:click="editor.minColorSelected=false">
                                         </div>
                                     </div>
-                                    <div v-if="minColorSelected">
+                                    <div v-if="editor.minColorSelected">
                                         <div class="red">
                                             <input type="range" v-model.number="selectedShape.shape.minColor.red" min="0" max="255" v-on:change="setColor">
                                         </div>
