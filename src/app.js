@@ -29,7 +29,10 @@ const app = new Vue({
             or: null,
             siz: null,
             col: null,
-        }
+            minColor: null,
+            maxColor: null
+        },
+        minColorSelected: true
     },
     methods: {
         musicInitialize: function() {
@@ -64,6 +67,7 @@ const app = new Vue({
         },
         selectShape: function(index) {
             this.selectedShape.shape = this.canvas.shapes[index];
+            this.setColor();
             for (var i = 0; i < this.canvas.shapes.length; i++) {
                 this.canvas.shapes[i].isSelected = false;
             }
@@ -80,6 +84,21 @@ const app = new Vue({
         },
         addShape: function() {
             this.canvas.add();
+        },
+        setColor: function() {
+            var minRed = this.selectedShape.shape.minColor.red;
+            var minGreen = this.selectedShape.shape.minColor.green;
+            var minBlue = this.selectedShape.shape.minColor.blue;
+
+            this.selectedShape.minColor = "rgb(" + minRed + ',' + minGreen + ',' + minBlue + ')';
+            
+            var maxRed = this.selectedShape.shape.maxColor.red;
+            var maxGreen = this.selectedShape.shape.maxColor.green;
+            var maxBlue = this.selectedShape.shape.maxColor.blue;
+
+            this.selectedShape.maxColor = "rgb(" + maxRed + ',' + maxGreen + ',' + maxBlue + ')';
+
+            console.log(this.selectedShape.minColor);
         }
     },
     mounted: function() {
