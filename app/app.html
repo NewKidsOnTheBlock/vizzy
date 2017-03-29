@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Vizzy</title>
 
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="stylesheets/main.css" rel="stylesheet" type="text/css">
 
     <script src="helpers/context_menu.js"></script>
@@ -26,8 +27,8 @@
                             <div class="vizzy-picture">
                                 <div class="vizzy-options">
                                     <div class="vizzy-options-wrapper">
-                                        <h3 class="agree-btn" v-on:click="moveState('player')">play</h3>
-                                        <h3 class="edit-btn" v-on:click="moveState('editor')">edit</h3>
+                                        <h3 class="agree-btn" v-on:click="moveState('player')">play <i class="fa fa-play-circle" aria-hidden="true"></i></h3>
+                                        <h3 class="edit-btn" v-on:click="moveState('editor')">edit <i class="fa fa-pencil" aria-hidden="true"></i></h3>
                                     </div>
                                 </div>
                             </div>
@@ -53,7 +54,8 @@
                     <div class="editor-nav panel-shadow">
                         <div class="path">
                             <h3 v-on:click="moveState('home')">Home </h3>
-                            <h3>\Vizzy Name</h3>
+                            <i class="fa fa-caret-right blue" aria-hidden="true"></i>
+                            <h3> Vizzy Name</h3>
                         </div>
                     </div>
                     <div class="editor">
@@ -82,36 +84,78 @@
                                 </div>
                                 <div class="shape-attribute" v-bind:style="{display: selectedShape.pos || 'none'}">
                                     <p>X-axis:</p>
-                                    <input v-model.number="selectedShape.shape.position.minX"></input>
-                                    <input v-model.number="selectedShape.shape.position.maxX"></input>
+                                    <input type="text" v-model.number="selectedShape.shape.position.minX"></input>
+                                    <i class="fa fa-arrows-h" aria-hidden="true"></i>
+                                    <input type="text" v-model.number="selectedShape.shape.position.maxX"></input>
                                     <p>Y-axis:</p>
-                                    <input v-model.number="selectedShape.shape.position.minY"></input>
-                                    <input v-model.number="selectedShape.shape.position.maxY"></input>
+                                    <input type="text" v-model.number="selectedShape.shape.position.minY"></input>
+                                    <i class="fa fa-arrows-h" aria-hidden="true"></i>
+                                    <input type="text" v-model.number="selectedShape.shape.position.maxY"></input>
                                 </div>
                                 <div class="orientation" v-on:click="toggleShapePanel('or')">
                                     <h6>orientation</h6>
                                 </div>
                                 <div class="shape-attribute" v-bind:style="{display: selectedShape.or || 'none'}">
                                     <p>Angle:</p>
-                                    <input v-model.number="selectedShape.shape.minAngle"></input>
-                                    <input v-model.number="selectedShape.shape.maxAngle"></input>
+                                    <input type="text" v-model.number="selectedShape.shape.minAngle"></input>
+                                    <i class="fa fa-arrows-h" aria-hidden="true"></i>
+                                    <input type="text" v-model.number="selectedShape.shape.maxAngle"></input>
                                 </div>
                                 <div class="size" v-on:click="toggleShapePanel('siz')">
                                     <h6>size</h6>
                                 </div>
                                 <div class="shape-attribute" v-bind:style="{display: selectedShape.siz || 'none'}">
                                     <p>Width:</p>
-                                    <input v-model.number="selectedShape.shape.minWidth"></input>
-                                    <input v-model.number="selectedShape.shape.maxWidth"></input>
+                                    <input type="text" v-model.number="selectedShape.shape.minWidth"></input>
+                                    <i class="fa fa-arrows-h" aria-hidden="true"></i>
+                                    <input type="text" v-model.number="selectedShape.shape.maxWidth"></input>
                                     <p>Height:</p>
-                                    <input v-model.number="selectedShape.shape.minHeight" number></input>
-                                    <input v-model.number="selectedShape.shape.maxHeight"></input>
+                                    <input type="text" v-model.number="selectedShape.shape.minHeight" number></input>
+                                    <i class="fa fa-arrows-h" aria-hidden="true"></i>
+                                    <input type="text" v-model.number="selectedShape.shape.maxHeight"></input>
                                 </div>
                                 <div class="color" v-on:click="toggleShapePanel('col')">
                                     <h6>color</h6>
                                 </div>
                                 <div class="shape-attribute" v-bind:style="{display: selectedShape.col || 'none'}">
                                     <p>Hue</p>
+                                    <div class="colors">
+                                        <div class="color">
+                                            <div>
+                                                <div v-bind:class="{selected: minColorSelected}" v-bind:style="{backgroundColor: selectedShape.minColor}" v-on:click="minColorSelected=true">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <i class="fa fa-arrows-h fa-2x" aria-hidden="true"></i>
+                                        <div class="color">
+                                            <div>
+                                                <div v-bind:class="{selected: !minColorSelected}" v-bind:style="{backgroundColor: selectedShape.maxColor}" v-on:click="minColorSelected=false">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div v-if="minColorSelected">
+                                        <div class="red">
+                                            <input type="range" v-model.number="selectedShape.shape.minColor.red" min="0" max="255" v-on:change="setColor">
+                                        </div>
+                                        <div class="green">
+                                            <input class="green" type="range" v-model.number="selectedShape.shape.minColor.green" min="0" max="255" v-on:change="setColor">
+                                        </div>
+                                        <div class="blue">
+                                            <input class="blue" type="range" v-model.number="selectedShape.shape.minColor.blue" min="0" max="255" v-on:change="setColor">
+                                        </div>
+                                    </div>
+                                    <div v-else>
+                                        <div class="red">
+                                            <input type="range" v-model.number="selectedShape.shape.maxColor.red" min="0" max="255" v-on:change="setColor">
+                                        </div>
+                                        <div class="green">
+                                            <input class="green" type="range" v-model.number="selectedShape.shape.maxColor.green" min="0" max="255" v-on:change="setColor">
+                                        </div>
+                                        <div class="blue">
+                                            <input class="blue" type="range" v-model.number="selectedShape.shape.maxColor.blue" min="0" max="255" v-on:change="setColor">
+                                        </div>
+                                    </div>
                                     <p>Opacity</p>
                                     <p>Link To Attribute <input type="checkbox" id="myCheck"></p>                      
 

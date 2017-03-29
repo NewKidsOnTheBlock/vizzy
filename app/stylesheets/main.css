@@ -1,3 +1,6 @@
+.blue {
+  color: #2f52e0;
+}
 @font-face {
   font-family: 'OpenSans';
   src: url('fonts/OpenSans-Regular.ttf');
@@ -230,7 +233,7 @@ ellipse {
 .vizzy .editor .shape-selector {
   height: 100%;
   width: 200px;
-  border-right: solid #ced2d2 1px;
+  border-right: 1px solid #ced2d2;
   background-color: white;
   z-index: 2;
 }
@@ -241,14 +244,10 @@ ellipse {
   padding: 5px 15px;
 }
 .vizzy .editor .shape-selector .shape.selected {
-  border-bottom: 1px solid #ced2d2;
-  border-top: 1px solid #ced2d2;
   color: #f9cb40;
 }
 .vizzy .editor .shape-selector .shape:hover {
-  border-bottom: 1px solid #ced2d2;
-  border-top: 1px solid #ced2d2;
-  color: #f9cb40;
+  background-color: #efefef;
   cursor: pointer;
 }
 .vizzy .editor .canvas-container {
@@ -268,6 +267,39 @@ ellipse {
 .vizzy .editor .shape-editor-container .shape-editor .shape-attribute {
   background-color: #efefef;
 }
+.vizzy .editor .shape-editor-container .shape-editor .shape-attribute .colors {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.vizzy .editor .shape-editor-container .shape-editor .shape-attribute .colors i {
+  flex: 1;
+}
+.vizzy .editor .shape-editor-container .shape-editor .shape-attribute .colors .color {
+  display: flex;
+  height: 50px;
+  width: 50px;
+  position: relative;
+}
+.vizzy .editor .shape-editor-container .shape-editor .shape-attribute .colors .color > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 3px;
+}
+.vizzy .editor .shape-editor-container .shape-editor .shape-attribute .colors .color > div div {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+}
+.vizzy .editor .shape-editor-container .shape-editor .shape-attribute .colors .color > div div.selected {
+  border: 2px solid #2f52e0;
+}
 .vizzy .editor .shape-editor-container .shape-editor > div {
   padding: 15px;
   border-bottom: solid #ced2d2 1px;
@@ -278,7 +310,7 @@ ellipse {
 .vizzy .editor .shape-editor-container .shape-editor > div p:nth-child(1) {
   margin-top: 0;
 }
-.vizzy .editor .shape-editor-container .shape-editor > div input {
+.vizzy .editor .shape-editor-container .shape-editor > div input[type="text"] {
   border: 1px solid #ced2d2;
   border-radius: 3px;
   box-sizing: border-box;
@@ -289,7 +321,7 @@ ellipse {
   text-align: center;
   width: 40%;
 }
-.vizzy .editor .shape-editor-container .shape-editor > div input:focus {
+.vizzy .editor .shape-editor-container .shape-editor > div input[type="text"]:focus {
   outline: none;
   border: 1px solid #2f52e0;
 }
@@ -538,4 +570,36 @@ ellipse {
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;
   background-color: #2f52e0;
+}
+input[type=range] {
+  -webkit-appearance: none;
+  /* Hides the slider so that custom slider can be made */
+  width: 100%;
+  /* Specific width is required for Firefox. */
+  background: transparent;
+  /* Otherwise white in Chrome */
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background-color: #4c5b5c;
+  border-radius: 15px;
+  height: 15px;
+  width: 15px;
+  margin-top: -5px;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  background-color: #ced2d2;
+  height: 5px;
+}
+.red input[type=range]::-webkit-slider-thumb {
+  background-color: #ff715b;
+}
+.green input[type=range]::-webkit-slider-thumb {
+  background-color: #bced09;
+}
+.blue input[type=range]::-webkit-slider-thumb {
+  background-color: #2f52e0;
+}
+input[type=range]:focus {
+  outline: none;
 }
