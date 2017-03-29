@@ -69,7 +69,7 @@ const app = new Vue({
                     app.canvas.setDomCanvas(svg);
                 }
             },0);
-            
+
         },
         selectShape: function(index) {
             this.selectedShape.shape = this.canvas.shapes[index];
@@ -113,7 +113,7 @@ const app = new Vue({
         var audioContext = new (window.AudioContext || window.webkitAudioContext)();
         var source = audioContext.createMediaElementSource(document.getElementById('vizzy-audio'));
         var analyze = audioContext.createAnalyser();
-        analyze.fftsize=2048;
+        analyze.fftsize=1024;
         analyze.smoothingTimeConstant=.5; //smoothing time is important for vizualization
 
         //connect audio nodes
@@ -128,17 +128,30 @@ const app = new Vue({
             //find the dominant frequency bin
             var max = 0;
             var index = -1;
-            for (var i = 0; i < buffer; i++){
+            var average = 0.0;
+            var beat = 0;
+
+            for (var i = 0; i < data.length; i++){
                 if (data[i]>max){
                     max = data[i];
                     index = i;
                 }
+                average += data[i];
             }
+            
             //calculate the dominant frequency
-            var frequency = (index * 44100)/ 2048.0;
+            var frequency = (index * 44100)/ 1024.0;
+            average = (average/data.length)/255.0;
+
+            if(frequency < 330 && average >= .2){
+                //subtract threshold from freq so lower frequencies rate higher
+                beat = (Math.abs(frequency-330.0) * average)/330.0; //divide total by maximum possible value (freq thresh)
+            }
 
             return {
-                'frequency': data[0]
+                'frequency': data[0],
+                'loudness': average,
+                'beat': beat
             };
         }
 
