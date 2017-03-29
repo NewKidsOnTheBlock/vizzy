@@ -26,7 +26,7 @@
                             <div class="vizzy-picture">
                                 <div class="vizzy-options">
                                     <div class="vizzy-options-wrapper">
-                                        <h3 class="agree-btn">play</h3>
+                                        <h3 class="agree-btn" v-on:click="moveState('player')">play</h3>
                                         <h3 class="edit-btn" v-on:click="moveState('editor')">edit</h3>
                                     </div>
                                 </div>
@@ -34,6 +34,18 @@
                             <h2>Vizzy</h2>
                         </div>
                     </div>
+                </div>
+            </transition>
+            <transition name="slide">
+                <div v-if="state.player" class="player">
+                    <div class="canvas-container">
+                        <div class="canvas">
+                            <div class="stretchVG">
+                                <svg id="svg" class="vizzy-svg"></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 class="edit-btn" v-on:click="moveState('home')">Go back</h3>
                 </div>
             </transition>
             <transition name="slide">
@@ -47,7 +59,7 @@
                     <div class="editor">
                         <div class="shape-selector">
                             <div class="create-container">
-                                <h4 class="agree-btn" v-on:click="addShape">Create Shape</h4>
+                                <h4 class="edit-btn" v-on:click="addShape">Create Shape</h4>
                             </div>
                             <div class="shape" v-for="(shape, i) in canvas.shapes" v-bind:class="{ selected: shape.isSelected }" v-on:click="selectShape(i)">
                                 <h3>{{shape.id}}</h3>
@@ -68,35 +80,37 @@
                                 <div class="position" v-on:click="toggleShapePanel('pos')">
                                     <h6>position</h6>
                                 </div>
-                                <div v-bind:style="{display: selectedShape.pos || 'none'}">
-                                    <p>X-axis</p>
+                                <div class="shape-attribute" v-bind:style="{display: selectedShape.pos || 'none'}">
+                                    <p>X-axis:</p>
                                     <input v-model.number="selectedShape.shape.position.minX"></input>
                                     <input v-model.number="selectedShape.shape.position.maxX"></input>
-                                    <p>Y-axis</p>
+                                    <p>Y-axis:</p>
                                     <input v-model.number="selectedShape.shape.position.minY"></input>
                                     <input v-model.number="selectedShape.shape.position.maxY"></input>
                                 </div>
                                 <div class="orientation" v-on:click="toggleShapePanel('or')">
                                     <h6>orientation</h6>
                                 </div>
-                                <div v-bind:style="{display: selectedShape.or || 'none'}">
-                                    <p>Rotation</p>
+                                <div class="shape-attribute" v-bind:style="{display: selectedShape.or || 'none'}">
+                                    <p>Angle:</p>
+                                    <input v-model.number="selectedShape.shape.minAngle"></input>
+                                    <input v-model.number="selectedShape.shape.maxAngle"></input>
                                 </div>
                                 <div class="size" v-on:click="toggleShapePanel('siz')">
                                     <h6>size</h6>
                                 </div>
-                                <div v-bind:style="{display: selectedShape.siz || 'none'}">
-                                    <p>Width</p>
+                                <div class="shape-attribute" v-bind:style="{display: selectedShape.siz || 'none'}">
+                                    <p>Width:</p>
                                     <input v-model.number="selectedShape.shape.minWidth"></input>
                                     <input v-model.number="selectedShape.shape.maxWidth"></input>
-                                    <p>Height</p>
-                                    <input v-model.number="selectedShape.shape.minHeight" v-on:input="log(selectedShape.shape.minHeight)" number></input>
+                                    <p>Height:</p>
+                                    <input v-model.number="selectedShape.shape.minHeight" number></input>
                                     <input v-model.number="selectedShape.shape.maxHeight"></input>
                                 </div>
                                 <div class="color" v-on:click="toggleShapePanel('col')">
                                     <h6>color</h6>
                                 </div>
-                                <div v-bind:style="{display: selectedShape.col || 'none'}">
+                                <div class="shape-attribute" v-bind:style="{display: selectedShape.col || 'none'}">
                                     <p>Hue</p>
                                     <p>Opacity</p>
                                     <p>Link To Attribute <input type="checkbox" id="myCheck"></p>                      

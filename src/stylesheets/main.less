@@ -97,13 +97,36 @@ ellipse {
 		}
 	}
 
+	.player {
+		display: flex;
+		overflow: hidden;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+
+		&:hover {
+			.edit-btn {
+				display: block;
+			}
+		}
+
+		.edit-btn {
+			display: none;
+			position: fixed;
+			top: 20px;
+			left: 20px;
+		}
+	}
+
 	.editor-container {
 		display: flex;
 		flex-direction: column;
 		width: 100%;
 
 		.editor-nav {
-			background-color: @vizzy-blue;
+			background-color: white;
+			border-bottom: 1px solid @vizzy-lightBlack;
 			padding: 15px;
 			position: relative;
 			z-index: 50;
@@ -111,7 +134,7 @@ ellipse {
 			.path {
 				h3 {
 					display: inline-block;
-					color: white;
+					color: @vizzy-blue;
 				}
 
 				h3:hover {
@@ -127,6 +150,7 @@ ellipse {
 		justify-content: center;
 		align-items: center;
 		flex-direction: row;
+		width: 100%;
 
 		.canvas {
 			background-color: white;
@@ -177,13 +201,15 @@ ellipse {
 			}
 
 			.shape.selected {
-				background-color: @vizzy-green;
-				color: white;
+				border-bottom: 1px solid @vizzy-lightBlack;
+				border-top: 1px solid @vizzy-lightBlack;
+				color: @vizzy-yellow;
 			}
 
 			.shape:hover {
-				background-color: @vizzy-green;
-				color: white;
+				border-bottom: 1px solid @vizzy-lightBlack;
+				border-top: 1px solid @vizzy-lightBlack;
+				color: @vizzy-yellow;
 				cursor: pointer;
 			}
 		}
@@ -204,9 +230,38 @@ ellipse {
 			overflow: auto;
 
 			.shape-editor {
+				.shape-attribute {
+					background-color: #efefef;
+				}
+
 				> div {
 					padding: 15px;
 					border-bottom: solid @vizzy-lightBlack 1px;
+
+					p {
+						margin: 10px 0;
+
+						&:nth-child(1) {
+							margin-top: 0;
+						}
+					}
+
+					input {
+						border: 1px solid @vizzy-lightBlack;
+						border-radius: 3px;
+						box-sizing: border-box;
+						display: inline-block;
+						font-family: 'OpenSans';
+						font-size: 18px;
+						padding: 5px;
+						text-align: center;
+						width: 40%;
+
+						&:focus {
+							outline: none;
+							border: 1px solid @vizzy-blue;
+						}
+					}
 				}
 
 				>div:hover {

@@ -156,20 +156,38 @@ ellipse {
 .vizzy .home .vizzies .vizzy-container .vizzy-picture:hover .vizzy-options {
   visibility: visible;
 }
+.vizzy .player {
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.vizzy .player:hover .edit-btn {
+  display: block;
+}
+.vizzy .player .edit-btn {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+}
 .vizzy .editor-container {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 .vizzy .editor-container .editor-nav {
-  background-color: #2f52e0;
+  background-color: white;
+  border-bottom: 1px solid #ced2d2;
   padding: 15px;
   position: relative;
   z-index: 50;
 }
 .vizzy .editor-container .editor-nav .path h3 {
   display: inline-block;
-  color: white;
+  color: #2f52e0;
 }
 .vizzy .editor-container .editor-nav .path h3:hover {
   cursor: pointer;
@@ -180,6 +198,7 @@ ellipse {
   justify-content: center;
   align-items: center;
   flex-direction: row;
+  width: 100%;
 }
 .vizzy .canvas-container .canvas {
   background-color: white;
@@ -222,12 +241,14 @@ ellipse {
   padding: 5px 15px;
 }
 .vizzy .editor .shape-selector .shape.selected {
-  background-color: #bced09;
-  color: white;
+  border-bottom: 1px solid #ced2d2;
+  border-top: 1px solid #ced2d2;
+  color: #f9cb40;
 }
 .vizzy .editor .shape-selector .shape:hover {
-  background-color: #bced09;
-  color: white;
+  border-bottom: 1px solid #ced2d2;
+  border-top: 1px solid #ced2d2;
+  color: #f9cb40;
   cursor: pointer;
 }
 .vizzy .editor .canvas-container {
@@ -244,9 +265,33 @@ ellipse {
   z-index: 2;
   overflow: auto;
 }
+.vizzy .editor .shape-editor-container .shape-editor .shape-attribute {
+  background-color: #efefef;
+}
 .vizzy .editor .shape-editor-container .shape-editor > div {
   padding: 15px;
   border-bottom: solid #ced2d2 1px;
+}
+.vizzy .editor .shape-editor-container .shape-editor > div p {
+  margin: 10px 0;
+}
+.vizzy .editor .shape-editor-container .shape-editor > div p:nth-child(1) {
+  margin-top: 0;
+}
+.vizzy .editor .shape-editor-container .shape-editor > div input {
+  border: 1px solid #ced2d2;
+  border-radius: 3px;
+  box-sizing: border-box;
+  display: inline-block;
+  font-family: 'OpenSans';
+  font-size: 18px;
+  padding: 5px;
+  text-align: center;
+  width: 40%;
+}
+.vizzy .editor .shape-editor-container .shape-editor > div input:focus {
+  outline: none;
+  border: 1px solid #2f52e0;
 }
 .vizzy .editor .shape-editor-container .shape-editor > div:hover {
   cursor: pointer;

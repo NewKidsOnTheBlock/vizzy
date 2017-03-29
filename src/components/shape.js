@@ -14,6 +14,8 @@ exports.Shape = function(name, canvas, canvasScale) {
         maxY: 500 
     };
     this.type = "square";
+    this.minAngle = 0;
+    this.maxAngle = 90;
     this.minColor = {
         red: 255,
         green: 0,
@@ -37,6 +39,7 @@ exports.Shape = function(name, canvas, canvasScale) {
     var y = 20;
     var height = 10;
     var width = 15;
+    var angle = 0;
     var colorHex = "#0000ff";
     var color = {
         red: 255,
@@ -70,6 +73,10 @@ exports.Shape = function(name, canvas, canvasScale) {
         }
     }
 
+    this.updateShapeScale = function(newScale) {
+        scale = newScale;
+    }
+
     //Our update function for our shapes
     this.update = function(data) {
         //assume data passed in is an integer from 0-100
@@ -81,6 +88,7 @@ exports.Shape = function(name, canvas, canvasScale) {
 
         updateSize(freq);
         updatePos(freq);
+        updateAng(freq);
         updateCol(freq);
 
         //Update our d3Obj if it is available
@@ -89,6 +97,7 @@ exports.Shape = function(name, canvas, canvasScale) {
                 .attr('ry', height)
                 .attr('cx', x)
                 .attr('cy', y)
+                .attr("transform", "rotate(" + angle + "," + x + "," + y + ")")
                 .style('fill', d3.rgb(color.red, color.green, color.blue));
         };
 
@@ -103,7 +112,7 @@ exports.Shape = function(name, canvas, canvasScale) {
     //Function to update the position, default to frequency
     var updatePos = function(data) {
         x = scale.x * (shape.position.minX + ((shape.position.maxX-shape.position.minX) * data));
-        y = scale.y * (shape.position.minY + ((shape.position.maxY-shape.position.minY) * data));
+        y =  scale.y * (1080 -(shape.position.minY + ((shape.position.maxY-shape.position.minY) * data)));
     }
 
     //helper function for updateCol
@@ -113,6 +122,10 @@ exports.Shape = function(name, canvas, canvasScale) {
         }
 
     return number.toString(16).toUpperCase();
+}
+
+    var updateAng = function(data) {
+        angle = shape.minAngle + ((shape.maxAngle-shape.minAngle) * data);
     }
 
     //Function to update the color, default to frequency
@@ -123,7 +136,6 @@ exports.Shape = function(name, canvas, canvasScale) {
         color.red = shape.minColor.red + ((shape.maxColor.red-shape.minColor.red) * data);
         color.green = shape.minColor.green + ((shape.maxColor.green-shape.minColor.green) * data);
         color.blue = shape.minColor.blue + ((shape.maxColor.blue-shape.minColor.blue) * data);
-        console.log(color);
 
         
         // can do something like this \/ to have more control over the colors

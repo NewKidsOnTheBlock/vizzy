@@ -24,6 +24,7 @@ const app = new Vue({
         state: {
             home: true,
             editor: false,
+            player: false
         },
         selectedShape: {
             shape: null,
@@ -38,8 +39,8 @@ const app = new Vue({
             this.musicInit = true;
         },
         moveState: function(page) {
-            if(this.state.editor) {
-                //If we are leaving our editor state clear our svgs
+            if(this.state.editor || this.state.player) {
+                //If we are leaving our editor/player state clear our svgs
                 this.canvas.clearShapeSvg();
             }
             for (var property in this.state) {
@@ -55,7 +56,7 @@ const app = new Vue({
             }
             var app = this;
             window.setTimeout(function() {
-                if(page === 'editor') {
+                if(page === 'editor' || page === 'player') {
                     var svg = d3.select('svg');
                     var svgCanvas = document.getElementById('svg');
                     app.canvas.resize(svgCanvas.clientWidth, svgCanvas.clientHeight);
@@ -123,7 +124,7 @@ const app = new Vue({
 
         function refresh(){
             //Only runs update if we are in the editor or play mode
-            if(app.state.editor || app.state.play) {
+            if(app.state.editor || app.state.player) {
                 app.canvas.update(musicData());
             }
             window.requestAnimationFrame(refresh);

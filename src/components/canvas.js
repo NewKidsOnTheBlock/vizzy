@@ -50,6 +50,10 @@ exports.Canvas = function() {
 
 		xSize = screenCanvasWidth/canvasWidth;
 		ySize = screenCanvasHeight/canvasHeight;
+
+		for(var i = 0; i < this.shapes.length; i++) {
+			this.shapes[i].updateShapeScale({x: xSize, y: ySize});
+		}
 	}
 
 	//Will go through array of shapes and place them on the canvas
