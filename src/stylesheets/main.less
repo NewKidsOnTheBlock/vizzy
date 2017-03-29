@@ -197,7 +197,7 @@ ellipse {
 			}
 
 			.shape {
-				padding: 5px 15px
+				padding: 5px 15px;
 			}
 
 			.shape.selected {
@@ -226,60 +226,25 @@ ellipse {
 			overflow: auto;
 
 			.shape-editor {
-				.shape-attribute {
-					background-color: #efefef;
+				.name {
 
-					.colors {
-						display: flex;
-						justify-content: center;
+					h4 {
 						align-items: center;
+						display: flex;
 						flex-direction: row;
-						margin-bottom: 20px;
-						text-align: center;
 
 						i {
-							flex: 1;
+							font-size: 12px;
 						}
+					}
 
-						.color {
-							display: flex;
-							height: 50px;
-							width: 50px;
-							position: relative;
-
-							> div {
-								position: absolute;
-								top: 0;
-								left: 0;
-								right: 0;
-								bottom: 0;
-								padding: 3px;
-
-								div {
-									box-sizing: border-box;
-									width: 100%;
-									height: 100%;
-
-									&.selected {
-										border: 2px solid @vizzy-blue;
-									}
-								}
-							}
-						}
+					input {
+						margin-right: 5px;
 					}
 				}
 
-				> div {
-					padding: 15px;
-					border-bottom: solid @vizzy-lightBlack 1px;
-
-					p {
-						margin: 10px 0;
-
-						&:nth-child(1) {
-							margin-top: 0;
-						}
-					}
+				.shape-attribute {
+					background-color: #efefef;
 
 					input[type="text"] {
 						border: 1px solid @vizzy-lightBlack;
@@ -295,6 +260,44 @@ ellipse {
 						&:focus {
 							outline: none;
 							border: 1px solid @vizzy-blue;
+						}
+					}
+
+					.colors {
+						display: flex;
+						justify-content: center;
+						align-items: center;
+						flex-direction: row;
+						margin-bottom: 20px;
+						text-align: center;
+
+						i {
+							flex: 1;
+						}
+
+						.color {
+							box-sizing: border-box;
+							display: flex;
+							height: 50px;
+							width: 50px;
+							position: relative;
+
+							&.selected {
+								border: 2px solid @vizzy-blue;
+							}
+						}
+					}
+				}
+
+				> div {
+					padding: 15px;
+					border-bottom: solid @vizzy-lightBlack 1px;
+
+					p {
+						margin: 10px 0;
+
+						&:nth-child(1) {
+							margin-top: 0;
 						}
 					}
 				}
@@ -594,6 +597,23 @@ ellipse {
 ::-webkit-scrollbar-thumb {
     border-radius: 5px;
     background-color: @vizzy-blue;
+}
+
+input[type="text"] {
+	border: 1px solid @vizzy-lightBlack;
+	border-radius: 3px;
+	box-sizing: border-box;
+	display: inline-block;
+	font-family: 'OpenSans';
+	font-size: 18px;
+	padding: 5px;
+	text-align: center;
+	width: 100%;
+
+	&:focus {
+		outline: none;
+		border: 1px solid @vizzy-blue;
+	}
 }
 
 input[type=range] {
