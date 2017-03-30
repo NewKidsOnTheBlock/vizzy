@@ -23,16 +23,25 @@
                         <h1 class="blue">Your Vizzies</h1>
                     </div>
                     <div class="vizzies">
-                        <div class="vizzy-container" v-for="vizzy in vizzies">
+                        <div class="vizzy-container">
+                            <div class="vizzy-picture">
+                                <div class="vizzy-options show">
+                                    <div class="vizzy-options-wrapper">
+                                        <h3 class="edit-btn" v-on:click="moveState('editor'); newVizzy();">Create a new vizzy <i class="fa fa-pencil" aria-hidden="true"></i></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="vizzy-container" v-for="(vizzy,i) in vizzies">
                             <div class="vizzy-picture">
                                 <div class="vizzy-options">
                                     <div class="vizzy-options-wrapper">
                                         <h3 class="agree-btn" v-on:click="moveState('player')">play <i class="fa fa-play-circle" aria-hidden="true"></i></h3>
-                                        <h3 class="edit-btn" v-on:click="moveState('editor')">edit <i class="fa fa-pencil" aria-hidden="true"></i></h3>
+                                        <h3 class="edit-btn" v-on:click="moveState('editor', i)">edit <i class="fa fa-pencil" aria-hidden="true"></i></h3>
                                     </div>
                                 </div>
                             </div>
-                            <h2>Vizzy</h2>
+                            <h2>{{vizzy.id}}</h2>
                         </div>
                     </div>
                 </div>
@@ -55,7 +64,7 @@
                         <div class="path">
                             <h3 v-on:click="moveState('home')">Home </h3>
                             <i class="fa fa-caret-right blue" aria-hidden="true"></i>
-                            <h3> Vizzy Name</h3>
+                            <h3>{{vizzy.id}}</h3>
                         </div>
                     </div>
                     <div class="editor">
@@ -63,7 +72,7 @@
                             <div class="create-container">
                                 <h4 class="edit-btn" v-on:click="addShape">Create Shape</h4>
                             </div>
-                            <div class="shape" v-for="(shape, i) in canvas.shapes" v-bind:class="{ selected: shape.isSelected }" v-on:click="selectShape(i)">
+                            <div class="shape" v-for="(shape, i) in vizzy.canvas.shapes" v-bind:class="{ selected: shape.isSelected }" v-on:click="selectShape(i)">
                                 <h3>{{shape.id}}</h3>
                             </div>
                         </div>
