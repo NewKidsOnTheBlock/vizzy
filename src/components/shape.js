@@ -4,10 +4,6 @@ exports.Shape = function(name, canvas, canvasScale) {
 	// public member variables
     this.id = name;
     this.position = {
-     /* minX: 30,
-        maxX: 50,
-        minY: 30,
-        maxY: 50 */
         minX: 1000, //These initial values were better for testing on my machine with 
         maxX: 1000, //the app at half size. Original values commented out above
         minY: 500,
@@ -21,6 +17,8 @@ exports.Shape = function(name, canvas, canvasScale) {
         green: 0,
         blue: 0
     };
+    this.minOpacity = 50;
+    this.maxOpacity = 100;
     this.maxColor = {
         red: 0,
         green: 255,
@@ -40,6 +38,7 @@ exports.Shape = function(name, canvas, canvasScale) {
     var height = 10;
     var width = 15;
     var angle = 0;
+    var opacity = .5;
     var colorHex = "#0000ff";
     var color = {
         red: 255,
@@ -59,6 +58,20 @@ exports.Shape = function(name, canvas, canvasScale) {
     //This function is used to clear our d3object when the editor is exited, just in case
     this.cleard3 = function() {
         d3Obj = null;
+    }
+
+    this.setProps = function() {
+        x = 20;
+        y = 20;
+        height = 10;
+        width = 15;
+        angle = 0;
+        colorHex = "#0000ff";
+        color = {
+            red: 255,
+            green: 0,
+            blue: 0
+        }
     }
 
     //This function is used to reappend our svgs, just in case they were deleted
@@ -98,15 +111,16 @@ exports.Shape = function(name, canvas, canvasScale) {
                 .attr('cx', x)
                 .attr('cy', y)
                 .attr("transform", "rotate(" + angle + "," + x + "," + y + ")")
-                .style('fill', d3.rgb(color.red, color.green, color.blue));
+                .style('fill', d3.rgb(color.red, color.green, color.blue))
+                .style('opacity', opacity);
         };
 
     }
 
     //Function to update the size, right now I'm defaulting to frequency which is being passed directly
     var updateSize = function(data) {
-        height = shape.minHeight + ((shape.maxHeight-shape.minHeight) * data);
-        width = shape.minWidth + ((shape.maxWidth-shape.minWidth) * data);
+        width = scale.y * (shape.minWidth + ((shape.maxWidth-shape.minWidth) * data));
+        height = scale.x * (shape.minHeight + ((shape.maxHeight-shape.minHeight) * data));
     }
 
     //Function to update the position, default to frequency
@@ -121,8 +135,8 @@ exports.Shape = function(name, canvas, canvasScale) {
             number = 0xFFFFFFFF + number + 1;
         }
 
-    return number.toString(16).toUpperCase();
-}
+        return number.toString(16).toUpperCase();
+    }
 
     var updateAng = function(data) {
         angle = shape.minAngle + ((shape.maxAngle-shape.minAngle) * data);
@@ -136,6 +150,8 @@ exports.Shape = function(name, canvas, canvasScale) {
         color.red = shape.minColor.red + ((shape.maxColor.red-shape.minColor.red) * data);
         color.green = shape.minColor.green + ((shape.maxColor.green-shape.minColor.green) * data);
         color.blue = shape.minColor.blue + ((shape.maxColor.blue-shape.minColor.blue) * data);
+
+        opacity = (shape.minOpacity + ((shape.maxOpacity-shape.minOpacity) * data))/100;
 
         
         // can do something like this \/ to have more control over the colors

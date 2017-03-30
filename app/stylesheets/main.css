@@ -1,6 +1,9 @@
 .blue {
   color: #2f52e0;
 }
+.yellow {
+  color: #f9cb40;
+}
 @font-face {
   font-family: 'OpenSans';
   src: url('fonts/OpenSans-Regular.ttf');
@@ -156,6 +159,9 @@ ellipse {
 .vizzy .home .vizzies .vizzy-container .vizzy-picture .vizzy-options .vizzy-options-wrapper h3 {
   margin: 0 5px;
 }
+.vizzy .home .vizzies .vizzy-container .vizzy-picture .vizzy-options.show {
+  visibility: visible;
+}
 .vizzy .home .vizzies .vizzy-container .vizzy-picture:hover .vizzy-options {
   visibility: visible;
 }
@@ -239,9 +245,11 @@ ellipse {
 }
 .vizzy .editor .shape-selector .create-container {
   padding: 15px 15px;
+  border-bottom: 1px solid #ced2d2;
 }
 .vizzy .editor .shape-selector .shape {
-  padding: 5px 15px;
+  padding: 10px 15px;
+  border-bottom: 1px solid #ced2d2;
 }
 .vizzy .editor .shape-selector .shape.selected {
   color: #f9cb40;
@@ -274,6 +282,7 @@ ellipse {
 }
 .vizzy .editor .shape-editor-container .shape-editor .name input {
   margin-right: 5px;
+  width: 80%;
 }
 .vizzy .editor .shape-editor-container .shape-editor .shape-attribute {
   background-color: #efefef;
