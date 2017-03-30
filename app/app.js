@@ -69,6 +69,7 @@ const app = new Vue({
             }
 
             if(this.state.editor) {
+                //Save the vizzy if we are moving away from the editor back home.
                 this.saveVizzy();
             }
 
@@ -85,16 +86,24 @@ const app = new Vue({
             var app = this;
             window.setTimeout(function() {
                 if(page === 'editor' || page === 'player') {
+                    //Reset our selected shape
+                    app.selectedShape = {
+                        shape: null,
+                        pos: null,
+                        or: null,
+                        siz: null,
+                        col: null,
+                        minColor: null,
+                        maxColor: null
+                    };
+                    //If we are loading a saved vizzy
                     if(index === 0 || index) {
-                        console.log('setting saved vizzy');
+                        //Set our vizzy
                         app.setVizzy(index);
                     }
+                    //If we are loading a new vizzy
                     else {
-                        console.log('new vizzy');
-                        var svg = d3.select('svg');
-                        var svgCanvas = document.getElementById('svg');
-                        app.vizzy.canvas.resize(svgCanvas.clientWidth, svgCanvas.clientHeight);
-                        app.vizzy.canvas.setDomCanvas(svg);
+                        app.setVizzy(null, true);
                     }
                 }
             },0);
@@ -104,34 +113,38 @@ const app = new Vue({
             this.vizzy.id = 'Placeholder' + this.vizzies.length;
         },
         saveVizzy: function() {
+            //Remove our existing file, and save the new one
             jetpack.remove(VIZZY_PATH + SLASH + this.vizzy.id + '.json');
-            console.log(this.vizzy);
             jetpack.write(VIZZY_PATH + SLASH + this.vizzy.id + '.json', this.vizzy);
+            //Update our vizzy list so it is reflected on the home page
             this.updateVizzyList();
-            console.log('vizzy saved');
         },
-        setVizzy: function(i) {
+        setVizzy: function(index, newVizzy) {
+            //Create a new canvas, and set it's ID to our selected Vizzies ID
             this.vizzy.canvas = new Canvas();
-            this.vizzy.id = this.vizzies[i].id;
-            console.log(this.vizzies[i]);
 
+            if (!newVizzy) {
+                this.vizzy.id = this.vizzies[index].id;
+            }
+
+            //Grabbing our on screen canvas, and resizing and setting the DOM of our canvas class
             var svg = d3.select('svg');
             var svgCanvas = document.getElementById('svg');
             app.vizzy.canvas.resize(svgCanvas.clientWidth, svgCanvas.clientHeight);
             app.vizzy.canvas.setDomCanvas(svg);
 
-            for(var j = 0; j < this.vizzies[i].canvas.shapes.length; j++) {
+            //Runs through all of the saved shapes and adds new shapes to our canvas. Also copies our saved shapes attributes to our new shapes
+            for(var i = 0; i < this.vizzies[index].canvas.shapes.length; i++) {
                 this.vizzy.canvas.add();
-                for (var property in this.vizzies[i].canvas.shapes[j]) {
-                    if (this.vizzies[i].canvas.shapes[j].hasOwnProperty(property)) {
-                        this.vizzy.canvas.shapes[j][property] = this.vizzies[i].canvas.shapes[j][property];
-                        console.log(property);
+                for (var property in this.vizzies[index].canvas.shapes[i]) {
+                    if (this.vizzies[index].canvas.shapes[i].hasOwnProperty(property)) {
+                        this.vizzy.canvas.shapes[i][property] = this.vizzies[index].canvas.shapes[i][property];
                     }
                 }
             }
-            console.log(this.vizzy.canvas.shapes);
         },
         updateVizzyList: function() {
+            //Finds our stored vizzies and sets them to our vizzies array
             var foundVizzies = jetpack.list(VIZZY_PATH);
             var parsedVizzies = [];
             if (foundVizzies.length === 0) {
