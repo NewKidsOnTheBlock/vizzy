@@ -119,8 +119,8 @@ exports.Shape = function(name, canvas, canvasScale) {
 
     //Function to update the size, right now I'm defaulting to frequency which is being passed directly
     var updateSize = function(data) {
-        height = shape.minHeight + ((shape.maxHeight-shape.minHeight) * data);
-        width = shape.minWidth + ((shape.maxWidth-shape.minWidth) * data);
+        width = scale.y * (shape.minWidth + ((shape.maxWidth-shape.minWidth) * data));
+        height = scale.x * (shape.minHeight + ((shape.maxHeight-shape.minHeight) * data));
     }
 
     //Function to update the position, default to frequency

@@ -25,6 +25,8 @@ var SLASH = (function() {
 
 var VIZZY_PATH = electronApp.getPath('userData') + SLASH + 'vizzies';
 
+console.log(VIZZY_PATH);
+
 const app = new Vue({
     el: ".app",
     data: {
@@ -104,7 +106,6 @@ const app = new Vue({
                     }
                 };
             },0);
-
         },
         newVizzy: function() {
             this.vizzy.id = 'Placeholder' + this.vizzies.length;

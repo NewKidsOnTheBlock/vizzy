@@ -245,9 +245,11 @@ ellipse {
 }
 .vizzy .editor .shape-selector .create-container {
   padding: 15px 15px;
+  border-bottom: 1px solid #ced2d2;
 }
 .vizzy .editor .shape-selector .shape {
-  padding: 5px 15px;
+  padding: 10px 15px;
+  border-bottom: 1px solid #ced2d2;
 }
 .vizzy .editor .shape-selector .shape.selected {
   color: #f9cb40;
@@ -280,6 +282,7 @@ ellipse {
 }
 .vizzy .editor .shape-editor-container .shape-editor .name input {
   margin-right: 5px;
+  width: 80%;
 }
 .vizzy .editor .shape-editor-container .shape-editor .shape-attribute {
   background-color: #efefef;

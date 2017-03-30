@@ -107,7 +107,6 @@ const app = new Vue({
                     }
                 }
             },0);
-
         },
         newVizzy: function() {
             this.vizzy.id = 'Placeholder' + this.vizzies.length;
