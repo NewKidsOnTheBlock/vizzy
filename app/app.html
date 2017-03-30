@@ -161,8 +161,8 @@
                                         </div>
                                     </div>
                                     <p>Opacity</p>
-                                    <p>Link To Attribute <input type="checkbox" id="myCheck"></p>                      
-
+                                    <input type="range" v-model.number="selectedShape.shape.minOpacity" min="0" max="100" v-on:change="setColor">  
+                                    <input type="range" v-model.number="selectedShape.shape.maxOpacity" min="0" max="100" v-on:change="setColor">    
                                 </div>
                             </div>
                         </div>
