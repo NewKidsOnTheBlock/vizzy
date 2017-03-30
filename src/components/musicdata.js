@@ -11,6 +11,20 @@ exports.musicData = function(ctx, analyzeNode) {
     source.connect(analyze);
     analyze.connect(audioContext.destination);
 
+    function averageFrequencySplits(freq) {
+        for(var property in freq) {
+            if(freq.hasOwnProperty(property)) {
+                var total = 0;
+                for(var i = 0; i < freq[property].length; i++) {
+                    total+=freq[property][i];
+                }
+                freq[property] = total/freq[property].length;
+            }
+        }
+
+        return freq;
+    }
+
     this.update = function(){
         return new Promise(function(resolve, reject){
             var buffer = analyze.frequencyBinCount;
@@ -22,13 +36,28 @@ exports.musicData = function(ctx, analyzeNode) {
             var index = -1;
             var average = 0.0;
             var beat = 0;
-
+            var split = Math.floor(data.length/5);
+            var frequencyBands = {
+                band1: 0
+            };
+            var freqCount = 0;
+            var splitCount = 1;
+            
             for (var i = 0; i < data.length; i++){
                 if (data[i]>max){
                     max = data[i];
                     index = i;
                 }
                 average += data[i];
+                freqCount++;
+                frequencyBands['band' + splitCount] += data[i];
+
+                if(i % split === 0 && splitCount < 5) {
+                    frequencyBands['band' + splitCount] = frequencyBands['band' + splitCount]/freqCount;
+                    splitCount++;
+                    frequencyBands['band' + splitCount] = [];
+                    freqCount = 0;
+                }
             }
 
             //calculate the dominant frequency
@@ -40,9 +69,10 @@ exports.musicData = function(ctx, analyzeNode) {
                 beat = (Math.abs(frequency-330.0) * average)/330.0; //divide total by maximum possible value (freq thresh)
             }
             resolve({
-                'frequency': data[0],
+                'frequency': frequency,
                 'loudness': average,
-                'beat': beat
+                'beat': beat,
+                bands: frequencyBands
             });
         });
 

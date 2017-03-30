@@ -28,6 +28,8 @@ var SLASH = (function() {
 
 var VIZZY_PATH = electronApp.getPath('userData') + SLASH + 'vizzies';
 
+console.log(VIZZY_PATH);
+
 const app = new Vue({
     el: ".app",
     data: {
@@ -201,18 +203,9 @@ const app = new Vue({
             this.vizzyDirectory = VIZZY_PATH;
         }
 
-        //initialize audio context & audio nodes
+        //initialize audio context and create musicdata object
         var audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        var source = audioContext.createMediaElementSource(document.getElementById('vizzy-audio'));
-        var analyze = audioContext.createAnalyser();
-        analyze.fftsize=1024;
-        analyze.smoothingTimeConstant=.5; //smoothing time is important for vizualization
-
-        //connect audio nodes
-        source.connect(analyze);
-        analyze.connect(audioContext.destination);
-
-        var mdata = new musicData(audioContext, analyze);
+        var mdata = new musicData(audioContext);
 
         var app = this;
 

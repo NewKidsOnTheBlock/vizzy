@@ -93,7 +93,7 @@ exports.Shape = function(name, canvas, canvasScale) {
     //Our update function for our shapes
     this.update = function(data) {
         //assume data passed in is an integer from 0-100
-        var freq = data.frequency;
+        var freq = data.bands.band1;
 
         //simple toy algorithm, sets size to percentage of max size
         // this.height = freq*this.max_height
