@@ -2,6 +2,14 @@ exports.musicData = function(ctx, analyzeNode) {
     //initialize audio context & audio nodes
     var audioContext = ctx;
     var analyze = analyzeNode;
+    var source = audioContext.createMediaElementSource(document.getElementById('vizzy-audio'));
+    var analyze = audioContext.createAnalyser();
+    analyze.fftsize=1024;
+    analyze.smoothingTimeConstant=.5; //smoothing time is important for vizualization
+
+    //connect audio nodes
+    source.connect(analyze);
+    analyze.connect(audioContext.destination);
 
     this.update = function(){
         return new Promise(function(resolve, reject){
