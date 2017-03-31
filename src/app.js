@@ -190,8 +190,6 @@ const app = new Vue({
             var maxBlue = this.selectedShape.shape.maxColor.blue;
 
             this.selectedShape.maxColor = "rgb(" + maxRed + ',' + maxGreen + ',' + maxBlue + ')';
-
-            console.log(this.selectedShape.minColor);
         }
     },
     mounted: function() {

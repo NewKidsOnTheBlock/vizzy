@@ -41,6 +41,8 @@ exports.Shape = function(name, canvas, canvasScale) {
     var yAttr = "cy";
     var x = 20;
     var y = 20;
+    var rotX = 20;
+    var rotY = 20;
     var widthAttr = 'rx';
     var heightAttr = 'ry';
     var height = 10;
@@ -138,11 +140,12 @@ exports.Shape = function(name, canvas, canvasScale) {
 
         //Update our d3Obj if it is available
         if(d3Obj) {
-            d3Obj.attr(widthAttr, width)
+            d3Obj.attr('transform-origin', 'center')
+                .attr(widthAttr, width)
                 .attr(heightAttr, height)
                 .attr(xAttr, x)
                 .attr(yAttr, y)
-                .attr("transform", "rotate(" + angle + "," + x + "," + y + ")")
+                .attr("transform", "rotate(" + angle + "," + rotX + "," + rotY + ")")
                 .style('fill', d3.rgb(color.red, color.green, color.blue))
                 .style('opacity', opacity);
         };
@@ -157,13 +160,11 @@ exports.Shape = function(name, canvas, canvasScale) {
     //Function to update the position, default to frequency
     var updatePos = function(data) {
         x = scale.x * (shape.position.minX + ((shape.position.maxX-shape.position.minX) * data));
-        y =  scale.y * (1080 -(shape.position.minY + ((shape.position.maxY-shape.position.minY) * data)));
+        y =  scale.y * (shape.position.minY + ((shape.position.maxY-shape.position.minY) * data));
 
         if (shape.type === 'rect') {
             x = x - width/2;
             y = y - height/2;
-
-            console.log('centering');
         }
     }
 
@@ -178,6 +179,15 @@ exports.Shape = function(name, canvas, canvasScale) {
 
     var updateAng = function(data) {
         angle = shape.minAngle + ((shape.maxAngle-shape.minAngle) * data);
+
+        if (shape.type === 'rect') {
+            rotX = x + width/2;
+            rotY = y + height/2;
+        }
+        else {
+            rotX = x;
+            rotY = y;
+        }
     }
 
     //Function to update the color, default to frequency
