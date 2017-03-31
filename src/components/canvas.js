@@ -68,10 +68,10 @@ exports.Canvas = function() {
 	var formatData = function(data) {
 		var percentageData = {};
 		percentageData.frequency = data.frequency/256;
-		percentageData.bands = {};
-		for(var property in data.bands) {
-			if (data.bands.hasOwnProperty(property)) {
-				percentageData.bands[property] = data.bands[property]/256;
+		percentageData.volume = data.volume;
+		for(var property in data) {
+			if (data.hasOwnProperty(property) && property.includes('band')) {
+				percentageData[property] = data[property]/256;
 			}
 		}
 		return percentageData;

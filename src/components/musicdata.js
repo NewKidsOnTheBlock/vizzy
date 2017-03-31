@@ -31,15 +31,14 @@ exports.musicData = function(ctx, analyzeNode) {
             var data = new Uint8Array(buffer);
             analyze.getByteFrequencyData(data);
 
+            var mdata = {band1: 0};
+
             //find the dominant frequency bin
             var max = 0;
             var index = -1;
             var average = 0.0;
             var beat = 0;
             var split = Math.floor(data.length/5);
-            var frequencyBands = {
-                band1: 0
-            };
             var freqCount = 0;
             var splitCount = 1;
             
@@ -50,15 +49,17 @@ exports.musicData = function(ctx, analyzeNode) {
                 }
                 average += data[i];
                 freqCount++;
-                frequencyBands['band' + splitCount] += data[i];
+                mdata['band' + splitCount] += data[i];
 
                 if(i % split === 0 && splitCount < 5) {
-                    frequencyBands['band' + splitCount] = frequencyBands['band' + splitCount]/freqCount;
+                    mdata['band' + splitCount] = mdata['band' + splitCount]/freqCount;
                     splitCount++;
-                    frequencyBands['band' + splitCount] = [];
+                    mdata['band' + splitCount] = 0;
                     freqCount = 0;
                 }
             }
+
+            mdata['band' + splitCount] = mdata['band' + splitCount]/freqCount;
 
             //calculate the dominant frequency
             var frequency = (index * 44100)/ 1024.0;
@@ -68,12 +69,11 @@ exports.musicData = function(ctx, analyzeNode) {
                 //subtract threshold from freq so lower frequencies rate higher
                 beat = (Math.abs(frequency-330.0) * average)/330.0; //divide total by maximum possible value (freq thresh)
             }
-            resolve({
-                'frequency': frequency,
-                'loudness': average,
-                'beat': beat,
-                bands: frequencyBands
-            });
+
+            mdata.frequency = frequency;
+            mdata.volume = average;
+            mdata.beat = beat;
+            resolve(mdata);
         });
 
     }

@@ -626,3 +626,24 @@ input[type=range]::-webkit-slider-runnable-track {
 input[type=range]:focus {
   outline: none;
 }
+select.vizzy-dropdown {
+  -webkit-appearance: none;
+  /*REMOVES DEFAULT CHROME & SAFARI STYLE*/
+  -moz-appearance: none;
+  border: 0 !important;
+  /*REMOVES BORDER*/
+  background-color: #f9cb40;
+  box-sizing: border-box;
+  color: #fff;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  font-family: 'Nunito';
+  font-size: 14px;
+  padding: 10px;
+  width: 90%;
+  cursor: pointer;
+  background: #f9cb40 url('../img/dropdown-carret.svg') no-repeat right center;
+}
+select.vizzy-dropdown.blue {
+  background: #2f52e0 url('../img/dropdown-carret.svg') no-repeat right center;
+}

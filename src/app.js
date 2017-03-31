@@ -45,6 +45,7 @@ const app = new Vue({
         },
         selectedShape: {
             shape: null,
+            typ: null,
             pos: null,
             or: null,
             siz: null,
@@ -88,6 +89,7 @@ const app = new Vue({
                     //Reset our selected shape
                     app.selectedShape = {
                         shape: null,
+                        typ: null,
                         pos: null,
                         or: null,
                         siz: null,
@@ -139,6 +141,7 @@ const app = new Vue({
                         this.vizzy.canvas.shapes[i][property] = this.vizzies[index].canvas.shapes[i][property];
                     }
                 }
+                this.vizzy.canvas.shapes[i].switchShapeType();
             }
         },
         updateVizzyList: function() {

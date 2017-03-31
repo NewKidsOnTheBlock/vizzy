@@ -95,6 +95,15 @@
                                         <input type="text" v-model="selectedShape.shape.id" v-on:keyup.enter="editor.editId=false"></input><i v-on:click="editor.editId=false" class="fa fa-check-square" aria-hidden="true"></i>
                                     </div>
                                 </div>
+                                <div class="position" v-on:click="toggleShapePanel('typ')">
+                                    <h6>shape type&ensp;<i v-if="!selectedShape.typ" class="fa fa-caret-right" aria-hidden="true"></i><i v-else class="fa fa-caret-down" aria-hidden="true"></i></h6>
+                                </div>
+                                <div class="shape-attribute" v-bind:style="{display: selectedShape.typ || 'none'}">
+                                    <select class="vizzy-dropdown blue" v-model="selectedShape.shape.type" v-on:change="selectedShape.shape.switchShapeType()">
+                                        <option value="ellipse">Ellipse</option>
+                                        <option value="rect">Rectangle</option>
+                                    </select> 
+                                </div>
                                 <div class="position" v-on:click="toggleShapePanel('pos')">
                                     <h6>position&ensp;<i v-if="!selectedShape.pos" class="fa fa-caret-right" aria-hidden="true"></i><i v-else class="fa fa-caret-down" aria-hidden="true"></i></h6>
                                 </div>
@@ -107,6 +116,16 @@
                                     <input type="text" v-model.number="selectedShape.shape.position.minY"></input>
                                     <i class="fa fa-arrows-h" aria-hidden="true"></i>
                                     <input type="text" v-model.number="selectedShape.shape.position.maxY"></input>
+                                    <p>Music Link:</p>
+                                    <select class="vizzy-dropdown" v-model="selectedShape.shape.positionLink">
+                                        <option value="band1">Freq. Band 1</option>
+                                        <option value="band2">Freq. Band 2</option>
+                                        <option value="band3">Freq. Band 3</option>
+                                        <option value="band4">Freq. Band 4</option>
+                                        <option value="band5">Freq. Band 5</option>
+                                        <option value="volume">Volume</option>
+                                        <option value="beat">Beat</option>
+                                    </select>
                                 </div>
                                 <div class="orientation" v-on:click="toggleShapePanel('or')">
                                     <h6>orientation&ensp;<i v-if="!selectedShape.or" class="fa fa-caret-right" aria-hidden="true"></i><i v-else class="fa fa-caret-down" aria-hidden="true"></i></h6>
@@ -116,6 +135,16 @@
                                     <input type="text" v-model.number="selectedShape.shape.minAngle"></input>
                                     <i class="fa fa-arrows-h" aria-hidden="true"></i>
                                     <input type="text" v-model.number="selectedShape.shape.maxAngle"></input>
+                                    <p>Music Link:</p>
+                                    <select class="vizzy-dropdown" v-model="selectedShape.shape.angleLink">
+                                        <option value="band1">Freq. Band 1</option>
+                                        <option value="band2">Freq. Band 2</option>
+                                        <option value="band3">Freq. Band 3</option>
+                                        <option value="band4">Freq. Band 4</option>
+                                        <option value="band5">Freq. Band 5</option>
+                                        <option value="volume">Volume</option>
+                                        <option value="beat">Beat</option>
+                                    </select>
                                 </div>
                                 <div class="size" v-on:click="toggleShapePanel('siz')">
                                     <h6>size&ensp;<i v-if="!selectedShape.siz" class="fa fa-caret-right" aria-hidden="true"></i><i v-else class="fa fa-caret-down" aria-hidden="true"></i></h6>
@@ -129,6 +158,16 @@
                                     <input type="text" v-model.number="selectedShape.shape.minHeight" number></input>
                                     <i class="fa fa-arrows-h" aria-hidden="true"></i>
                                     <input type="text" v-model.number="selectedShape.shape.maxHeight"></input>
+                                    <p>Music Link:</p>
+                                    <select class="vizzy-dropdown" v-model="selectedShape.shape.sizeLink">
+                                        <option value="band1">Freq. Band 1</option>
+                                        <option value="band2">Freq. Band 2</option>
+                                        <option value="band3">Freq. Band 3</option>
+                                        <option value="band4">Freq. Band 4</option>
+                                        <option value="band5">Freq. Band 5</option>
+                                        <option value="volume">Volume</option>
+                                        <option value="beat">Beat</option>
+                                    </select>
                                 </div>
                                 <div class="color" v-on:click="toggleShapePanel('col')">
                                     <h6>color&ensp;<i v-if="!selectedShape.col" class="fa fa-caret-right" aria-hidden="true"></i><i v-else class="fa fa-caret-down" aria-hidden="true"></i></h6>
@@ -166,7 +205,17 @@
                                     </div>
                                     <p>Opacity</p>
                                     <input type="range" v-model.number="selectedShape.shape.minOpacity" min="0" max="100" v-on:change="setColor">  
-                                    <input type="range" v-model.number="selectedShape.shape.maxOpacity" min="0" max="100" v-on:change="setColor">    
+                                    <input type="range" v-model.number="selectedShape.shape.maxOpacity" min="0" max="100" v-on:change="setColor">
+                                    <p>Music Link:</p>
+                                    <select class="vizzy-dropdown" v-model="selectedShape.shape.colorLink">
+                                        <option value="band1">Freq. Band 1</option>
+                                        <option value="band2">Freq. Band 2</option>
+                                        <option value="band3">Freq. Band 3</option>
+                                        <option value="band4">Freq. Band 4</option>
+                                        <option value="band5">Freq. Band 5</option>
+                                        <option value="volume">Volume</option>
+                                        <option value="beat">Beat</option>
+                                    </select>    
                                 </div>
                             </div>
                         </div>
