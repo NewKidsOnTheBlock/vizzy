@@ -106,7 +106,7 @@ exports.Shape = function(name, canvas, canvasScale) {
         console.log('switching to ' + this.type);
         d3Obj.remove();
         d3Obj = null;
-        if (this.type = 'rect') {
+        if (this.type === 'rect') {
             xAttr = 'x';
             yAttr = 'y';
             widthAttr = 'width';
