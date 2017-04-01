@@ -43,6 +43,13 @@ exports.Canvas = function() {
 		}
 	}
 
+	this.rearrangeShapes = function() {
+		for(var i = 0; i < this.shapes.length; i++) {
+			this.shapes[i].cleard3();
+			this.shapes[i].reappend();
+		}
+	}
+
 	//Will resize to canvas
 	this.resize = function(width, height){
 		screenCanvasWidth = width;
@@ -69,6 +76,8 @@ exports.Canvas = function() {
 		var percentageData = {};
 		percentageData.frequency = data.frequency/256;
 		percentageData.volume = data.volume;
+		percentageData.beat = data.beat/.5;
+		console.log(data.beat);
 		for(var property in data) {
 			if (data.hasOwnProperty(property) && property.includes('band')) {
 				percentageData[property] = data[property]/256;

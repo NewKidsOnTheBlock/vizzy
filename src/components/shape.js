@@ -68,6 +68,7 @@ exports.Shape = function(name, canvas, canvasScale) {
     //Public functionsheight
     //This function is used to clear our d3object when the editor is exited, just in case
     this.cleard3 = function() {
+        d3Obj.remove();
         d3Obj = null;
     }
 
@@ -87,7 +88,9 @@ exports.Shape = function(name, canvas, canvasScale) {
 
     //This function is used to reappend our svgs, just in case they were deleted
     this.reappend = function(canvas) {
-        d3canvas = canvas;
+        if(canvas) {
+            d3canvas = canvas;
+        }
         if(!d3Obj) {
             console.log('append');
             d3Obj = d3canvas.append(this.type)

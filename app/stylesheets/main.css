@@ -102,6 +102,9 @@ body {
 ellipse {
   transition: all .1s;
 }
+rect {
+  transition: all .1s;
+}
 .vizzy {
   display: flex;
   flex: 1;
@@ -248,10 +251,34 @@ ellipse {
   border-bottom: 1px solid #ced2d2;
 }
 .vizzy .editor .shape-selector .shape {
-  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: center;
   border-bottom: 1px solid #ced2d2;
 }
+.vizzy .editor .shape-selector .shape:hover .shape-move {
+  display: flex;
+}
+.vizzy .editor .shape-selector .shape .shape-name {
+  flex: 1;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+}
+.vizzy .editor .shape-selector .shape .shape-move {
+  color: #4c5b5c;
+  display: none;
+  flex-direction: column;
+  font-size: 16px;
+  line-height: 16px;
+  padding-right: 15px;
+}
+.vizzy .editor .shape-selector .shape .shape-move p:hover {
+  color: #f9cb40;
+}
 .vizzy .editor .shape-selector .shape.selected {
+  background-color: #efefef;
   color: #f9cb40;
 }
 .vizzy .editor .shape-selector .shape:hover {

@@ -27,6 +27,12 @@ var VIZZY_PATH = electronApp.getPath('userData') + SLASH + 'vizzies';
 
 console.log(VIZZY_PATH);
 
+Vue.swap = function(arr, x, y) {
+   var origin = arr[x]
+   arr.splice(x, 1, arr[y])
+   Vue.set(arr, y, origin)
+}
+
 const app = new Vue({
     el: ".app",
     data: {
@@ -165,6 +171,23 @@ const app = new Vue({
                 this.vizzy.canvas.shapes[i].isSelected = false;
             }
             this.vizzy.canvas.shapes[index].isSelected = true;
+        },
+        moveBack: function(index) {
+            this.selectedShape.shape = null;
+            if(index !== 0) {
+                Vue.swap(this.vizzy.canvas.shapes, index, index-1);
+                this.selectShape(index-1);
+            }
+            this.vizzy.canvas.rearrangeShapes();
+            
+        },
+        moveForward: function(index) {
+            this.selectedShape.shape = null;
+            if(index !== this.vizzy.canvas.shapes.length - 1) {
+                Vue.swap(this.vizzy.canvas.shapes, index, index+1);
+                this.selectShape(index+1);
+            }
+            this.vizzy.canvas.rearrangeShapes();
         },
         toggleShapePanel: function(type) {
 

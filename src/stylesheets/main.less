@@ -24,6 +24,10 @@ ellipse {
 	transition: all .1s;
 }
 
+rect {
+	transition: all .1s;
+}
+
 //Vizzy Editor Styles -------------------------------------------
 
 .vizzy {
@@ -202,11 +206,43 @@ ellipse {
 			}
 
 			.shape {
-				padding: 10px 15px;
+				display: flex;
+				align-items: center;
+				flex-direction: row;
+				justify-content: center;
 				border-bottom: 1px solid @vizzy-lightBlack;
+
+				&:hover {
+					.shape-move {
+						display: flex;
+					}
+				}
+
+				.shape-name {
+					flex: 1;
+					padding-top: 10px;
+					padding-bottom: 10px;
+					padding-left: 15px;
+				}
+
+				.shape-move {
+					color: @vizzy-black;
+					display: none;
+					flex-direction: column;
+					font-size: 16px;
+					line-height: 16px;
+					padding-right: 15px;
+
+					p {
+						&:hover {
+							color: @vizzy-yellow;
+						}
+					}
+				}
 			}
 
 			.shape.selected {
+				background-color: #efefef;
 				color: @vizzy-yellow;
 			}
 

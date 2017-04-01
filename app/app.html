@@ -76,8 +76,14 @@
                             <div class="create-container">
                                 <h4 class="edit-btn" v-on:click="addShape">Create Shape</h4>
                             </div>
-                            <div class="shape" v-for="(shape, i) in vizzy.canvas.shapes" v-bind:class="{ selected: shape.isSelected }" v-on:click="selectShape(i)">
-                                <p>{{shape.id}}</p>
+                            <div class="shape" v-for="(shape, i) in vizzy.canvas.shapes" v-bind:class="{selected: shape.isSelected}">
+                                <div class="shape-name" v-on:click="selectShape(i)">
+                                    <p>{{shape.id}}</p>
+                                </div>
+                                <div class="shape-move">
+                                    <p v-on:click="moveBack(i)"><i class="fa fa-caret-square-o-up" aria-hidden="true"></i></p>
+                                    <p v-on:click="moveForward(i)"><i class="fa fa-caret-square-o-down" aria-hidden="true"></i></p>
+                                </div>
                             </div>
                         </div>
                         <div class="canvas-container">
