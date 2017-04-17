@@ -70,12 +70,27 @@ p {
     background-color: @vizzy-green;
     border-radius: 5px;
     color: white;
+    display: inline-block;
     padding: 10px 15px;
     margin: 0;
 }
 
 .agree-btn:hover {
     background-color: darken(@vizzy-green, 5%);
+    cursor: pointer;
+}
+
+.disagree-btn {
+    background-color: @vizzy-red;
+    border-radius: 5px;
+    color: white;
+    display: inline-block;
+    padding: 10px 15px;
+    margin: 0;
+}
+
+.disagree-btn:hover {
+    background-color: darken(@vizzy-red, 5%);
     cursor: pointer;
 }
 

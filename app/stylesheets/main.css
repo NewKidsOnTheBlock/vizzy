@@ -61,11 +61,24 @@ p {
   background-color: #bced09;
   border-radius: 5px;
   color: white;
+  display: inline-block;
   padding: 10px 15px;
   margin: 0;
 }
 .agree-btn:hover {
   background-color: #a9d408;
+  cursor: pointer;
+}
+.disagree-btn {
+  background-color: #ff715b;
+  border-radius: 5px;
+  color: white;
+  display: inline-block;
+  padding: 10px 15px;
+  margin: 0;
+}
+.disagree-btn:hover {
+  background-color: #ff5b42;
   cursor: pointer;
 }
 .edit-btn {
@@ -80,6 +93,18 @@ p {
 }
 .small {
   padding: 0px 5px;
+}
+.mgn-btm-10 {
+  margin-bottom: 10px;
+}
+.mgn-rt-10 {
+  margin-right: 10px;
+}
+.mgn-lft-10 {
+  margin-left: 10px;
+}
+.mgn-top-10 {
+  margin-top: 10px;
 }
 .home {
   display: flex;
@@ -106,7 +131,7 @@ p {
   display: none;
 }
 .home .vizzies .vizzy-container .delete:hover {
-  color: #f9cb40;
+  color: #ff715b;
   cursor: pointer;
 }
 .home .vizzies .vizzy-container:hover .delete {
@@ -342,21 +367,6 @@ p {
 .editor .shape-editor-container .shape-editor > div:hover {
   cursor: pointer;
 }
-input[type="text"] {
-  border: 1px solid #ced2d2;
-  border-radius: 3px;
-  box-sizing: border-box;
-  display: inline-block;
-  font-family: 'OpenSans';
-  font-size: 18px;
-  padding: 5px;
-  text-align: center;
-  width: 100%;
-}
-input[type="text"]:focus {
-  outline: none;
-  border: 1px solid #2f52e0;
-}
 input[type=range] {
   -webkit-appearance: none;
   /* Hides the slider so that custom slider can be made */
@@ -412,6 +422,7 @@ select.vizzy-dropdown.blue {
 }
 .pop-up-container {
   align-items: center;
+  background-color: rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: center;
   position: absolute;
@@ -421,9 +432,16 @@ select.vizzy-dropdown.blue {
   bottom: 0;
   z-index: 200;
 }
-.pop-up-container .delete-vizzy {
+.pop-up-container > div {
   background-color: white;
   border-radius: 3px;
+  padding: 40px;
+}
+.pop-up-container .delete-vizzy {
+  text-align: right;
+}
+.pop-up-container .create-vizzy {
+  text-align: center;
 }
 .music-viewer-container {
   box-sizing: border-box;
@@ -664,6 +682,21 @@ rect {
   position: relative;
   width: 100%;
   overflow-x: hidden;
+}
+.vizzy input[type="text"] {
+  border: 1px solid #ced2d2;
+  border-radius: 3px;
+  box-sizing: border-box;
+  display: inline-block;
+  font-family: 'OpenSans';
+  font-size: 18px;
+  padding: 5px;
+  text-align: center;
+  width: 100%;
+}
+.vizzy input[type="text"]:focus {
+  outline: none;
+  border: 1px solid #2f52e0;
 }
 .panel-shadow {
   box-shadow: 0 0 10px -1px rgba(0, 0, 0, 0.75);

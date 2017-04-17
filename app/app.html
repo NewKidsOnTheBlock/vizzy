@@ -17,9 +17,17 @@
 
     <div class="app">
         <div v-if="musicInit" class="vizzy">
-            <div class="pop-up-container">
-                <div class="delete-vizzy">
-                    <h2>Are you sure you want to delete this Vizzy?</h2>
+            <div class="pop-up-container" v-if="deleting || creating">
+                <div class="delete-vizzy panel-shadow" v-if="deleting">
+                    <h2 class="mgn-btm-10">Are you sure you want to delete this Vizzy?</h2>
+                    <h4 class="agree-btn mgn-rt-10" v-on:click="deleteVizzy">yes.</h4>
+                    <h4 class="disagree-btn" v-on:click="deleting=false">no!</h4>
+                </div>
+                <div class="create-vizzy panel-shadow" v-if="creating">
+                    <h3 class="mgn-btm-10" >Name this Vizzy:</h3>
+                    <input class="mgn-btm-10" type="text" v-model="newVizzyName" placeholder="Vizzy Name"></input>
+                    <h4 class="agree-btn mgn-rt-10" v-on:click="newVizzy">create</h4>
+                    <h4 class="disagree-btn" v-on:click="creating=false">cancel</h4>
                 </div>
             </div>
             <transition name="slide">
@@ -32,7 +40,7 @@
                             <div class="vizzy-picture">
                                 <div class="vizzy-options show">
                                     <div class="vizzy-options-wrapper">
-                                        <h3 class="edit-btn" v-on:click="moveState('editor'); newVizzy();">Create a new vizzy <i class="fa fa-pencil" aria-hidden="true"></i></h3>
+                                        <h3 class="edit-btn" v-on:click="creating=true">Create a new vizzy <i class="fa fa-pencil" aria-hidden="true"></i></h3>
                                     </div>
                                 </div>
                             </div>
@@ -46,7 +54,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <h2>{{vizzy.id}} <span class="delete"><i class="fa fa-trash" aria-hidden="true"></i></span></h2>
+                            <h2>{{vizzy.id}} <span class="delete"><i class="fa fa-trash" aria-hidden="true" v-on:click="deleting = vizzy.id"></i></span></h2>
                         </div>
                     </div>
                 </div>

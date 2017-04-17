@@ -1,5 +1,6 @@
 .pop-up-container {
     align-items: center;
+    background-color: rgba(0,0,0, .1);
     display: flex;
     justify-content: center;
     position: absolute;
@@ -9,8 +10,17 @@
     bottom: 0;
     z-index: 200;
 
-    .delete-vizzy {
+    > div {
         background-color: white;
         border-radius: 3px;
+        padding: 40px;
+    }
+
+    .delete-vizzy {
+        text-align: right;
+    }
+
+    .create-vizzy {
+        text-align: center;
     }
 }

@@ -1,24 +1,22 @@
 (function () {'use strict';
 
-var os = require('os');
-var fs = require('fs');
-
-// Here is the starting point for your application code.
-// All stuff below is just to show you how it works. You can delete all of it.
-
-// Use new ES6 modules syntax for everything.
+//Grabbing our requirements from other files
 var remote = require('electron').remote; // native electron module
 var electronApp = require('electron').remote.app;
+var fs = require('fs');
 var jetpack = require('fs-jetpack');
 var d3 = require('d3');
 
-const Vue = require('vue/dist/vue.common.js');
+//Vue and its components
+var Vue = require('vue/dist/vue.common.js');
 var musicBar = require('../src/components/musicbar').musicBar;
 
+//Our three main classes
 var Canvas = require('../src/components/canvas.js').Canvas;
 var Shape = require('../src/components/shape.js').Shape;
 var musicData = require('../src/components/musicdata.js').musicData;
 
+//Creating a global variable for a slash to append to our paths
 var SLASH = (function() {
         if(process.platform === 'darwin' || process.platform === 'linux') {
             return '/';
@@ -26,17 +24,17 @@ var SLASH = (function() {
         else return '\\'
 })();
 
+//Path to our Vizzies
 var VIZZY_PATH = electronApp.getPath('userData') + SLASH + 'vizzies';
 
-console.log(VIZZY_PATH);
-
+//Creating a function for Vue for swapping places
 Vue.swap = function(arr, x, y) {
    var origin = arr[x];
    arr.splice(x, 1, arr[y]);
    Vue.set(arr, y, origin);
 };
 
-const app = new Vue({
+var app = new Vue({
     el: ".app",
     data: {
         directoryCheck: jetpack.exists(VIZZY_PATH),
@@ -65,7 +63,10 @@ const app = new Vue({
         editor: {
             editId: false,
             minColorSelected: true
-        }
+        },
+        deleting: false,
+        creating: false,
+        newVizzyName: ''
     },
     methods: {
         musicInitialize: function() {
@@ -119,7 +120,9 @@ const app = new Vue({
             },0);
         },
         newVizzy: function() {
-            this.vizzy.id = 'Placeholder' + this.vizzies.length;
+            this.vizzy.id = this.newVizzyName || 'Placeholder' + this.vizzies.length;
+            this.moveState('editor');
+            this.creating = false;
         },
         saveVizzy: function() {
             //Remove our existing file, and save the new one
@@ -127,6 +130,12 @@ const app = new Vue({
             jetpack.write(VIZZY_PATH + SLASH + this.vizzy.id + '.json', this.vizzy);
             //Update our vizzy list so it is reflected on the home page
             this.updateVizzyList();
+        },
+        deleteVizzy: function() {
+            //Remove our existing file, and save the new one
+            jetpack.remove(VIZZY_PATH + SLASH + this.deleting + '.json');
+            this.updateVizzyList();
+            this.deleting = false;
         },
         setVizzy: function(index, newVizzy) {
             //Create a new canvas, and set it's ID to our selected Vizzies ID

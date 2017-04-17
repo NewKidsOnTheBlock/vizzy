@@ -1,4 +1,5 @@
 @import 'fonts.less';
+@import 'helpers';
 @import 'components/vizzyHome';
 @import 'components/vizzyPlayer';
 @import 'components/vizzyEditor';
@@ -41,6 +42,23 @@ rect {
 	position: relative;
 	width: 100%;
 	overflow-x: hidden;
+
+	input[type="text"] {
+		border: 1px solid @vizzy-lightBlack;
+		border-radius: 3px;
+		box-sizing: border-box;
+		display: inline-block;
+		font-family: 'OpenSans';
+		font-size: 18px;
+		padding: 5px;
+		text-align: center;
+		width: 100%;
+
+		&:focus {
+			outline: none;
+			border: 1px solid @vizzy-blue;
+		}
+	}
 }
 
 //Helper styles ---------------------------------------------------

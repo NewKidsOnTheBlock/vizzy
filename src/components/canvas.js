@@ -77,7 +77,6 @@ exports.Canvas = function() {
 		percentageData.frequency = data.frequency/256;
 		percentageData.volume = data.volume;
 		percentageData.beat = data.beat/.5;
-		console.log(data.beat);
 		for(var property in data) {
 			if (data.hasOwnProperty(property) && property.includes('band')) {
 				percentageData[property] = data[property]/256;
