@@ -4,6 +4,8 @@ var electronApp = require('electron').remote.app
 var fs = require('fs');
 var jetpack = require('fs-jetpack');
 var d3 = require('d3');
+var SvgSaver = require('../src/components/svgToPng.js').SvgSaver;
+console.log(SvgSaver);
 
 //Vue and its components
 var Vue = require('vue/dist/vue.common.js');
@@ -76,10 +78,11 @@ var app = new Vue({
                 this.vizzy.canvas.clearShapeSvg();
             }
 
-            if(this.state.editor) {
-                //Save the vizzy if we are moving away from the editor back home.
-                this.saveVizzy();
-            }
+            // if(this.state.editor) {
+            //     //Save the vizzy if we are moving away from the editor back home.
+            //     this.saveVizzy();
+                
+            // }
 
             for (var property in this.state) {
                 if (this.state.hasOwnProperty(property)) {
@@ -114,6 +117,7 @@ var app = new Vue({
                     else {
                         app.setVizzy(null, true);
                     }
+
                 };
             },0);
         },
@@ -123,11 +127,18 @@ var app = new Vue({
             this.creating = false;
         },
         saveVizzy: function() {
-            //Remove our existing file, and save the new one
-            jetpack.remove(VIZZY_PATH + SLASH + this.vizzy.id + '.json');
-            jetpack.write(VIZZY_PATH + SLASH + this.vizzy.id + '.json', this.vizzy);
-            //Update our vizzy list so it is reflected on the home page
-            this.updateVizzyList();
+            var app = this;
+            //Create an image URI and run the callback function
+            SvgSaver.svgAsPngUri(document.getElementById("svg"), {}, function(uri) {
+                app.vizzy.pic = uri;
+                console.log(app.vizzy)
+                //Remove our existing file, and save the new one
+                jetpack.remove(VIZZY_PATH + SLASH + app.vizzy.id + '.json');
+                jetpack.write(VIZZY_PATH + SLASH + app.vizzy.id + '.json', app.vizzy);
+                //Update our vizzy list so it is reflected on the home page
+                app.updateVizzyList();
+                app.moveState('home');
+            });
         },
         deleteVizzy: function() {
             //Remove our existing file, and save the new one
@@ -173,6 +184,9 @@ var app = new Vue({
                 }
             }
             this.vizzies = parsedVizzies;
+        },
+        resolvePic: function(vizzy) {
+            return 'url(' + vizzy.pic || '' + ')';
         },
         selectShape: function(index) {
             this.selectedShape.shape = this.vizzy.canvas.shapes[index];

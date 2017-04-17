@@ -6,15 +6,15 @@
 }
 @font-face {
   font-family: 'OpenSans';
-  src: url('fonts/OpenSans-Regular.ttf');
+  src: url('../fonts/OpenSans-Regular.ttf');
 }
 @font-face {
   font-family: 'NunitoExtra';
-  src: url('fonts/Nunito-ExtraBold.ttf');
+  src: url('../fonts/Nunito-ExtraBold.ttf');
 }
 @font-face {
   font-family: 'NunitoBold';
-  src: url('fonts/Nunito-Bold.ttf');
+  src: url('../fonts/Nunito-Bold.ttf');
 }
 h1 {
   font-family: 'NunitoExtra';
@@ -138,6 +138,8 @@ p {
   display: inline-block;
 }
 .home .vizzies .vizzy-container .vizzy-picture {
+  background-position: center center;
+  background-size: cover;
   display: flex;
   flex-direction: column;
   height: 0;
