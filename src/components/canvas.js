@@ -29,7 +29,7 @@ exports.Canvas = function() {
 		//Creating a base ID for our shape
 		var idNum = this.shapes.length + 1;
 		//Adding it to ellipse for now, will depend on user input later
-		var shapeName = "Ellipse " + idNum;
+		var shapeName = "Shape " + idNum;
 		//Creating the new shape, hand it our dom canvas
 		var shape = new Shape(shapeName, domCanvas, {x: xSize, y: ySize});
 		//Pushing the shape to our shapes array

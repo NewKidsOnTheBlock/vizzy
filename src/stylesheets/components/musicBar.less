@@ -1,0 +1,144 @@
+@import 'musicViewer';
+
+//Music Bar Styles --------------------------------------------------------
+.music-bar-container {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	z-index: 99;
+
+	.music-select {
+		display: flex;
+		flex: 1;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+
+		p {
+			margin-bottom: 20px;
+			width: 40%;
+			text-align: center;
+		}
+	}
+}
+
+.music-bar {
+    display: flex;
+    height: 100px;
+    flex-direction: column;
+	position: relative;
+	z-index: 200;
+
+    .music-tracker {
+        background-color: #eee;
+        height: 7px;
+        width: 100%;
+
+		.drag-container {
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 999;
+			width: 100%;
+			height: 100%;
+		}
+
+		.inside-tracker {
+			background-color: @vizzy-yellow;
+			height: 100%;
+			position: relative;
+
+			.tracker-decorator {
+				background-color: @vizzy-yellow;
+				border-radius: 0px;
+				position: absolute;
+				height: 7px;
+				right: 0px;
+				top: 0px;
+				width: 7px;
+				transition: all .5s;
+			}
+		}
+    }
+
+	.music-tracker:hover .tracker-decorator {
+		border-radius: 15px;
+		height: 15px;
+		right: -8px;
+		top: -4px;
+		width: 15px;
+	}
+
+    .music-info {
+        display: flex;
+        flex: 1;
+        flex-direction: row;
+        align-items: center;
+		-webkit-user-select: none;
+
+        .song-info {
+            display: flex;
+            flex: 1;
+            flex-direction: row;
+            align-items: center;
+
+			h5 {
+				display: -webkit-box;
+				-webkit-line-clamp: 1;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				user-select: none;
+			}
+
+			p {
+				display: -webkit-box;
+				-webkit-line-clamp: 1;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				user-select: none;
+			}
+
+            .album-img {
+                height: 93px;
+                width: auto;
+            }
+
+            .info {
+                flex: 1;
+                margin-left: 20px;
+            }
+        }
+
+        .music-controls {
+			display: flex;
+            flex: 1;
+			justify-content: center;
+			align-items: center;
+			flex-direction: row;
+
+			svg {
+				display: inline-block;
+				fill: @vizzy-yellow;
+				height: 60px;
+				margin: 0px 5px;
+			}
+
+			.navigation {
+				height: 40px;
+			}
+
+			svg:hover circle {
+				fill: #dfb53e;
+			}
+        }
+
+        .music-options {
+            flex: 1;
+			display: flex;
+			justify-content: flex-end;
+			padding-right: 20px;
+        }
+    }
+}

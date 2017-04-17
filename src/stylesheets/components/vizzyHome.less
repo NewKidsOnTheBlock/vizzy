@@ -1,0 +1,80 @@
+.home {
+    display: flex;
+    padding: 20px;
+    overflow: auto;
+    flex-direction: column;
+    width: 100%;
+
+    .vizzy-select-options {
+        padding-left: 15px;
+    }
+
+    .vizzies {
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        .vizzy-container {
+            box-sizing: border-box;
+            padding: 15px;
+            width: 33%;
+
+            .delete {
+                display: none;
+
+                &:hover {
+                    color: @vizzy-yellow;
+                    cursor: pointer;
+                }
+            }
+
+            &:hover .delete {
+                display: inline-block;
+            }
+
+            .vizzy-picture {
+                display: flex;
+                flex-direction: column;
+                height: 0;
+                border: 1px solid @vizzy-lightBlack;
+                margin-bottom: 10px;
+                padding-bottom: 60%;
+                position: relative;
+                width: 100%;
+
+                .vizzy-options {
+                    display: block;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    visibility: hidden;
+
+                    .vizzy-options-wrapper {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        width: 100%;
+                        height: 100%;
+
+                        h3 {
+                            margin: 0 5px;
+                        }
+                    }
+
+                    &.show {
+                        visibility: visible;
+                    }
+                }
+            }
+
+            .vizzy-picture:hover {
+                .vizzy-options {
+                    visibility: visible;
+                }
+            }
+        }
+    }
+}

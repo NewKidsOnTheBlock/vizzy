@@ -81,59 +81,38 @@ p {
 .small {
   padding: 0px 5px;
 }
-* {
-  margin: 0;
-  padding: 0;
-}
-html,
-body {
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
-}
-.app {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
-  overflow-x: hidden;
-  position: relative;
-}
-ellipse {
-  transition: all .1s;
-}
-rect {
-  transition: all .1s;
-}
-.vizzy {
-  display: flex;
-  flex: 1;
-  position: relative;
-  width: 100%;
-  overflow-x: hidden;
-}
-.vizzy .home {
+.home {
   display: flex;
   padding: 20px;
   overflow: auto;
   flex-direction: column;
   width: 100%;
 }
-.vizzy .home .vizzy-select-options {
+.home .vizzy-select-options {
   padding-left: 15px;
 }
-.vizzy .home .vizzies {
+.home .vizzies {
   display: flex;
   width: 100%;
   flex-direction: row;
   flex-wrap: wrap;
 }
-.vizzy .home .vizzies .vizzy-container {
+.home .vizzies .vizzy-container {
   box-sizing: border-box;
   padding: 15px;
   width: 33%;
 }
-.vizzy .home .vizzies .vizzy-container .vizzy-picture {
+.home .vizzies .vizzy-container .delete {
+  display: none;
+}
+.home .vizzies .vizzy-container .delete:hover {
+  color: #f9cb40;
+  cursor: pointer;
+}
+.home .vizzies .vizzy-container:hover .delete {
+  display: inline-block;
+}
+.home .vizzies .vizzy-container .vizzy-picture {
   display: flex;
   flex-direction: column;
   height: 0;
@@ -143,7 +122,7 @@ rect {
   position: relative;
   width: 100%;
 }
-.vizzy .home .vizzies .vizzy-container .vizzy-picture .vizzy-options {
+.home .vizzies .vizzy-container .vizzy-picture .vizzy-options {
   display: block;
   position: absolute;
   top: 0;
@@ -152,23 +131,23 @@ rect {
   bottom: 0;
   visibility: hidden;
 }
-.vizzy .home .vizzies .vizzy-container .vizzy-picture .vizzy-options .vizzy-options-wrapper {
+.home .vizzies .vizzy-container .vizzy-picture .vizzy-options .vizzy-options-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
 }
-.vizzy .home .vizzies .vizzy-container .vizzy-picture .vizzy-options .vizzy-options-wrapper h3 {
+.home .vizzies .vizzy-container .vizzy-picture .vizzy-options .vizzy-options-wrapper h3 {
   margin: 0 5px;
 }
-.vizzy .home .vizzies .vizzy-container .vizzy-picture .vizzy-options.show {
+.home .vizzies .vizzy-container .vizzy-picture .vizzy-options.show {
   visibility: visible;
 }
-.vizzy .home .vizzies .vizzy-container .vizzy-picture:hover .vizzy-options {
+.home .vizzies .vizzy-container .vizzy-picture:hover .vizzy-options {
   visibility: visible;
 }
-.vizzy .player {
+.player {
   display: flex;
   overflow: hidden;
   flex-direction: column;
@@ -176,97 +155,97 @@ rect {
   justify-content: center;
   width: 100%;
 }
-.vizzy .player:hover .edit-btn {
+.player:hover .edit-btn {
   display: block;
 }
-.vizzy .player .edit-btn {
+.player .edit-btn {
   display: none;
   position: fixed;
   top: 20px;
   left: 20px;
 }
-.vizzy .editor-container {
+.editor-container {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
-.vizzy .editor-container .editor-nav {
+.editor-container .editor-nav {
   background-color: white;
   border-bottom: 1px solid #ced2d2;
   padding: 15px;
   position: relative;
   z-index: 50;
 }
-.vizzy .editor-container .editor-nav .path h3 {
+.editor-container .editor-nav .path h3 {
   display: inline-block;
   color: #2f52e0;
 }
-.vizzy .editor-container .editor-nav .path h3:hover {
+.editor-container .editor-nav .path h3:hover {
   cursor: pointer;
   text-decoration: underline;
 }
-.vizzy .canvas-container {
+.canvas-container {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: row;
   width: 100%;
 }
-.vizzy .canvas-container .canvas {
+.canvas-container .canvas {
   background-color: white;
   width: 100%;
   padding-bottom: 56.25%;
   position: relative;
   border: 1px solid #ced2d2;
 }
-.vizzy .canvas-container .canvas .stretchVG {
+.canvas-container .canvas .stretchVG {
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
 }
-.vizzy .canvas-container .canvas .stretchVG .vizzy-svg {
+.canvas-container .canvas .stretchVG .vizzy-svg {
   width: 100%;
   height: 100%;
 }
-.vizzy .editor {
+.editor {
   display: flex;
   flex: 1;
   flex-direction: row;
 }
-.vizzy .editor > div {
+.editor > div {
   box-sizing: border-box;
   position: relative;
 }
-.vizzy .editor .shape-selector {
+.editor .shape-selector {
   height: 100%;
   width: 200px;
   border-right: 1px solid #ced2d2;
   background-color: white;
   z-index: 2;
 }
-.vizzy .editor .shape-selector .create-container {
+.editor .shape-selector .create-container {
   padding: 15px 15px;
   border-bottom: 1px solid #ced2d2;
 }
-.vizzy .editor .shape-selector .shape {
+.editor .shape-selector .shape {
   display: flex;
   align-items: center;
   flex-direction: row;
   justify-content: center;
   border-bottom: 1px solid #ced2d2;
 }
-.vizzy .editor .shape-selector .shape:hover .shape-move {
+.editor .shape-selector .shape:hover .shape-move {
   display: flex;
 }
-.vizzy .editor .shape-selector .shape .shape-name {
+.editor .shape-selector .shape .shape-name {
   flex: 1;
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 15px;
 }
-.vizzy .editor .shape-selector .shape .shape-move {
+.editor .shape-selector .shape .shape-move {
   color: #4c5b5c;
   display: none;
   flex-direction: column;
@@ -274,24 +253,24 @@ rect {
   line-height: 16px;
   padding-right: 15px;
 }
-.vizzy .editor .shape-selector .shape .shape-move p:hover {
+.editor .shape-selector .shape .shape-move p:hover {
   color: #f9cb40;
 }
-.vizzy .editor .shape-selector .shape.selected {
+.editor .shape-selector .shape.selected {
   background-color: #efefef;
   color: #f9cb40;
 }
-.vizzy .editor .shape-selector .shape:hover {
+.editor .shape-selector .shape:hover {
   background-color: #efefef;
   cursor: pointer;
 }
-.vizzy .editor .canvas-container {
+.editor .canvas-container {
   flex: 1;
   background-color: #ced2d2;
   padding: 15px;
   z-index: 1;
 }
-.vizzy .editor .shape-editor-container {
+.editor .shape-editor-container {
   height: 100%;
   width: 200px;
   border-left: solid #ced2d2 1px;
@@ -299,22 +278,22 @@ rect {
   z-index: 2;
   overflow: auto;
 }
-.vizzy .editor .shape-editor-container .shape-editor .name h4 {
+.editor .shape-editor-container .shape-editor .name h4 {
   align-items: center;
   display: flex;
   flex-direction: row;
 }
-.vizzy .editor .shape-editor-container .shape-editor .name h4 i {
+.editor .shape-editor-container .shape-editor .name h4 i {
   font-size: 12px;
 }
-.vizzy .editor .shape-editor-container .shape-editor .name input {
+.editor .shape-editor-container .shape-editor .name input {
   margin-right: 5px;
   width: 80%;
 }
-.vizzy .editor .shape-editor-container .shape-editor .shape-attribute {
+.editor .shape-editor-container .shape-editor .shape-attribute {
   background-color: #efefef;
 }
-.vizzy .editor .shape-editor-container .shape-editor .shape-attribute input[type="text"] {
+.editor .shape-editor-container .shape-editor .shape-attribute input[type="text"] {
   border: 1px solid #ced2d2;
   border-radius: 3px;
   box-sizing: border-box;
@@ -325,11 +304,11 @@ rect {
   text-align: center;
   width: 40%;
 }
-.vizzy .editor .shape-editor-container .shape-editor .shape-attribute input[type="text"]:focus {
+.editor .shape-editor-container .shape-editor .shape-attribute input[type="text"]:focus {
   outline: none;
   border: 1px solid #2f52e0;
 }
-.vizzy .editor .shape-editor-container .shape-editor .shape-attribute .colors {
+.editor .shape-editor-container .shape-editor .shape-attribute .colors {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -337,49 +316,114 @@ rect {
   margin-bottom: 20px;
   text-align: center;
 }
-.vizzy .editor .shape-editor-container .shape-editor .shape-attribute .colors i {
+.editor .shape-editor-container .shape-editor .shape-attribute .colors i {
   flex: 1;
 }
-.vizzy .editor .shape-editor-container .shape-editor .shape-attribute .colors .color {
+.editor .shape-editor-container .shape-editor .shape-attribute .colors .color {
   box-sizing: border-box;
   display: flex;
   height: 50px;
   width: 50px;
   position: relative;
 }
-.vizzy .editor .shape-editor-container .shape-editor .shape-attribute .colors .color.selected {
+.editor .shape-editor-container .shape-editor .shape-attribute .colors .color.selected {
   border: 2px solid #2f52e0;
 }
-.vizzy .editor .shape-editor-container .shape-editor > div {
+.editor .shape-editor-container .shape-editor > div {
   padding: 15px;
   border-bottom: solid #ced2d2 1px;
 }
-.vizzy .editor .shape-editor-container .shape-editor > div p {
+.editor .shape-editor-container .shape-editor > div p {
   margin: 10px 0;
 }
-.vizzy .editor .shape-editor-container .shape-editor > div p:nth-child(1) {
+.editor .shape-editor-container .shape-editor > div p:nth-child(1) {
   margin-top: 0;
 }
-.vizzy .editor .shape-editor-container .shape-editor > div:hover {
+.editor .shape-editor-container .shape-editor > div:hover {
   cursor: pointer;
 }
-.music-bar-container {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  z-index: 99;
-}
-.music-bar-container .music-select {
-  display: flex;
-  flex: 1;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-.music-bar-container .music-select p {
-  margin-bottom: 20px;
-  width: 40%;
+input[type="text"] {
+  border: 1px solid #ced2d2;
+  border-radius: 3px;
+  box-sizing: border-box;
+  display: inline-block;
+  font-family: 'OpenSans';
+  font-size: 18px;
+  padding: 5px;
   text-align: center;
+  width: 100%;
+}
+input[type="text"]:focus {
+  outline: none;
+  border: 1px solid #2f52e0;
+}
+input[type=range] {
+  -webkit-appearance: none;
+  /* Hides the slider so that custom slider can be made */
+  width: 100%;
+  /* Specific width is required for Firefox. */
+  background: transparent;
+  /* Otherwise white in Chrome */
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background-color: #4c5b5c;
+  border-radius: 15px;
+  height: 15px;
+  width: 15px;
+  margin-top: -5px;
+}
+input[type=range]::-webkit-slider-runnable-track {
+  background-color: #ced2d2;
+  height: 5px;
+}
+.red input[type=range]::-webkit-slider-thumb {
+  background-color: #ff715b;
+}
+.green input[type=range]::-webkit-slider-thumb {
+  background-color: #bced09;
+}
+.blue input[type=range]::-webkit-slider-thumb {
+  background-color: #2f52e0;
+}
+input[type=range]:focus {
+  outline: none;
+}
+select.vizzy-dropdown {
+  -webkit-appearance: none;
+  /*REMOVES DEFAULT CHROME & SAFARI STYLE*/
+  -moz-appearance: none;
+  border: 0 !important;
+  /*REMOVES BORDER*/
+  background-color: #f9cb40;
+  box-sizing: border-box;
+  color: #fff;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  font-family: 'Nunito';
+  font-size: 14px;
+  padding: 10px;
+  width: 90%;
+  cursor: pointer;
+  background: #f9cb40 url('../img/dropdown-carret.svg') no-repeat right center;
+}
+select.vizzy-dropdown.blue {
+  background: #2f52e0 url('../img/dropdown-carret.svg') no-repeat right center;
+}
+.pop-up-container {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+}
+.pop-up-container .delete-vizzy {
+  background-color: white;
+  border-radius: 3px;
 }
 .music-viewer-container {
   box-sizing: border-box;
@@ -467,6 +511,24 @@ rect {
 .music-viewer-container .music-viewer .music .song:hover {
   background-color: #ced2d2;
   cursor: pointer;
+}
+.music-bar-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 99;
+}
+.music-bar-container .music-select {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.music-bar-container .music-select p {
+  margin-bottom: 20px;
+  width: 40%;
+  text-align: center;
 }
 .music-bar {
   display: flex;
@@ -572,6 +634,37 @@ rect {
   justify-content: flex-end;
   padding-right: 20px;
 }
+* {
+  margin: 0;
+  padding: 0;
+}
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+.app {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  overflow-x: hidden;
+  position: relative;
+}
+ellipse {
+  transition: all .1s;
+}
+rect {
+  transition: all .1s;
+}
+.vizzy {
+  display: flex;
+  flex: 1;
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
+}
 .panel-shadow {
   box-shadow: 0 0 10px -1px rgba(0, 0, 0, 0.75);
 }
@@ -605,72 +698,4 @@ rect {
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;
   background-color: #2f52e0;
-}
-input[type="text"] {
-  border: 1px solid #ced2d2;
-  border-radius: 3px;
-  box-sizing: border-box;
-  display: inline-block;
-  font-family: 'OpenSans';
-  font-size: 18px;
-  padding: 5px;
-  text-align: center;
-  width: 100%;
-}
-input[type="text"]:focus {
-  outline: none;
-  border: 1px solid #2f52e0;
-}
-input[type=range] {
-  -webkit-appearance: none;
-  /* Hides the slider so that custom slider can be made */
-  width: 100%;
-  /* Specific width is required for Firefox. */
-  background: transparent;
-  /* Otherwise white in Chrome */
-}
-input[type=range]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  background-color: #4c5b5c;
-  border-radius: 15px;
-  height: 15px;
-  width: 15px;
-  margin-top: -5px;
-}
-input[type=range]::-webkit-slider-runnable-track {
-  background-color: #ced2d2;
-  height: 5px;
-}
-.red input[type=range]::-webkit-slider-thumb {
-  background-color: #ff715b;
-}
-.green input[type=range]::-webkit-slider-thumb {
-  background-color: #bced09;
-}
-.blue input[type=range]::-webkit-slider-thumb {
-  background-color: #2f52e0;
-}
-input[type=range]:focus {
-  outline: none;
-}
-select.vizzy-dropdown {
-  -webkit-appearance: none;
-  /*REMOVES DEFAULT CHROME & SAFARI STYLE*/
-  -moz-appearance: none;
-  border: 0 !important;
-  /*REMOVES BORDER*/
-  background-color: #f9cb40;
-  box-sizing: border-box;
-  color: #fff;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  font-family: 'Nunito';
-  font-size: 14px;
-  padding: 10px;
-  width: 90%;
-  cursor: pointer;
-  background: #f9cb40 url('../img/dropdown-carret.svg') no-repeat right center;
-}
-select.vizzy-dropdown.blue {
-  background: #2f52e0 url('../img/dropdown-carret.svg') no-repeat right center;
 }

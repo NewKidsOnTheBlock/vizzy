@@ -17,6 +17,11 @@
 
     <div class="app">
         <div v-if="musicInit" class="vizzy">
+            <div class="pop-up-container">
+                <div class="delete-vizzy">
+                    <h2>Are you sure you want to delete this Vizzy?</h2>
+                </div>
+            </div>
             <transition name="slide">
                 <div v-if="state.home" class="home">
                     <div class="vizzy-select-options">
@@ -41,7 +46,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <h2>{{vizzy.id}}</h2>
+                            <h2>{{vizzy.id}} <span class="delete"><i class="fa fa-trash" aria-hidden="true"></i></span></h2>
                         </div>
                     </div>
                 </div>
