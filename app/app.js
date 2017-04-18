@@ -75,11 +75,6 @@ var app = new Vue({
             this.musicInit = true;
         },
         moveState: function(page, index) {
-            if(this.state.editor || this.state.player) {
-                //If we are leaving our editor/player state clear our svgs
-                this.vizzy.canvas.clearShapeSvg();
-            }
-
             // if(this.state.editor) {
             //     //Save the vizzy if we are moving away from the editor back home.
             //     this.saveVizzy();
@@ -157,10 +152,14 @@ var app = new Vue({
             }
 
             //Grabbing our on screen canvas, and resizing and setting the DOM of our canvas class
-            var svg = d3.select('svg');
-            var svgCanvas = document.getElementById('svg');
-            app.vizzy.canvas.resize(svgCanvas.clientWidth, svgCanvas.clientHeight);
-            app.vizzy.canvas.setDomCanvas(svg);
+            var canvas = document.getElementById('canvas');
+            console.log(canvas.clientWidth);
+            var width = canvas.clientWidth;
+            var height = canvas.clientHeight;
+            canvas.width = width;
+            canvas.height = height;
+            app.vizzy.canvas.resize(canvas.clientWidth, canvas.clientHeight);
+            app.vizzy.canvas.setDomCanvas(canvas);
 
             //Runs through all of the saved shapes and adds new shapes to our canvas. Also copies our saved shapes attributes to our new shapes
             for(var i = 0; i < this.vizzies[index].canvas.shapes.length; i++) {
@@ -260,6 +259,7 @@ var app = new Vue({
             //Only runs update if we are in the editor or play mode
             if(app.state.editor || app.state.player) {
                 mdata.update().then((ret) => {
+                    app.vizzy.canvas.clear();
                     app.vizzy.canvas.update(ret);
                 });
             }

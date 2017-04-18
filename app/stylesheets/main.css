@@ -225,14 +225,15 @@ p {
   position: relative;
   border: 1px solid #ced2d2;
 }
-.canvas-container .canvas .stretchVG {
+.canvas-container .canvas .stretch-canvas {
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
 }
-.canvas-container .canvas .stretchVG .vizzy-svg {
+.canvas-container .canvas .stretch-canvas .vizzy-canvas {
+  image-rendering: pixelated;
   width: 100%;
   height: 100%;
 }

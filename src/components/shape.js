@@ -1,6 +1,6 @@
 var d3 = require('d3');
 
-exports.Shape = function(name, canvas, canvasScale) {
+exports.Shape = function(name, ctx, canvasScale) {
 	// public member variables
     this.id = name;
     this.positionLink = "band1";
@@ -10,7 +10,7 @@ exports.Shape = function(name, canvas, canvasScale) {
         minY: 500,
         maxY: 500 
     };
-    this.type = "ellipse";
+    this.type = "rect";
     this.angleLink = "band1";
     this.minAngle = 0;
     this.maxAngle = 90;
@@ -37,40 +37,22 @@ exports.Shape = function(name, canvas, canvasScale) {
     // Private variables
     //Declaring a shape as this so our private functions can access our public variables
     var shape = this;
-    var xAttr = "cx";
-    var yAttr = "cy";
     var x = 20;
     var y = 20;
     var rotX = 20;
     var rotY = 20;
-    var widthAttr = 'rx';
-    var heightAttr = 'ry';
     var height = 10;
     var width = 15;
     var angle = 0;
     var opacity = .5;
-    var colorHex = "#0000ff";
     var color = {
         red: 255,
         green: 0,
         blue: 0
     }
-    var d3canvas = canvas;
-    //Our d3 object
-    var d3Obj = d3canvas.append(this.type)
-                    .attr(widthAttr, this.minWidth)
-                    .attr(heightAttr, this.minHeight)
-                    .attr(xAttr, this.position.x)
-                    .attr(yAttr, this.position.y);
+    var canvasCtx = ctx;
     //This helps us scale our shapes to our canvas size                
     var scale = canvasScale;
-
-    //Public functionsheight
-    //This function is used to clear our d3object when the editor is exited, just in case
-    this.cleard3 = function() {
-        d3Obj.remove();
-        d3Obj = null;
-    }
 
     this.setProps = function() {
         x = 20;
@@ -78,7 +60,6 @@ exports.Shape = function(name, canvas, canvasScale) {
         height = 10;
         width = 15;
         angle = 0;
-        colorHex = "#0000ff";
         color = {
             red: 255,
             green: 0,
@@ -89,15 +70,10 @@ exports.Shape = function(name, canvas, canvasScale) {
     //This function is used to reappend our svgs, just in case they were deleted
     this.reappend = function(canvas) {
         if(canvas) {
-            d3canvas = canvas;
+            canvasCtx = canvas;
         }
         if(!d3Obj) {
-            console.log('append');
-            d3Obj = d3canvas.append(this.type)
-                        .attr(widthAttr, this.minWidth)
-                        .attr(heightAttr, this.minHeight)
-                        .attr(xAttr, this.position.x)
-                        .attr(yAttr, this.position.y);
+
         }
     }
 
@@ -142,16 +118,8 @@ exports.Shape = function(name, canvas, canvasScale) {
         updateCol(data[this.colorLink]);
 
         //Update our d3Obj if it is available
-        if(d3Obj) {
-            d3Obj.attr('transform-origin', 'center')
-                .attr(widthAttr, width)
-                .attr(heightAttr, height)
-                .attr(xAttr, x)
-                .attr(yAttr, y)
-                .attr("transform", "rotate(" + angle + "," + rotX + "," + rotY + ")")
-                .style('fill', d3.rgb(color.red, color.green, color.blue))
-                .style('opacity', opacity);
-        };
+        canvasCtx.fillStyle = 'rgba(' + Math.floor(color.red) + ',' + Math.floor(color.green) + ',' + Math.floor(color.blue) + ',' + opacity + ')';
+        canvasCtx.fillRect(x, y, width, height);
     }
 
     //Function to update the size, right now I'm defaulting to frequency which is being passed directly
@@ -169,15 +137,6 @@ exports.Shape = function(name, canvas, canvasScale) {
             x = x - width/2;
             y = y - height/2;
         }
-    }
-
-    //helper function for updateCol
-    function decimalToHexString(number){
-        if (number < 0){
-            number = 0xFFFFFFFF + number + 1;
-        }
-
-        return number.toString(16).toUpperCase();
     }
 
     var updateAng = function(data) {
@@ -203,39 +162,6 @@ exports.Shape = function(name, canvas, canvasScale) {
         color.blue = shape.minColor.blue + ((shape.maxColor.blue-shape.minColor.blue) * data);
 
         opacity = (shape.minOpacity + ((shape.maxOpacity-shape.minOpacity) * data))/100;
-
-        
-        // can do something like this \/ to have more control over the colors
-       /* littleData = bigData % 225;
-
-        if(bigData > 50000000){
-             r = (littleData + 75) % 255;
-             g = (littleData*.3);
-             b = (littleData*.5);
-             rHex = decimalToHexString(r);
-             gHex = decimalToHexString(g);
-             bHex = decimalToHexString(b);
-        }
-        else if(bigData > 35000000){
-             b = (littleData + 75) % 255;
-             g = (littleData*.5);
-             r = (littleData*.3) ;
-             rHex = decimalToHexString(r);
-             gHex = decimalToHexString(g);
-             bHex = decimalToHexString(b);
-
-        }
-        else{
-             g = (littleData +75) % 255;
-             b = (littleData*.5);
-             r = (littleData*.3);
-             rHex = decimalToHexString(r);
-             gHex = decimalToHexString(g);
-             bHex = decimalToHexString(b);
-        }
-        colorHex = rHex + bHex + gHex;*/
-
-        colorHex = decimalToHexString(littleData);     
     }
 
 }

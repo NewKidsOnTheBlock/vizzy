@@ -7,6 +7,7 @@ exports.Canvas = function() {
 	//Private variables
 	//This stores a DOM element for our canvas
 	var domCanvas;
+	var ctx;
 	var canvasWidth = 1920; 
 	var canvasHeight = 1080;
 	//These variables are for the on screen width and height of the canvas
@@ -17,10 +18,11 @@ exports.Canvas = function() {
 	var ySize;
 
 	//Set our canvas to our svg element, also reappends our shape svgs to canvas if needed
-	this.setDomCanvas = function(svg) {
-		domCanvas = svg;
+	this.setDomCanvas = function(canvas) {
+		domCanvas = canvas;
+		ctx = domCanvas.getContext('2d');
 		for (var i = 0; i < this.shapes.length; i++) {
-			this.shapes[i].reappend(domCanvas);
+			this.shapes[i].reappend(ctx);
 		}
 	}
 
@@ -31,16 +33,9 @@ exports.Canvas = function() {
 		//Adding it to ellipse for now, will depend on user input later
 		var shapeName = "Shape " + idNum;
 		//Creating the new shape, hand it our dom canvas
-		var shape = new Shape(shapeName, domCanvas, {x: xSize, y: ySize});
+		var shape = new Shape(shapeName, ctx, {x: xSize, y: ySize});
 		//Pushing the shape to our shapes array
 		this.shapes.push(shape);
-	}
-
-	//Clears our shape svgs on editor exit
-	this.clearShapeSvg = function() {
-		for(var i = 0; i < this.shapes.length; i++) {
-			this.shapes[i].cleard3();
-		}
 	}
 
 	this.rearrangeShapes = function() {
@@ -61,6 +56,10 @@ exports.Canvas = function() {
 		for(var i = 0; i < this.shapes.length; i++) {
 			this.shapes[i].updateShapeScale({x: xSize, y: ySize});
 		}
+	}
+
+	this.clear = function() {
+		ctx.clearRect(0, 0, domCanvas.width, domCanvas.height);
 	}
 
 	//Will go through array of shapes and place them on the canvas
