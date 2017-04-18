@@ -3,10 +3,10 @@ var Shape = require('./shape.js').Shape;
 exports.Canvas = function() {
 	//Public variable
 	this.shapes = [];
+	this.domCanvas;
 
 	//Private variables
 	//This stores a DOM element for our canvas
-	var domCanvas;
 	var ctx;
 	var canvasWidth = 1920; 
 	var canvasHeight = 1080;
@@ -19,8 +19,8 @@ exports.Canvas = function() {
 
 	//Set our canvas to our svg element, also reappends our shape svgs to canvas if needed
 	this.setDomCanvas = function(canvas) {
-		domCanvas = canvas;
-		ctx = domCanvas.getContext('2d');
+		this.domCanvas = canvas;
+		ctx = this.domCanvas.getContext('2d');
 		for (var i = 0; i < this.shapes.length; i++) {
 			this.shapes[i].reappend(ctx);
 		}
@@ -59,7 +59,7 @@ exports.Canvas = function() {
 	}
 
 	this.clear = function() {
-		ctx.clearRect(0, 0, domCanvas.width, domCanvas.height);
+		ctx.clearRect(0, 0, this.domCanvas.width, this.domCanvas.height);
 	}
 
 	//Will go through array of shapes and place them on the canvas

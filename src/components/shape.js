@@ -10,7 +10,7 @@ exports.Shape = function(name, ctx, canvasScale) {
         minY: 500,
         maxY: 500 
     };
-    this.type = "rect";
+    this.type = "ellipse";
     this.angleLink = "band1";
     this.minAngle = 0;
     this.maxAngle = 90;
@@ -77,31 +77,12 @@ exports.Shape = function(name, ctx, canvasScale) {
         }
     }
 
-    this.updateShapeScale = function(newScale) {
-        scale = newScale;
+    this.switchShapeType = function() {
+        console.log(this.type);
     }
 
-    this.switchShapeType = function() {
-        console.log('switching to ' + this.type);
-        d3Obj.remove();
-        d3Obj = null;
-        if (this.type === 'rect') {
-            xAttr = 'x';
-            yAttr = 'y';
-            widthAttr = 'width';
-            heightAttr = 'height';
-        }
-        else {
-            xAttr = 'cx';
-            yAttr = 'cy';
-            widthAttr = 'rx';
-            heightAttr = 'ry';
-        }
-        d3Obj = d3canvas.append(this.type)
-                        .attr(widthAttr, this.minWidth)
-                        .attr(heightAttr, this.minHeight)
-                        .attr(xAttr, this.position.x)
-                        .attr(yAttr, this.position.y);
+    this.updateShapeScale = function(newScale) {
+        scale = newScale;
     }
 
     //Our update function for our shapes
@@ -117,9 +98,20 @@ exports.Shape = function(name, ctx, canvasScale) {
         updateAng(data[this.angleLink]);
         updateCol(data[this.colorLink]);
 
-        //Update our d3Obj if it is available
+        canvasCtx.beginPath();
         canvasCtx.fillStyle = 'rgba(' + Math.floor(color.red) + ',' + Math.floor(color.green) + ',' + Math.floor(color.blue) + ',' + opacity + ')';
-        canvasCtx.fillRect(x, y, width, height);
+        if(this.type === 'ellipse') {
+            canvasCtx.ellipse(x, y, width, height, angle * Math.PI / 180, 0, 2 * Math.PI);
+            canvasCtx.fill();
+        }
+        else if(this.type === 'rect') {
+            canvasCtx.save();
+            canvasCtx.translate(x+width/2,y+height/2)
+            canvasCtx.rotate(angle * Math.PI / 180);
+            canvasCtx.fillRect(-width/2, -height/2, width, height);
+            canvasCtx.restore();
+        }
+        canvasCtx.closePath();
     }
 
     //Function to update the size, right now I'm defaulting to frequency which is being passed directly

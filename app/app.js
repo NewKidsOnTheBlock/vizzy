@@ -124,18 +124,13 @@ var app = new Vue({
             this.creating = false;
         },
         saveVizzy: function() {
-            var app = this;
-            //Create an image URI and run the callback function
-            SvgSaver.svgAsPngUri(document.getElementById("svg"), {}, function(uri) {
-                app.vizzy.pic = uri;
-                console.log(app.vizzy);
-                //Remove our existing file, and save the new one
-                jetpack.remove(VIZZY_PATH + SLASH + app.vizzy.id + '.json');
-                jetpack.write(VIZZY_PATH + SLASH + app.vizzy.id + '.json', app.vizzy);
-                //Update our vizzy list so it is reflected on the home page
-                app.updateVizzyList();
-                app.moveState('home');
-            });
+            this.vizzy.pic = this.vizzy.canvas.domCanvas.toDataURL('png');
+            //Remove our existing file, and save the new one
+            jetpack.remove(VIZZY_PATH + SLASH + this.vizzy.id + '.json');
+            jetpack.write(VIZZY_PATH + SLASH + this.vizzy.id + '.json', this.vizzy);
+            //Update our vizzy list so it is reflected on the home page
+            this.updateVizzyList();
+            this.moveState('home');
         },
         deleteVizzy: function() {
             //Remove our existing file, and save the new one
@@ -249,7 +244,7 @@ var app = new Vue({
             this.vizzyDirectory = VIZZY_PATH;
         }
 
-        //initialize audio context and create musicdata object
+        //initialize audio context and create musicdata 
         var audioContext = new (window.AudioContext || window.webkitAudioContext)();
         var mdata = new musicData(audioContext);
 
