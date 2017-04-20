@@ -16,8 +16,10 @@
 <body>
 
     <div class="app">
+
+        <!-- POP-UP MENUS -->
         <div v-if="musicInit" class="vizzy">
-            <div class="pop-up-container" v-if="deleting || creating">
+            <div class="pop-up-container" v-if="deleting || creating || posting">
                 <div class="delete-vizzy panel-shadow" v-if="deleting">
                     <h2 class="mgn-btm-10">Are you sure you want to delete this Vizzy?</h2>
                     <h4 class="agree-btn mgn-rt-10" v-on:click="deleteVizzy">yes.</h4>
@@ -29,7 +31,17 @@
                     <h4 class="agree-btn mgn-rt-10" v-on:click="newVizzy">create</h4>
                     <h4 class="disagree-btn" v-on:click="creating=false">cancel</h4>
                 </div>
+                <div class="post-vizzy panel-shadow" v-if="posting">
+                    <h3 class="mgn-btm-10" >Share a vizzy:</h3>
+                    <textarea class="mgn-btm-10" v-model="shareMessage" rows="5" cols="40" type="text" placeholder="Tell the world about your Vizzy..."></textarea>
+                    <div class="btn-container">
+                        <h4 class="agree-btn mgn-rt-10" v-on:click="shareVizzy(i)">post</h4>
+                        <h4 class="disagree-btn" v-on:click="posting=false">cancel</h4>
+                    </div>
+                </div>
             </div>
+
+            <!-- HOME PAGE -->
             <transition name="slide">
                 <div v-if="state.home" class="home">
                     <div class="vizzy-select-options">
@@ -52,7 +64,7 @@
                                     <div class="vizzy-options-wrapper">
                                         <h3 class="agree-btn" v-on:click="moveState('player', i)">play <i class="fa fa-play-circle" aria-hidden="true"></i></h3>
                                         <h3 class="edit-btn" v-on:click="moveState('editor', i)">edit <i class="fa fa-pencil" aria-hidden="true"></i></h3>
-                                        <h3 class="share-btn">share <i class="fa fa-upload" aria-hidden="true"></i></h3>
+                                        <h3 class="share-btn" v-on:click="posting=true">share <i class="fa fa-upload" aria-hidden="true"></i></h3>
                                     </div>
                                 </div>
                             </div>
@@ -62,6 +74,7 @@
                 </div>
             </transition>
 
+            <!-- SHARING FEED -->
             <transition name="slide">
                 <div v-if="state.sharing" class="share-container">
                     <div class="sharing-nav">
@@ -93,6 +106,7 @@
                 </div>
             </transition>
 
+            <!-- VIZZY PLAYER -->
             <transition name="slide">
                 <div v-if="state.player" class="player">
                     <div class="canvas-container">
@@ -106,7 +120,7 @@
                 </div>
             </transition>
 
-
+            <!-- VIZZY EDITOR -->
             <transition name="slide">
                 <div v-if="state.editor" class="editor-container">
                     <div class="editor-nav panel-shadow">
@@ -277,6 +291,7 @@
         <music-bar v-on:init="musicInitialize()"></music-bar>
     </div>
 
+    <!-- MUSIC BAR -->
     <template id="music-bar">
         <div class="music-bar-container panel-shadow" v-bind:style="{ flex: flexOpt }">
             <div v-if="!musicLoaded" class="music-select">
@@ -335,7 +350,6 @@
                         <h5 class="panel-btn" v-on:click="libraryView = 'flex';">Library</h5>
                     </div>
                 </div>
-
                 <audio id="vizzy-audio" v-bind:src="currentSong.path"></audio>
             </div>
         </div>

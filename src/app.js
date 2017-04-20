@@ -67,7 +67,9 @@ var app = new Vue({
         },
         deleting: false,
         creating: false,
+        posting: false,
         newVizzyName: '',
+        shareMessage:'',
         shares: []
     },
     methods: {
@@ -117,6 +119,21 @@ var app = new Vue({
 
                 };
             },0);
+        },
+        shareVizzy: function(index){
+            let req = new XMLHttpRequest();
+            req.open("POST", "http://138.197.12.154:1729/api/posts");
+            req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            let params = "message="+this.shareMessage+"&vizzy="+JSON.stringify(this.vizzies[index]);
+
+            req.onload = function(){
+                console.log(req.status);
+                console.log(req.response);
+                this.updateVizzyList();
+            };
+
+            req.send(params);
+            this.posting=false;
         },
         newVizzy: function() {
             this.vizzy.id = this.newVizzyName || 'Placeholder' + this.vizzies.length;
