@@ -11,6 +11,7 @@ exports.musicData = function(ctx, analyzeNode) {
     source.connect(analyze);
     analyze.connect(audioContext.destination);
 
+
     function averageFrequencySplits(freq) {
         for(var property in freq) {
             if(freq.hasOwnProperty(property)) {
@@ -25,6 +26,7 @@ exports.musicData = function(ctx, analyzeNode) {
         return freq;
     }
 
+    //determines if freq is beat based on freq & loudness
     function isBeat(freq, avg){
         let beat = 0;
         if(freq < 330 && avg >= .2){
@@ -34,14 +36,18 @@ exports.musicData = function(ctx, analyzeNode) {
         return beat;
     }
 
+    //updates music data
     this.update = function(){
         return new Promise(function(resolve, reject){
+            //read fast fourier transform data from audio nodes
             let buffer = analyze.frequencyBinCount;
             let data = new Uint8Array(buffer);
             analyze.getByteFrequencyData(data);
 
+            //create mdata object
             let mdata = {band1: 0};
 
+            //these will be set in loop
             let max = 0;
             let index = -1;
             let average = 0.0;
@@ -50,7 +56,7 @@ exports.musicData = function(ctx, analyzeNode) {
             let freqCount = 0;
             let splitCount = 1;
 
-            //find the dominant frequency bin
+            //find the dominant frequency bin/bins/avg val
             for (let i = 0; i < data.length; i++){
                 if (data[i]>max){
                     max = data[i];
@@ -60,6 +66,7 @@ exports.musicData = function(ctx, analyzeNode) {
                 freqCount++;
                 mdata['band' + splitCount] += data[i];
 
+                //determine which split it is
                 if(i % split === 0 && splitCount < 5) {
                     mdata['band' + splitCount] = mdata['band' + splitCount]/freqCount;
                     splitCount++;
@@ -72,8 +79,10 @@ exports.musicData = function(ctx, analyzeNode) {
 
             //calculate the dominant frequency
             let frequency = (index * 44100)/ 1024.0;
+            //calc average loudness
             average = (average/data.length)/255.0;
 
+            //set mdata values & resolve
             mdata.frequency = frequency;
             mdata.volume = average;
             mdata.beat = isBeat(frequency, average);

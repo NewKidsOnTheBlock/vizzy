@@ -35,7 +35,7 @@
                     <h3 class="mgn-btm-10" >Share a vizzy:</h3>
                     <textarea class="mgn-btm-10" v-model="shareMessage" rows="5" cols="40" type="text" placeholder="Tell the world about your Vizzy..."></textarea>
                     <div class="btn-container">
-                        <h4 class="agree-btn mgn-rt-10" v-on:click="shareVizzy(i)">post</h4>
+                        <h4 class="agree-btn mgn-rt-10" v-on:click="shareVizzy(vizzy)">post</h4>
                         <h4 class="disagree-btn" v-on:click="posting=false">cancel</h4>
                     </div>
                 </div>
@@ -94,9 +94,9 @@
                                     <p class="date">Posted on: {{share.posted}}</p>
                                 </div>
                                 <div class="buttons">
-                                    <h3 class="play">play <i class="fa fa-play-circle" aria-hidden="true"></i></h3>
-                                    <h3 class="edit">edit <i class="fa fa-pencil" aria-hidden="true"></i></h3>
-                                    <h3 class="save">save <i class="fa fa-download" aria-hidden="true"></i></h3>
+                                    <!-- <h3 class="play">play <i class="fa fa-play-circle" aria-hidden="true"></i></h3>
+                                    <h3 class="edit">edit <i class="fa fa-pencil" aria-hidden="true"></i></h3> -->
+                                    <h3 class="save" v-on:click="saveShare(share.vizzy)">save <i class="fa fa-download" aria-hidden="true"></i></h3>
                                 </div>
                             </div>
                         </div>
