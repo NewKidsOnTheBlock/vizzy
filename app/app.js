@@ -196,9 +196,7 @@ var app = new Vue({
             this.selectedShape.shape = null;
             if(index !== 0) {
                 Vue.swap(this.vizzy.canvas.shapes, index, index-1);
-                this.selectShape(index-1);
             }
-            this.vizzy.canvas.rearrangeShapes();
             
         },
         moveForward: function(index) {

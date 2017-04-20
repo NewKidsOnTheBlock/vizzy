@@ -218,6 +218,7 @@ exports.musicBar = Vue.component('music-bar', {
         },
         setCurrentSong: function(i) {
             this.currentSong = this.library[i];
+            this.index = i;
             this.reset();
         },
         reset: function() {
