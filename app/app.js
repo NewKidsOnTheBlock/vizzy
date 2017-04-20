@@ -80,8 +80,23 @@ var app = new Vue({
         musicInitialize: function() {
             this.musicInit = true;
         },
+        //uses fetch API to update this.shares array for sharing feed
+        updateShareList: function(){
+            this.shares = [];
+            fetch('http://138.197.12.154:1729/api/posts',{
+                method: 'get'
+            }).then((res) => {
+                return res.json();
+            }).then((json) => {
+                this.shares = json;
+            });
+        },
+        //moves state to new View (page == v-if)
         moveState: function(page, index) {
             //Loop over our states and switch to the correct one
+            if(page === 'sharing'){
+                this.updateShareList();
+            }
             for (var property in this.state) {
                 if (this.state.hasOwnProperty(property)) {
                     if(property === page) {
@@ -120,22 +135,32 @@ var app = new Vue({
                 },0);
             }
         },
-        shareVizzy: function(index){
-            //Open a new request, and stringify the corresponding vizzy to be sent to our database
+        //POSTs a vizzy to the Vizzy web API using XHR
+        shareVizzy: function(vizzy){
+
             let req = new XMLHttpRequest();
             req.open("POST", "http://138.197.12.154:1729/api/posts");
             req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            let params = "message="+this.shareMessage+"&vizzy="+JSON.stringify(this.vizzies[index]);
+            let params = "message="+this.shareMessage+"&vizzy="+JSON.stringify(vizzy);
 
-            //Our callback when a response is recieved
+            //this function is asynchronously called upon req.response
             req.onload = function(){
                 console.log(req.status);
                 console.log(req.response);
-                this.updateVizzyList();
             };
 
             req.send(params);
             this.posting=false;
+        },
+        //saves a vizzy from the sharing feed
+        saveShare: function(vizzy){
+            //parse shared vizzy to json, then write
+            Promise.resolve(JSON.parse(vizzy)).then((json) => {
+                jetpack.write(VIZZY_PATH + SLASH + json.id + '.json', json);
+                // //Update our vizzy list so it is reflected on the home page
+                this.updateVizzyList();
+                console.log("Vizzy saved!");
+            });
         },
         newVizzy: function() {
             //Creates a new vizzy and moves to the editor
@@ -152,9 +177,10 @@ var app = new Vue({
             this.updateVizzyList();
             this.moveState('home');
         },
+        //deletes selected vizzy, this.vizzy is determined by which box is clicked
         deleteVizzy: function() {
             //Remove our existing file, and save the new one
-            jetpack.remove(VIZZY_PATH + SLASH + this.deleting + '.json');
+            jetpack.remove(VIZZY_PATH + SLASH + this.vizzy.id + '.json');
             this.updateVizzyList();
             this.deleting = false;
         },
@@ -196,15 +222,6 @@ var app = new Vue({
                 }
             }
             this.vizzies = parsedVizzies;
-        },
-        updateShareList: function(){
-            fetch('http://138.197.12.154:1729/api/posts',{
-                method: 'get'
-            }).then((res) => {
-                return res.json();
-            }).then((json) => {
-                this.shares = json;
-            });
         },
         resolvePic: function(vizzy) {
             //This function is used to hand the picture of the Vizzy to the DOM
@@ -265,6 +282,7 @@ var app = new Vue({
             this.selectedShape.maxColor = "rgb(" + maxRed + ',' + maxGreen + ',' + maxBlue + ')';
         }
     },
+    //this function is called upon app init
     mounted: function() {
         //If we have a directory already created start Vizzy, otherwise create one
         if (this.directoryCheck) {
