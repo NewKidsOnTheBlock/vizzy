@@ -25,24 +25,33 @@ exports.musicData = function(ctx, analyzeNode) {
         return freq;
     }
 
+    function isBeat(freq, avg){
+        let beat = 0;
+        if(freq < 330 && avg >= .2){
+            //subtract threshold from freq so lower frequencies rate higher
+            beat = (Math.abs(freq-330.0) * avg)/330.0; //divide total by maximum possible value (freq thresh)
+        }
+        return beat;
+    }
+
     this.update = function(){
         return new Promise(function(resolve, reject){
-            var buffer = analyze.frequencyBinCount;
-            var data = new Uint8Array(buffer);
+            let buffer = analyze.frequencyBinCount;
+            let data = new Uint8Array(buffer);
             analyze.getByteFrequencyData(data);
 
-            var mdata = {band1: 0};
+            let mdata = {band1: 0};
+
+            let max = 0;
+            let index = -1;
+            let average = 0.0;
+
+            let split = Math.floor(data.length/5);
+            let freqCount = 0;
+            let splitCount = 1;
 
             //find the dominant frequency bin
-            var max = 0;
-            var index = -1;
-            var average = 0.0;
-            var beat = 0;
-            var split = Math.floor(data.length/5);
-            var freqCount = 0;
-            var splitCount = 1;
-            
-            for (var i = 0; i < data.length; i++){
+            for (let i = 0; i < data.length; i++){
                 if (data[i]>max){
                     max = data[i];
                     index = i;
@@ -62,18 +71,13 @@ exports.musicData = function(ctx, analyzeNode) {
             mdata['band' + splitCount] = mdata['band' + splitCount]/freqCount;
 
             //calculate the dominant frequency
-            var frequency = (index * 44100)/ 1024.0;
+            let frequency = (index * 44100)/ 1024.0;
             average = (average/data.length)/255.0;
-
-            if(frequency < 330 && average >= .2){
-                //subtract threshold from freq so lower frequencies rate higher
-                beat = (Math.abs(frequency-330.0) * average)/330.0; //divide total by maximum possible value (freq thresh)
-            }
 
             mdata.frequency = frequency;
             mdata.volume = average;
-            mdata.beat = beat;
-            resolve(mdata);
+            mdata.beat = isBeat(frequency, average);
+            resolve(mdata)
         });
 
     }
