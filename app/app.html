@@ -59,7 +59,7 @@
                             </div>
                         </div>
                         <div class="vizzy-container" v-for="(vizzy,i) in vizzies">
-                            <div class="vizzy-picture" v-bind:style="{backgroundImage: resolvePic(vizzy)}">
+                            <div class="vizzy-picture" v-bind:style="{ backgroundImage: 'url(' + vizzy.pic + ')' }">
                                 <div class="vizzy-options">
                                     <div class="vizzy-options-wrapper">
                                         <h3 class="agree-btn" v-on:click="moveState('player', i)">play <i class="fa fa-play-circle" aria-hidden="true"></i></h3>

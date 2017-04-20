@@ -107,7 +107,7 @@ var app = new Vue({
                     }
                 }
             }
-            
+
             var app = this;
             //We have to set a timeout function here to make sure that the state has been switched
             if(page === 'editor' || page === 'player') {
@@ -156,6 +156,9 @@ var app = new Vue({
         saveShare: function(vizzy){
             //parse shared vizzy to json, then write
             Promise.resolve(JSON.parse(vizzy)).then((json) => {
+                let randnum = Math.floor(Math.random() * 10000);
+                json.id = json.id + randnum;
+                console.log(json.id);
                 jetpack.write(VIZZY_PATH + SLASH + json.id + '.json', json);
                 // //Update our vizzy list so it is reflected on the home page
                 this.updateVizzyList();
