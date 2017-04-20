@@ -91,20 +91,10 @@ var app = new Vue({
         },
         //moves state to new View (page == v-if)
         moveState: function(page, index) {
-<<<<<<< HEAD
             //Loop over our states and switch to the correct one
-=======
-            // if(this.state.editor) {
-            //     //Save the vizzy if we are moving away from the editor back home.
-            //     this.saveVizzy();
-
-            // }
-
             if(page === 'sharing'){
                 this.updateShareList();
             }
-
->>>>>>> c445a5cf9bd7a62661863fa135d2ed4c6321b991
             for (var property in this.state) {
                 if (this.state.hasOwnProperty(property)) {
                     if(property === page) {
@@ -143,23 +133,15 @@ var app = new Vue({
                 },0);
             }
         },
-<<<<<<< HEAD
-        shareVizzy: function(index){
-            //Open a new request, and stringify the corresponding vizzy to be sent to our database
-=======
         //POSTs a vizzy to the Vizzy web API using XHR
         shareVizzy: function(vizzy){
->>>>>>> c445a5cf9bd7a62661863fa135d2ed4c6321b991
+
             let req = new XMLHttpRequest();
             req.open("POST", "http://138.197.12.154:1729/api/posts");
             req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             let params = "message="+this.shareMessage+"&vizzy="+JSON.stringify(vizzy);
 
-<<<<<<< HEAD
-            //Our callback when a response is recieved
-=======
             //this function is asynchronously called upon req.response
->>>>>>> c445a5cf9bd7a62661863fa135d2ed4c6321b991
             req.onload = function(){
                 console.log(req.status);
                 console.log(req.response);
