@@ -25,9 +25,6 @@ var Song = function(data, path) {
     else {
         this.picture = './img/albumPlaceHolder.png';
     }
-    // this.number = data.track.no;
-    // this.albumImg = data.picture[0].data;
-    // this.albumImgExtension = data.picture[0].format;
 
     this.path = path;
 }

@@ -5,10 +5,10 @@ exports.Shape = function(name, ctx, canvasScale) {
     this.id = name;
     this.positionLink = "band1";
     this.position = {
-        minX: 1000, //These initial values were better for testing on my machine with 
-        maxX: 1000, //the app at half size. Original values commented out above
-        minY: 500,
-        maxY: 500 
+        minX: 960, //These initial values were better for testing on my machine with 
+        maxX: 960, //the app at half size. Original values commented out above
+        minY: 540,
+        maxY: 540 
     };
     this.type = "ellipse";
     this.angleLink = "band1";
@@ -34,7 +34,7 @@ exports.Shape = function(name, ctx, canvasScale) {
     this.minHeight = 10;
     this.maxHeight = 50;
     
-    // Private variables
+    //Private variables
     //Declaring a shape as this so our private functions can access our public variables
     var shape = this;
     var x = 20;
@@ -50,22 +50,10 @@ exports.Shape = function(name, ctx, canvasScale) {
         green: 0,
         blue: 0
     }
+    //Our canvas context
     var canvasCtx = ctx;
     //This helps us scale our shapes to our canvas size                
     var scale = canvasScale;
-
-    this.setProps = function() {
-        x = 20;
-        y = 20;
-        height = 10;
-        width = 15;
-        angle = 0;
-        color = {
-            red: 255,
-            green: 0,
-            blue: 0
-        }
-    }
 
     //This function is used to reappend our svgs, just in case they were deleted
     this.reappend = function(canvas) {
@@ -77,40 +65,37 @@ exports.Shape = function(name, ctx, canvasScale) {
         }
     }
 
-    this.switchShapeType = function() {
-        console.log(this.type);
-    }
-
     this.updateShapeScale = function(newScale) {
         scale = newScale;
     }
 
     //Our update function for our shapes
     this.update = function(data) {
-        //assume data passed in is an integer from 0-100
-
-        //simple toy algorithm, sets size to percentage of max size
-        // this.height = freq*this.max_height
-        // this.width = freq*this.max_width
-
+        
+        //Update all of our shape attributes
         updateSize(data[this.sizeLink]);
         updatePos(data[this.positionLink]);
         updateAng(data[this.angleLink]);
         updateCol(data[this.colorLink]);
 
+        //Begin our canvas path and set the fill color
         canvasCtx.beginPath();
         canvasCtx.fillStyle = 'rgba(' + Math.floor(color.red) + ',' + Math.floor(color.green) + ',' + Math.floor(color.blue) + ',' + opacity + ')';
+        //We need to check if this is an ellipse, or rect because the two shapes are drawn differently.
         if(this.type === 'ellipse') {
             canvasCtx.ellipse(x, y, width, height, angle * Math.PI / 180, 0, 2 * Math.PI);
             canvasCtx.fill();
         }
         else if(this.type === 'rect') {
+            //Save our context so we can rotate the canvas
             canvasCtx.save();
+            //Rotate the canvas according to the shapes position, and the restore our context so other shapes won't be rotated too
             canvasCtx.translate(x+width/2,y+height/2)
             canvasCtx.rotate(angle * Math.PI / 180);
             canvasCtx.fillRect(-width/2, -height/2, width, height);
             canvasCtx.restore();
         }
+        //Close our canvas path, THIS IS NECESSARY
         canvasCtx.closePath();
     }
 
@@ -120,7 +105,7 @@ exports.Shape = function(name, ctx, canvasScale) {
         height = scale.x * (shape.minHeight + ((shape.maxHeight-shape.minHeight) * data));
     }
 
-    //Function to update the position, default to frequency
+    //Function to update the position
     var updatePos = function(data) {
         x = scale.x * (shape.position.minX + ((shape.position.maxX-shape.position.minX) * data));
         y =  scale.y * (shape.position.minY + ((shape.position.maxY-shape.position.minY) * data));
@@ -131,6 +116,7 @@ exports.Shape = function(name, ctx, canvasScale) {
         }
     }
 
+    //Function to update the angle
     var updateAng = function(data) {
         angle = shape.minAngle + ((shape.maxAngle-shape.minAngle) * data);
 
@@ -144,7 +130,7 @@ exports.Shape = function(name, ctx, canvasScale) {
         }
     }
 
-    //Function to update the color, default to frequency
+    //Function to update the color
     var updateCol = function(data) {
         bigData = data * 100000000;
         littleData = bigData % 16777215;

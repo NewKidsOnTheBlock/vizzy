@@ -38,6 +38,7 @@ Vue.swap = function(arr, x, y) {
 
 var app = new Vue({
     el: ".app",
+    //These are all of the variables the application uses.
     data: {
         directoryCheck: jetpack.exists(VIZZY_PATH),
         vizzyDirectory: '',
@@ -50,7 +51,8 @@ var app = new Vue({
         state: {
             home: true,
             editor: false,
-            player: false
+            player: false,
+            sharing: false
         },
         selectedShape: {
             shape: null,
@@ -68,19 +70,18 @@ var app = new Vue({
         },
         deleting: false,
         creating: false,
-        newVizzyName: ''
+        posting: false,
+        newVizzyName: '',
+        shareMessage:'',
+        shares: []
     },
     methods: {
+        //This is called from our music bar to make sure we have music loaded into our application
         musicInitialize: function() {
             this.musicInit = true;
         },
         moveState: function(page, index) {
-            // if(this.state.editor) {
-            //     //Save the vizzy if we are moving away from the editor back home.
-            //     this.saveVizzy();
-                
-            // }
-
+            //Loop over our states and switch to the correct one
             for (var property in this.state) {
                 if (this.state.hasOwnProperty(property)) {
                     if(property === page) {
@@ -91,9 +92,11 @@ var app = new Vue({
                     }
                 }
             }
+            
             var app = this;
-            window.setTimeout(function() {
-                if(page === 'editor' || page === 'player') {
+            //We have to set a timeout function here to make sure that the state has been switched
+            if(page === 'editor' || page === 'player') {
+                window.setTimeout(function() {
                     //Reset our selected shape
                     app.selectedShape = {
                         shape: null,
@@ -114,11 +117,28 @@ var app = new Vue({
                     else {
                         app.setVizzy(null, true);
                     }
+                },0);
+            }
+        },
+        shareVizzy: function(index){
+            //Open a new request, and stringify the corresponding vizzy to be sent to our database
+            let req = new XMLHttpRequest();
+            req.open("POST", "http://138.197.12.154:1729/api/posts");
+            req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            let params = "message="+this.shareMessage+"&vizzy="+JSON.stringify(this.vizzies[index]);
 
-                }
-            },0);
+            //Our callback when a response is recieved
+            req.onload = function(){
+                console.log(req.status);
+                console.log(req.response);
+                this.updateVizzyList();
+            };
+
+            req.send(params);
+            this.posting=false;
         },
         newVizzy: function() {
+            //Creates a new vizzy and moves to the editor
             this.vizzy.id = this.newVizzyName || 'Placeholder' + this.vizzies.length;
             this.moveState('editor');
             this.creating = false;
@@ -142,29 +162,25 @@ var app = new Vue({
             //Create a new canvas, and set it's ID to our selected Vizzies ID
             this.vizzy.canvas = new Canvas();
 
-            if (!newVizzy) {
-                this.vizzy.id = this.vizzies[index].id;
-            }
-
             //Grabbing our on screen canvas, and resizing and setting the DOM of our canvas class
             var canvas = document.getElementById('canvas');
-            console.log(canvas.clientWidth);
-            var width = canvas.clientWidth;
-            var height = canvas.clientHeight;
-            canvas.width = width;
-            canvas.height = height;
-            app.vizzy.canvas.resize(canvas.clientWidth, canvas.clientHeight);
-            app.vizzy.canvas.setDomCanvas(canvas);
+            canvas.width = canvas.clientWidth;
+            canvas.height = canvas.clientHeight;
+            //We also need to let our canvas class resize itself, and store the DOM canvas
+            this.vizzy.canvas.resize(canvas.clientWidth, canvas.clientHeight);
+            this.vizzy.canvas.setDomCanvas(canvas);
 
-            //Runs through all of the saved shapes and adds new shapes to our canvas. Also copies our saved shapes attributes to our new shapes
-            for(var i = 0; i < this.vizzies[index].canvas.shapes.length; i++) {
-                this.vizzy.canvas.add();
-                for (var property in this.vizzies[index].canvas.shapes[i]) {
-                    if (this.vizzies[index].canvas.shapes[i].hasOwnProperty(property)) {
-                        this.vizzy.canvas.shapes[i][property] = this.vizzies[index].canvas.shapes[i][property];
+            if (!newVizzy) {
+                this.vizzy.id = this.vizzies[index].id;
+                //Runs through all of the saved shapes and adds new shapes to our canvas. Also copies our saved shapes attributes to our new shapes
+                for(var i = 0; i < this.vizzies[index].canvas.shapes.length; i++) {
+                    this.vizzy.canvas.add();
+                    for (var property in this.vizzies[index].canvas.shapes[i]) {
+                        if (this.vizzies[index].canvas.shapes[i].hasOwnProperty(property)) {
+                            this.vizzy.canvas.shapes[i][property] = this.vizzies[index].canvas.shapes[i][property];
+                        }
                     }
                 }
-                this.vizzy.canvas.shapes[i].switchShapeType();
             }
         },
         updateVizzyList: function() {
@@ -181,9 +197,20 @@ var app = new Vue({
             }
             this.vizzies = parsedVizzies;
         },
+        updateShareList: function(){
+            fetch('http://138.197.12.154:1729/api/posts',{
+                method: 'get'
+            }).then((res) => {
+                return res.json();
+            }).then((json) => {
+                this.shares = json;
+            });
+        },
         resolvePic: function(vizzy) {
+            //This function is used to hand the picture of the Vizzy to the DOM
             return 'url(' + vizzy.pic || '' + ')';
         },
+        //Selects the shape in the editor
         selectShape: function(index) {
             this.selectedShape.shape = this.vizzy.canvas.shapes[index];
             this.setColor();
@@ -192,13 +219,15 @@ var app = new Vue({
             }
             this.vizzy.canvas.shapes[index].isSelected = true;
         },
+        //Moves a shape backwards in the editor
         moveBack: function(index) {
             this.selectedShape.shape = null;
             if(index !== 0) {
                 Vue.swap(this.vizzy.canvas.shapes, index, index-1);
             }
-            
+
         },
+        //Moves a shape forwards in the editor
         moveForward: function(index) {
             this.selectedShape.shape = null;
             if(index !== this.vizzy.canvas.shapes.length - 1) {
@@ -207,6 +236,7 @@ var app = new Vue({
             }
             this.vizzy.canvas.rearrangeShapes();
         },
+        //Used to toggle the shape editor panels
         toggleShapePanel: function(type) {
 
             if(this.selectedShape[type]) {
@@ -216,9 +246,11 @@ var app = new Vue({
                 this.selectedShape[type] = 'block';
             }
         },
+        //Used to add a new shape to a Vizzy
         addShape: function() {
             this.vizzy.canvas.add();
         },
+        //Used to set the colors of the color selectors
         setColor: function() {
             var minRed = this.selectedShape.shape.minColor.red;
             var minGreen = this.selectedShape.shape.minColor.green;
@@ -234,6 +266,7 @@ var app = new Vue({
         }
     },
     mounted: function() {
+        //If we have a directory already created start Vizzy, otherwise create one
         if (this.directoryCheck) {
             this.updateVizzyList();
         }
@@ -242,12 +275,15 @@ var app = new Vue({
             this.vizzyDirectory = VIZZY_PATH;
         }
 
-        //initialize audio context and create musicdata 
+        this.updateShareList();
+
+        //initialize audio context and create musicdata
         var audioContext = new (window.AudioContext || window.webkitAudioContext)();
         var mdata = new musicData(audioContext);
 
         var app = this;
 
+        //This function is used to update the canvas when music is playing.
         function refresh(){
             //Only runs update if we are in the editor or play mode
             if(app.state.editor || app.state.player) {

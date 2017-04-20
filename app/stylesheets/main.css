@@ -168,6 +168,17 @@ p {
 .home .vizzies .vizzy-container .vizzy-picture .vizzy-options .vizzy-options-wrapper h3 {
   margin: 0 5px;
 }
+.home .vizzies .vizzy-container .vizzy-picture .vizzy-options .vizzy-options-wrapper .share-btn {
+  background-color: #385ae0;
+  border-radius: 5px;
+  color: white;
+  display: inline-block;
+  padding: 10px 15px;
+}
+.home .vizzies .vizzy-container .vizzy-picture .vizzy-options .vizzy-options-wrapper .share-btn:hover {
+  background-color: #2f52e0;
+  cursor: pointer;
+}
 .home .vizzies .vizzy-container .vizzy-picture .vizzy-options.show {
   visibility: visible;
 }
@@ -445,6 +456,119 @@ select.vizzy-dropdown.blue {
 }
 .pop-up-container .create-vizzy {
   text-align: center;
+}
+.pop-up-container .post-vizzy {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+.pop-up-container .btn-container {
+  display: flex;
+  flex-direction: row;
+  float: right;
+}
+.share-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.share-container .sharing-nav {
+  background-color: white;
+  border-bottom: 1px solid #ced2d2;
+  padding: 15px;
+  position: relative;
+  z-index: 50;
+}
+.share-container .sharing-nav .path h3 {
+  display: inline-block;
+  color: #2f52e0;
+}
+.share-container .sharing-nav .path h3:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.sharing {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding-top: 50px;
+  flex-direction: row;
+}
+.sharing .left {
+  flex: 1;
+  flex-direction: column;
+}
+.sharing .sharing-container {
+  display: flex;
+  flex: 2;
+  flex-direction: column;
+}
+.sharing .sharing-container .share-card {
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+.sharing .sharing-container .share-card .message {
+  padding: 10px 0;
+}
+.sharing .sharing-container .share-card .message .msg {
+  font-size: 25px;
+  font-family: "Raleway", sans-serif;
+  line-height: 1.5;
+}
+.sharing .sharing-container .share-card .message .date {
+  font-size: 10px;
+  font-family: "Raleway", sans-serif;
+  line-height: 1.5;
+  margin-top: 2%;
+}
+.sharing .sharing-container .share-card .buttons {
+  padding: 10px 0;
+  text-align: center;
+}
+.sharing .sharing-container .share-card .buttons .play {
+  background-color: #bced09;
+  border-radius: 5px;
+  color: white;
+  display: inline-block;
+  padding: 10px 15px;
+  margin: auto;
+}
+.sharing .sharing-container .share-card .buttons .play:hover {
+  background-color: #a9d408;
+  cursor: pointer;
+}
+.sharing .sharing-container .share-card .buttons .edit {
+  background-color: #f9cb40;
+  border-radius: 5px;
+  color: white;
+  display: inline-block;
+  padding: 10px 15px;
+  margin: auto;
+}
+.sharing .sharing-container .share-card .buttons .edit:hover {
+  background-color: #f7be0f;
+  cursor: pointer;
+}
+.sharing .sharing-container .share-card .buttons .save {
+  background-color: #385ae0;
+  border-radius: 5px;
+  color: white;
+  display: inline-block;
+  padding: 10px 15px;
+  margin: auto;
+}
+.sharing .sharing-container .share-card .buttons .save:hover {
+  background-color: #2f52e0;
+  cursor: pointer;
+}
+.sharing .right {
+  flex: 1;
+  flex-direction: column;
 }
 .music-viewer-container {
   box-sizing: border-box;

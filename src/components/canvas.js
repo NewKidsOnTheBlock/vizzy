@@ -59,7 +59,9 @@ exports.Canvas = function() {
 	}
 
 	this.clear = function() {
-		ctx.clearRect(0, 0, this.domCanvas.width, this.domCanvas.height);
+		if(ctx) {
+			ctx.clearRect(0, 0, this.domCanvas.width, this.domCanvas.height);
+		}
 	}
 
 	//Will go through array of shapes and place them on the canvas
