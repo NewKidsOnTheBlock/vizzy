@@ -139,7 +139,7 @@ var app = new Vue({
             let req = new XMLHttpRequest();
             req.open("POST", "http://138.197.12.154:1729/api/posts");
             req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            let params = "message="+this.shareMessage+"&vizzy="+JSON.stringify(vizzy);
+            let params = "message="+this.shareMessage+"&vizzy="+JSON.stringify(this.posting);
 
             //this function is asynchronously called upon req.response
             req.onload = function(){
@@ -178,7 +178,7 @@ var app = new Vue({
         //deletes selected vizzy, this.vizzy is determined by which box is clicked
         deleteVizzy: function() {
             //Remove our existing file, and save the new one
-            jetpack.remove(VIZZY_PATH + SLASH + this.vizzy.id + '.json');
+            jetpack.remove(VIZZY_PATH + SLASH + this.deleting + '.json');
             this.updateVizzyList();
             this.deleting = false;
         },
