@@ -4,17 +4,19 @@
 @import 'components/vizzyPlayer';
 @import 'components/vizzyEditor';
 @import 'components/vizzyPopup';
+@import 'components/vizzySharing';
 @import 'components/musicBar';
 
+
 * {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
 
 html, body {
     width: 100%;
     height: 100%;
-	overflow-x: hidden;
+    overflow-x: hidden;
 }
 
 .app {
@@ -22,73 +24,73 @@ html, body {
     width: 100%;
     height: 100%;
     flex-direction: column;
-	overflow-x: hidden;
-	position: relative;
+    overflow-x: hidden;
+    position: relative;
 }
 
 ellipse {
-	transition: all .1s;
+    transition: all .1s;
 }
 
 rect {
-	transition: all .1s;
+    transition: all .1s;
 }
 
 //Vizzy Editor Styles -------------------------------------------
 
 .vizzy {
-	display: flex;
-	flex: 1;
-	position: relative;
-	width: 100%;
-	overflow-x: hidden;
+    display: flex;
+    flex: 1;
+    position: relative;
+    width: 100%;
+    overflow-x: hidden;
 
-	input[type="text"] {
-		border: 1px solid @vizzy-lightBlack;
-		border-radius: 3px;
-		box-sizing: border-box;
-		display: inline-block;
-		font-family: 'OpenSans';
-		font-size: 18px;
-		padding: 5px;
-		text-align: center;
-		width: 100%;
+    input[type="text"] {
+        border: 1px solid @vizzy-lightBlack;
+        border-radius: 3px;
+        box-sizing: border-box;
+        display: inline-block;
+        font-family: 'OpenSans';
+        font-size: 18px;
+        padding: 5px;
+        text-align: center;
+        width: 100%;
 
-		&:focus {
-			outline: none;
-			border: 1px solid @vizzy-blue;
-		}
-	}
+        &:focus {
+            outline: none;
+            border: 1px solid @vizzy-blue;
+        }
+    }
 }
 
 //Helper styles ---------------------------------------------------
 
 .panel-shadow {
-	box-shadow: 0 0 10px -1px rgba(0,0,0,.75);
+    box-shadow: 0 0 10px -1px rgba(0,0,0,.75);
 }
 
 .blue {
-	color: @vizzy-blue;
+    color: @vizzy-blue;
 }
 
 .slide-enter-active {
-	transition: all .5s;
-	position: relative;
-	z-index: 1;
+    transition: all .5s;
+    position: relative;
+    z-index: 1;
 }
 
 .slide-leave-active  {
-  	transition: all .5s;
-	position: absolute;
-	width: 100%;
-	height: 100%;
-  	z-index: 2;
+      transition: all .5s;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+      z-index: 2;
 }
 
 .slide-enter, .slide-leave-to
 /* .slide-fade-leave-active for <2.1.8 */ {
-  	transform: translateX(500px);
-	opacity: 0;
+      transform: translateX(500px);
+    opacity: 0;
 }
 
 ::-webkit-scrollbar {
@@ -97,7 +99,7 @@ rect {
 
 ::-webkit-scrollbar-track {
     border-radius: 3px;
-	padding: 1px;
+    padding: 1px;
 }
 
 ::-webkit-scrollbar-thumb {

@@ -34,6 +34,7 @@
                 <div v-if="state.home" class="home">
                     <div class="vizzy-select-options">
                         <h1 class="blue">Your Vizzies</h1>
+                        <h1 class="blue" v-on:click="moveState('sharing', i)">Share</h1>
                     </div>
                     <div class="vizzies">
                         <div class="vizzy-container">
@@ -51,6 +52,7 @@
                                     <div class="vizzy-options-wrapper">
                                         <h3 class="agree-btn" v-on:click="moveState('player', i)">play <i class="fa fa-play-circle" aria-hidden="true"></i></h3>
                                         <h3 class="edit-btn" v-on:click="moveState('editor', i)">edit <i class="fa fa-pencil" aria-hidden="true"></i></h3>
+                                        <h3 class="share-btn">share <i class="fa fa-upload" aria-hidden="true"></i></h3>
                                     </div>
                                 </div>
                             </div>
@@ -60,6 +62,36 @@
                 </div>
             </transition>
 
+            <transition name="slide">
+                <div v-if="state.sharing" class="share-container">
+                    <div class="sharing-nav">
+                        <div class="path">
+                            <h3 v-on:click="moveState('home')">Home </h3>
+                            <i class="fa fa-caret-right blue" aria-hidden="true"></i>
+                            <h3>Sharing</h3>
+                        </div>
+                    </div>
+                    <div class="sharing">
+                        <div class="left">
+                        </div>
+                        <div class="sharing-container">
+                            <div class="share-card" v-for="share in shares">
+                                <div class="message">
+                                    <p class="msg">{{share.message}}</p>
+                                    <p class="date">Posted on: {{share.posted}}</p>
+                                </div>
+                                <div class="buttons">
+                                    <h3 class="play">play <i class="fa fa-play-circle" aria-hidden="true"></i></h3>
+                                    <h3 class="edit">edit <i class="fa fa-pencil" aria-hidden="true"></i></h3>
+                                    <h3 class="save">save <i class="fa fa-download" aria-hidden="true"></i></h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="right">
+                        </div>
+                    </div>
+                </div>
+            </transition>
 
             <transition name="slide">
                 <div v-if="state.player" class="player">
@@ -121,7 +153,7 @@
                                     <select class="vizzy-dropdown blue" v-model="selectedShape.shape.type" v-on:change="selectedShape.shape.switchShapeType()">
                                         <option value="ellipse">Ellipse</option>
                                         <option value="rect">Rectangle</option>
-                                    </select> 
+                                    </select>
                                 </div>
                                 <div class="position" v-on:click="toggleShapePanel('pos')">
                                     <h6>position&ensp;<i v-if="!selectedShape.pos" class="fa fa-caret-right" aria-hidden="true"></i><i v-else class="fa fa-caret-down" aria-hidden="true"></i></h6>
@@ -223,7 +255,7 @@
                                         </div>
                                     </div>
                                     <p>Opacity</p>
-                                    <input type="range" v-model.number="selectedShape.shape.minOpacity" min="0" max="100" v-on:change="setColor">  
+                                    <input type="range" v-model.number="selectedShape.shape.minOpacity" min="0" max="100" v-on:change="setColor">
                                     <input type="range" v-model.number="selectedShape.shape.maxOpacity" min="0" max="100" v-on:change="setColor">
                                     <p>Music Link:</p>
                                     <select class="vizzy-dropdown" v-model="selectedShape.shape.colorLink">
@@ -234,7 +266,7 @@
                                         <option value="band5">Freq. Band 5</option>
                                         <option value="volume">Volume</option>
                                         <option value="beat">Beat</option>
-                                    </select>    
+                                    </select>
                                 </div>
                             </div>
                         </div>

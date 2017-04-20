@@ -48,7 +48,8 @@ var app = new Vue({
         state: {
             home: true,
             editor: false,
-            player: false
+            player: false,
+            sharing: false
         },
         selectedShape: {
             shape: null,
@@ -66,7 +67,8 @@ var app = new Vue({
         },
         deleting: false,
         creating: false,
-        newVizzyName: ''
+        newVizzyName: '',
+        shares: []
     },
     methods: {
         musicInitialize: function() {
@@ -76,7 +78,7 @@ var app = new Vue({
             // if(this.state.editor) {
             //     //Save the vizzy if we are moving away from the editor back home.
             //     this.saveVizzy();
-                
+
             // }
 
             for (var property in this.state) {
@@ -179,6 +181,15 @@ var app = new Vue({
             }
             this.vizzies = parsedVizzies;
         },
+        updateShareList: function(){
+            fetch('http://138.197.12.154:1729/api/posts',{
+                method: 'get'
+            }).then((res) => {
+                return res.json();
+            }).then((json) => {
+                this.shares = json;
+            })
+        },
         resolvePic: function(vizzy) {
             return 'url(' + vizzy.pic || '' + ')';
         },
@@ -195,7 +206,7 @@ var app = new Vue({
             if(index !== 0) {
                 Vue.swap(this.vizzy.canvas.shapes, index, index-1);
             }
-            
+
         },
         moveForward: function(index) {
             this.selectedShape.shape = null;
@@ -240,7 +251,9 @@ var app = new Vue({
             this.vizzyDirectory = VIZZY_PATH;
         }
 
-        //initialize audio context and create musicdata 
+        this.updateShareList();
+
+        //initialize audio context and create musicdata
         var audioContext = new (window.AudioContext || window.webkitAudioContext)();
         var mdata = new musicData(audioContext);
 
