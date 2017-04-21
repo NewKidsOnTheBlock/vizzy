@@ -25,8 +25,8 @@ exports.Shape = function(name, ctx, canvasScale) {
     this.maxOpacity = 100;
     this.maxColor = {
         red: 0,
-        green: 255,
-        blue: 0
+        green: 0,
+        blue: 255
     }
     this.sizeLink = "band1";
     this.minWidth = 15;

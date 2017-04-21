@@ -164,7 +164,7 @@
                                     <h6>shape type&ensp;<i v-if="!selectedShape.typ" class="fa fa-caret-right" aria-hidden="true"></i><i v-else class="fa fa-caret-down" aria-hidden="true"></i></h6>
                                 </div>
                                 <div class="shape-attribute" v-bind:style="{display: selectedShape.typ || 'none'}">
-                                    <select class="vizzy-dropdown blue" v-model="selectedShape.shape.type" v-on:change="selectedShape.shape.switchShapeType()">
+                                    <select class="vizzy-dropdown blue" v-model="selectedShape.shape.type">
                                         <option value="ellipse">Ellipse</option>
                                         <option value="rect">Rectangle</option>
                                     </select>
