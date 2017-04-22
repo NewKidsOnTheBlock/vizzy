@@ -54,6 +54,12 @@ var app = new Vue({
             player: false,
             sharing: false
         },
+        popupState: {
+            deleting: false,
+            creating: false,
+            posting: false,
+            renaming: false
+        },
         selectedShape: {
             shape: null,
             typ: null,
@@ -68,9 +74,6 @@ var app = new Vue({
             editId: false,
             minColorSelected: true
         },
-        deleting: false,
-        creating: false,
-        posting: false,
         newVizzyName: '',
         shareMessage:'',
         shares: []
@@ -150,7 +153,7 @@ var app = new Vue({
             };
 
             req.send(params);
-            this.posting=false;
+            this.popupState.posting=false;
         },
         //saves a vizzy from the sharing feed
         saveShare: function(vizzy){
@@ -169,7 +172,8 @@ var app = new Vue({
             //Creates a new vizzy and moves to the editor
             this.vizzy.id = this.newVizzyName || 'Placeholder' + this.vizzies.length;
             this.moveState('editor');
-            this.creating = false;
+            this.newVizzyName = '';
+            this.popupState.creating = false;
         },
         saveVizzy: function() {
             this.vizzy.pic = this.vizzy.canvas.domCanvas.toDataURL('png');
@@ -185,7 +189,15 @@ var app = new Vue({
             //Remove our existing file, and save the new one
             jetpack.remove(VIZZY_PATH + SLASH + this.deleting + '.json');
             this.updateVizzyList();
-            this.deleting = false;
+            this.popupState.deleting = false;
+        },
+        renameVizzy: function() {
+            jetpack.remove(VIZZY_PATH + SLASH + this.vizzies[this.popupState.renaming-1].id + '.json');
+            this.vizzies[this.popupState.renaming-1].id = this.newVizzyName;
+            jetpack.write(VIZZY_PATH + SLASH + this.newVizzyName + '.json', this.vizzies[this.popupState.renaming-1]);
+            this.newVizzyName = '';
+            this.updateVizzyList();
+            this.popupState.renaming = false;
         },
         setVizzy: function(index, newVizzy) {
             //Create a new canvas, and set it's ID to our selected Vizzies ID

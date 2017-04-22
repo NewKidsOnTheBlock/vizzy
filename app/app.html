@@ -19,24 +19,40 @@
 
         <!-- POP-UP MENUS -->
         <div v-if="musicInit" class="vizzy">
-            <div class="pop-up-container" v-if="deleting || creating || posting">
-                <div class="delete-vizzy panel-shadow" v-if="deleting">
-                    <h2 class="mgn-btm-10">Are you sure you want to delete this Vizzy?</h2>
-                    <h4 class="agree-btn mgn-rt-10" v-on:click="deleteVizzy">yes.</h4>
-                    <h4 class="disagree-btn" v-on:click="deleting=false">no!</h4>
+            <div class="pop-up-container" v-if="popupState.deleting || popupState.creating || popupState.posting || popupState.renaming">
+                <div class="delete-vizzy panel-shadow pop-up" v-if="popupState.deleting">
+                    <h3 class="mgn-btm-10">Deleting "{{popupState.deleting}}"</h3>
+                    <p>Are you sure you'd like to delete this vizzy?</p>
+                    <div class="btn-container">
+                        <h4 class="agree-btn mgn-rt-10 wide" v-on:click="deleteVizzy">OK</h4>
+                        <h4 class="disagree-btn wide" v-on:click="popupState.deleting=false">Cancel</h4>
+                    </div>
                 </div>
-                <div class="create-vizzy panel-shadow" v-if="creating">
-                    <h3 class="mgn-btm-10" >Name this Vizzy:</h3>
+                <div class="create-vizzy panel-shadow pop-up" v-if="popupState.creating">
+                    <h3 class="mgn-btm-10" >Creating a new Vizzy:</h3>
+                    <p class="mgn-btm-10" >Please name your new vizzy</p>
                     <input class="mgn-btm-10" type="text" v-model="newVizzyName" placeholder="Vizzy Name"></input>
-                    <h4 class="agree-btn mgn-rt-10" v-on:click="newVizzy">create</h4>
-                    <h4 class="disagree-btn" v-on:click="creating=false">cancel</h4>
+                    <div class="btn-container">
+                        <h4 class="agree-btn mgn-rt-10 wide" v-on:click="newVizzy">Create</h4>
+                        <h4 class="disagree-btn wide" v-on:click="popupState.creating=false">Cancel</h4>
+                    </div>
                 </div>
-                <div class="post-vizzy panel-shadow" v-if="posting">
-                    <h3 class="mgn-btm-10" >Share a vizzy:</h3>
+                <div class="post-vizzy panel-shadow pop-up" v-if="popupState.posting">
+                    <h3 class="mgn-btm-10">Share a Vizzy:</h3>
+                    <p class="mgn-btm-10">Please type a message you'd like to share with your Vizzy</p>
                     <textarea class="mgn-btm-10" v-model="shareMessage" rows="5" cols="40" type="text" placeholder="Tell the world about your Vizzy..."></textarea>
                     <div class="btn-container">
-                        <h4 class="agree-btn mgn-rt-10" v-on:click="shareVizzy(vizzy)">post</h4>
-                        <h4 class="disagree-btn" v-on:click="posting=false">cancel</h4>
+                        <h4 class="agree-btn mgn-rt-10 wide" v-on:click="shareVizzy(vizzy)">Post</h4>
+                        <h4 class="disagree-btn wide" v-on:click="popupState.posting=false">Cancel</h4>
+                    </div>
+                </div>
+                <div class="post-vizzy panel-shadow pop-up" v-if="popupState.renaming">
+                    <h3 class="mgn-btm-10">Rename "{{vizzies[popupState.renaming-1].id}}":</h3>
+                    <p class="mgn-btm-10">Would you like to give this Vizzy a new name?</p>
+                    <input class="mgn-btm-10" type="text" v-model="newVizzyName" placeholder="Vizzy Name"></input>
+                    <div class="btn-container">
+                        <h4 class="agree-btn mgn-rt-10 wide" v-on:click="renameVizzy">Rename</h4>
+                        <h4 class="disagree-btn wide" v-on:click="popupState.renaming=false">Cancel</h4>
                     </div>
                 </div>
             </div>
@@ -53,7 +69,7 @@
                             <div class="vizzy-picture">
                                 <div class="vizzy-options show">
                                     <div class="vizzy-options-wrapper">
-                                        <h3 class="edit-btn" v-on:click="creating=true">Create a new vizzy <i class="fa fa-pencil" aria-hidden="true"></i></h3>
+                                        <h3 class="edit-btn" v-on:click="popupState.creating=true">Create a new vizzy <i class="fa fa-pencil" aria-hidden="true"></i></h3>
                                     </div>
                                 </div>
                             </div>
@@ -64,11 +80,15 @@
                                     <div class="vizzy-options-wrapper">
                                         <h3 class="agree-btn" v-on:click="moveState('player', i)">play <i class="fa fa-play-circle" aria-hidden="true"></i></h3>
                                         <h3 class="edit-btn" v-on:click="moveState('editor', i)">edit <i class="fa fa-pencil" aria-hidden="true"></i></h3>
-                                        <h3 class="share-btn" v-on:click="posting = vizzy">share <i class="fa fa-upload" aria-hidden="true"></i></h3>
+                                        <h3 class="share-btn" v-on:click="popupState.posting = vizzy">share <i class="fa fa-upload" aria-hidden="true"></i></h3>
                                     </div>
                                 </div>
                             </div>
-                            <h2>{{vizzy.id}} <span class="delete"><i class="fa fa-trash" aria-hidden="true" v-on:click="deleting = vizzy.id"></i></span></h2>
+                            <div class="vizzy-opts">
+                                <div class="vizzy-name"><h2>{{vizzy.id}}</h2></div>
+                                <h2><span class="edit"><i class="fa fa-pencil" aria-hidden="true" v-on:click="popupState.renaming = i+1"></i></span></h2>
+                                <h2><span class="delete"><i class="fa fa-trash" aria-hidden="true" v-on:click="popupState.deleting = vizzy.id"></i></span></h2>
+                            </div>
                         </div>
                     </div>
                 </div>

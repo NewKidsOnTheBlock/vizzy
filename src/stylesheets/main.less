@@ -45,7 +45,7 @@ rect {
     width: 100%;
     overflow-x: hidden;
 
-    input[type="text"] {
+    input[type="text"], textarea {
         border: 1px solid @vizzy-lightBlack;
         border-radius: 3px;
         box-sizing: border-box;
@@ -60,6 +60,10 @@ rect {
             outline: none;
             border: 1px solid @vizzy-blue;
         }
+    }
+
+    textarea {
+        text-align: left;
     }
 }
 

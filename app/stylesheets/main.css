@@ -87,6 +87,9 @@ p {
   color: white;
   padding: 10px 15px;
 }
+.wide {
+  padding: 10px 30px;
+}
 .edit-btn:hover {
   background-color: #f7be0f;
   cursor: pointer;
@@ -134,7 +137,15 @@ p {
   color: #ff715b;
   cursor: pointer;
 }
-.home .vizzies .vizzy-container:hover .delete {
+.home .vizzies .vizzy-container .edit {
+  display: none;
+}
+.home .vizzies .vizzy-container .edit:hover {
+  color: #f9cb40;
+  cursor: pointer;
+}
+.home .vizzies .vizzy-container:hover .delete,
+.home .vizzies .vizzy-container:hover .edit {
   display: inline-block;
 }
 .home .vizzies .vizzy-container .vizzy-picture {
@@ -182,8 +193,24 @@ p {
 .home .vizzies .vizzy-container .vizzy-picture .vizzy-options.show {
   visibility: visible;
 }
-.home .vizzies .vizzy-container .vizzy-picture:hover .vizzy-options {
+.home .vizzies .vizzy-container:hover .vizzy-options {
   visibility: visible;
+}
+.home .vizzies .vizzy-container .vizzy-opts {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+.home .vizzies .vizzy-container .vizzy-opts .vizzy-name {
+  width: 80%;
+}
+.home .vizzies .vizzy-container .vizzy-opts .vizzy-name h2 {
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.home .vizzies .vizzy-container .vizzy-opts .edit {
+  margin-right: 10px;
 }
 .player {
   display: flex;
@@ -448,24 +475,16 @@ select.vizzy-dropdown.blue {
 }
 .pop-up-container > div {
   background-color: white;
+  border: 1px solid #4c5b5c;
   border-radius: 3px;
-  padding: 40px;
-}
-.pop-up-container .delete-vizzy {
-  text-align: right;
-}
-.pop-up-container .create-vizzy {
-  text-align: center;
-}
-.pop-up-container .post-vizzy {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
+  padding: 20px;
+  width: 400px;
 }
 .pop-up-container .btn-container {
+  margin-top: 60px;
   display: flex;
   flex-direction: row;
-  float: right;
+  justify-content: flex-end;
 }
 .share-container {
   display: flex;
@@ -810,7 +829,8 @@ rect {
   width: 100%;
   overflow-x: hidden;
 }
-.vizzy input[type="text"] {
+.vizzy input[type="text"],
+.vizzy textarea {
   border: 1px solid #ced2d2;
   border-radius: 3px;
   box-sizing: border-box;
@@ -821,9 +841,13 @@ rect {
   text-align: center;
   width: 100%;
 }
-.vizzy input[type="text"]:focus {
+.vizzy input[type="text"]:focus,
+.vizzy textarea:focus {
   outline: none;
   border: 1px solid #2f52e0;
+}
+.vizzy textarea {
+  text-align: left;
 }
 .panel-shadow {
   box-shadow: 0 0 10px -1px rgba(0, 0, 0, 0.75);

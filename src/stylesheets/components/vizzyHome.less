@@ -29,7 +29,16 @@
                 }
             }
 
-            &:hover .delete {
+            .edit {
+                display: none;
+
+                &:hover {
+                    color: @vizzy-yellow;
+                    cursor: pointer;
+                }
+            }
+
+            &:hover .delete, &:hover .edit {
                 display: inline-block;
             }
 
@@ -84,9 +93,30 @@
                 }
             }
 
-            .vizzy-picture:hover {
+            &:hover {
                 .vizzy-options {
                     visibility: visible;
+                }
+            }
+
+            .vizzy-opts {
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+
+                .vizzy-name {
+                    width: 80%;
+
+                    h2 {
+                        overflow-x: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        
+                    }
+                }
+
+                .edit {
+                    margin-right: 10px;
                 }
             }
         }
