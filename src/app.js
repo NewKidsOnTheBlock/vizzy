@@ -116,6 +116,7 @@ var app = new Vue({
             var app = this;
             //We have to set a timeout function here to make sure that the state has been switched
             if(page === 'editor' || page === 'player') {
+                this.popupState.saving = false; //if play a vizzy with exiting name from sharing feed, this gets rid of menu
                 window.setTimeout(function() {
                     //Reset our selected shape
                     app.selectedShape = {
