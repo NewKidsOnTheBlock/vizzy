@@ -83,8 +83,13 @@
             flex-direction: row;
             justify-content: center;
             border-bottom: 1px solid @vizzy-lightBlack;
+            padding: 0px 15px;
 
             &:hover {
+                .shape-delete {
+                    display: flex;
+                }
+
                 .shape-move {
                     display: flex;
                 }
@@ -92,9 +97,17 @@
 
             .shape-name {
                 flex: 1;
-                padding-top: 10px;
-                padding-bottom: 10px;
-                padding-left: 15px;
+                padding: 10px 0;
+            }
+
+            .shape-delete {
+                color: @vizzy-black;
+                display: none;
+                margin-right: 10px;
+
+                &:hover {
+                    color: @vizzy-yellow;
+                }
             }
 
             .shape-move {
@@ -103,7 +116,6 @@
                 flex-direction: column;
                 font-size: 16px;
                 line-height: 16px;
-                padding-right: 15px;
 
                 p {
                     &:hover {

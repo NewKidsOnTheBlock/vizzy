@@ -301,15 +301,25 @@ p {
   flex-direction: row;
   justify-content: center;
   border-bottom: 1px solid #ced2d2;
+  padding: 0px 15px;
+}
+.editor .shape-selector .shape:hover .shape-delete {
+  display: flex;
 }
 .editor .shape-selector .shape:hover .shape-move {
   display: flex;
 }
 .editor .shape-selector .shape .shape-name {
   flex: 1;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 15px;
+  padding: 10px 0;
+}
+.editor .shape-selector .shape .shape-delete {
+  color: #4c5b5c;
+  display: none;
+  margin-right: 10px;
+}
+.editor .shape-selector .shape .shape-delete:hover {
+  color: #f9cb40;
 }
 .editor .shape-selector .shape .shape-move {
   color: #4c5b5c;
@@ -317,7 +327,6 @@ p {
   flex-direction: column;
   font-size: 16px;
   line-height: 16px;
-  padding-right: 15px;
 }
 .editor .shape-selector .shape .shape-move p:hover {
   color: #f9cb40;

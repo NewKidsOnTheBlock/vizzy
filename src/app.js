@@ -249,6 +249,9 @@ var app = new Vue({
             }
             this.vizzy.canvas.shapes[index].isSelected = true;
         },
+        deleteShape: function(index) {
+            this.vizzy.canvas.shapes.splice(index, 1);
+        },
         //Moves a shape backwards in the editor
         moveBack: function(index) {
             this.selectedShape.shape = null;
