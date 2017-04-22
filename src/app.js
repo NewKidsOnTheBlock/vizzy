@@ -228,7 +228,7 @@ var app = new Vue({
         //deletes selected vizzy, this.vizzy is determined by which box is clicked
         deleteVizzy: function() {
             //Remove our existing file, and save the new one
-            jetpack.remove(VIZZY_PATH + SLASH + this.deleting + '.json');
+            jetpack.remove(VIZZY_PATH + SLASH + this.popupState.deleting + '.json');
             this.updateVizzyList();
             this.popupState.deleting = false;
         },

@@ -118,6 +118,7 @@ var app = new Vue({
             var app = this;
             //We have to set a timeout function here to make sure that the state has been switched
             if(page === 'editor' || page === 'player') {
+                this.popupState.saving = false; //if play a vizzy with exiting name from sharing feed, this gets rid of menu
                 window.setTimeout(function() {
                     //Reset our selected shape
                     app.selectedShape = {
@@ -229,7 +230,7 @@ var app = new Vue({
         //deletes selected vizzy, this.vizzy is determined by which box is clicked
         deleteVizzy: function() {
             //Remove our existing file, and save the new one
-            jetpack.remove(VIZZY_PATH + SLASH + this.deleting + '.json');
+            jetpack.remove(VIZZY_PATH + SLASH + this.popupState.deleting + '.json');
             this.updateVizzyList();
             this.popupState.deleting = false;
         },
