@@ -561,18 +561,6 @@ select.vizzy-dropdown.blue {
   background-color: #a9d408;
   cursor: pointer;
 }
-.sharing .sharing-container .share-card .buttons .edit {
-  background-color: #f9cb40;
-  border-radius: 5px;
-  color: white;
-  display: inline-block;
-  padding: 10px 15px;
-  margin: auto;
-}
-.sharing .sharing-container .share-card .buttons .edit:hover {
-  background-color: #f7be0f;
-  cursor: pointer;
-}
 .sharing .sharing-container .share-card .buttons .save {
   background-color: #385ae0;
   border-radius: 5px;

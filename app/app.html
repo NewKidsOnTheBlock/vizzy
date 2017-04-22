@@ -19,7 +19,7 @@
 
         <!-- POP-UP MENUS -->
         <div v-if="musicInit" class="vizzy">
-            <div class="pop-up-container" v-if="popupState.deleting || popupState.creating || popupState.posting || popupState.renaming">
+            <div class="pop-up-container" v-if="popupState.deleting || popupState.creating || popupState.posting || popupState.renaming || popupState.saving">
                 <div class="delete-vizzy panel-shadow pop-up" v-if="popupState.deleting">
                     <h3 class="mgn-btm-10">Deleting "{{popupState.deleting}}"</h3>
                     <p>Are you sure you'd like to delete this vizzy?</p>
@@ -55,6 +55,16 @@
                         <h4 class="disagree-btn wide" v-on:click="popupState.renaming=false">Cancel</h4>
                     </div>
                 </div>
+                <div class="post-vizzy panel-shadow pop-up" v-if="popupState.saving">
+                    <h3 class="mgn-btm-10">Vizzy with the name "{{existingViz}}" already exists.</h3>
+                    <p class="mgn-btm-10">Please enter a new name:</p>
+                    <input class="mgn-btm-10" type="text" v-model="saveName" placeholder="Vizzy Name"></input>
+                    <div class="btn-container">
+                        <h4 class="agree-btn mgn-rt-10 wide" v-on:click="saveShare(tempVizzy)">Save</h4>
+                        <h4 class="disagree-btn wide" v-on:click="popupState.saving=false">Cancel</h4>
+                    </div>
+                </div>
+
             </div>
 
             <!-- HOME PAGE -->
@@ -114,8 +124,7 @@
                                     <p class="date">Posted on: {{share.posted}}</p>
                                 </div>
                                 <div class="buttons">
-                                    <!-- <h3 class="play">play <i class="fa fa-play-circle" aria-hidden="true"></i></h3>
-                                    <h3 class="edit">edit <i class="fa fa-pencil" aria-hidden="true"></i></h3> -->
+                                    <h3 class="play" v-on:click="playShare(share.vizzy)">play <i class="fa fa-play-circle" aria-hidden="true"></i></h3>
                                     <h3 class="save" v-on:click="saveShare(share.vizzy)">save <i class="fa fa-download" aria-hidden="true"></i></h3>
                                 </div>
                             </div>

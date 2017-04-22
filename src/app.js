@@ -56,7 +56,8 @@ var app = new Vue({
             deleting: false,
             creating: false,
             posting: false,
-            renaming: false
+            renaming: false,
+            saving: false,
         },
         selectedShape: {
             shape: null,
@@ -74,6 +75,9 @@ var app = new Vue({
         },
         newVizzyName: '',
         shareMessage:'',
+        saveName:'',
+        existingViz:'',
+        tempVizzy:'',
         shares: []
     },
     methods: {
@@ -157,14 +161,52 @@ var app = new Vue({
         saveShare: function(vizzy){
             //parse shared vizzy to json, then write
             Promise.resolve(JSON.parse(vizzy)).then((json) => {
-                let randnum = Math.floor(Math.random() * 10000);
-                json.id = json.id + randnum;
-                console.log(json.id);
-                jetpack.write(VIZZY_PATH + SLASH + json.id + '.json', json);
-                // //Update our vizzy list so it is reflected on the home page
-                this.updateVizzyList();
-                console.log("Vizzy saved!");
+                let save = true;
+                for (let i=0; i<this.vizzies.length; i++){
+                    if (this.vizzies[i].id === json.id){
+                        //vizzy exists, don't save
+                        save = false;
+                        break;
+                    }
+                }
+                if (save){
+                    jetpack.write(VIZZY_PATH + SLASH + json.id + '.json', json);
+                    // //Update our vizzy list so it is reflected on the home page
+                    this.updateVizzyList();
+                    console.log("Saved vizzy "+json.id+"!");
+                }
+                //if popup open, perform actions to save renamed vizzy
+                else if (this.popupState.saving){
+                    if(this.saveName.length > 0){
+                        json.id = this.saveName;
+                        jetpack.write(VIZZY_PATH + SLASH + json.id + '.json', json);
+                        this.updateVizzyList();
+                        this.existingViz = '';
+                        this.saveName = '';
+                        this.tempVizzy = '';
+                        this.popupState.saving = false;
+                    }
+                }
+                //prompt user (this.popupState.saving = true opens a popup)
+                else{
+                    console.log("saving true");
+                    this.tempVizzy = vizzy;
+                    this.existingViz = json.id;
+                    this.popupState.saving = true;
+                }
             });
+        },
+        playShare: function(vizzy){
+            this.saveShare(vizzy);
+            Promise.resolve(JSON.parse(vizzy)).then((json) => {
+                for (let i=0; i<this.vizzies.length; i++){
+                    if (this.vizzies[i].id === json.id){
+                        this.moveState('player', i);
+                        break;
+                    }
+                }
+            })
+
         },
         newVizzy: function() {
             //Creates a new vizzy and moves to the editor
