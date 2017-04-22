@@ -1,6 +1,8 @@
+(function () {'use strict';
+
 //Grabbing our requirements from other files
 var remote = require('electron').remote; // native electron module
-var electronApp = require('electron').remote.app
+var electronApp = require('electron').remote.app;
 var fs = require('fs');
 var jetpack = require('fs-jetpack');
 var d3 = require('d3');
@@ -29,10 +31,10 @@ var VIZZY_PATH = electronApp.getPath('userData') + SLASH + 'vizzies';
 
 //Creating a function for Vue for swapping places
 Vue.swap = function(arr, x, y) {
-   var origin = arr[x]
-   arr.splice(x, 1, arr[y])
-   Vue.set(arr, y, origin)
-}
+   var origin = arr[x];
+   arr.splice(x, 1, arr[y]);
+   Vue.set(arr, y, origin);
+};
 
 var app = new Vue({
     el: ".app",
@@ -94,7 +96,7 @@ var app = new Vue({
                 return res.json();
             }).then((json) => {
                 this.shares = json;
-            })
+            });
         },
         //moves state to new View (page == v-if)
         moveState: function(page, index) {
@@ -205,7 +207,7 @@ var app = new Vue({
                         break;
                     }
                 }
-            })
+            });
 
         },
         newVizzy: function() {
@@ -374,3 +376,6 @@ var app = new Vue({
         window.requestAnimationFrame(refresh);
     }
 });
+
+}());
+//# sourceMappingURL=app.js.map
