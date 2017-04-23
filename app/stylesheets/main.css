@@ -89,6 +89,7 @@ p {
 }
 .wide {
   padding: 10px 30px;
+  text-align: center;
 }
 .edit-btn:hover {
   background-color: #f7be0f;
@@ -495,44 +496,45 @@ select.vizzy-dropdown.blue {
   flex-direction: row;
   justify-content: flex-end;
 }
-.share-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-.share-container .sharing-nav {
+.sharing-nav {
   background-color: white;
   border-bottom: 1px solid #ced2d2;
   padding: 15px;
   position: relative;
   z-index: 50;
 }
-.share-container .sharing-nav .path h3 {
+.sharing-nav .path h3 {
   display: inline-block;
   color: #2f52e0;
 }
-.share-container .sharing-nav .path h3:hover {
+.sharing-nav .path h3:hover {
   cursor: pointer;
   text-decoration: underline;
 }
-.sharing {
-  box-sizing: border-box;
+.wide {
   width: 100%;
-  height: 100%;
+}
+.wide .share-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.wide .share-container .sharing {
+  box-sizing: border-box;
   display: flex;
   padding-top: 50px;
   flex-direction: row;
 }
-.sharing .left {
+.wide .share-container .sharing .left {
   flex: 1;
   flex-direction: column;
 }
-.sharing .sharing-container {
+.wide .share-container .sharing .sharing-container {
   display: flex;
   flex: 2;
   flex-direction: column;
 }
-.sharing .sharing-container .share-card {
+.wide .share-container .sharing .sharing-container .share-card {
   background-color: white;
   border: 1px solid black;
   border-radius: 3px;
@@ -540,25 +542,25 @@ select.vizzy-dropdown.blue {
   flex-direction: column;
   margin-bottom: 20px;
 }
-.sharing .sharing-container .share-card .message {
+.wide .share-container .sharing .sharing-container .share-card .message {
   padding: 10px 0;
 }
-.sharing .sharing-container .share-card .message .msg {
+.wide .share-container .sharing .sharing-container .share-card .message .msg {
   font-size: 25px;
   font-family: "Raleway", sans-serif;
   line-height: 1.5;
 }
-.sharing .sharing-container .share-card .message .date {
+.wide .share-container .sharing .sharing-container .share-card .message .date {
   font-size: 10px;
   font-family: "Raleway", sans-serif;
   line-height: 1.5;
   margin-top: 2%;
 }
-.sharing .sharing-container .share-card .buttons {
+.wide .share-container .sharing .sharing-container .share-card .buttons {
   padding: 10px 0;
   text-align: center;
 }
-.sharing .sharing-container .share-card .buttons .play {
+.wide .share-container .sharing .sharing-container .share-card .buttons .play {
   background-color: #bced09;
   border-radius: 5px;
   color: white;
@@ -566,11 +568,11 @@ select.vizzy-dropdown.blue {
   padding: 10px 15px;
   margin: auto;
 }
-.sharing .sharing-container .share-card .buttons .play:hover {
+.wide .share-container .sharing .sharing-container .share-card .buttons .play:hover {
   background-color: #a9d408;
   cursor: pointer;
 }
-.sharing .sharing-container .share-card .buttons .save {
+.wide .share-container .sharing .sharing-container .share-card .buttons .save {
   background-color: #385ae0;
   border-radius: 5px;
   color: white;
@@ -578,11 +580,11 @@ select.vizzy-dropdown.blue {
   padding: 10px 15px;
   margin: auto;
 }
-.sharing .sharing-container .share-card .buttons .save:hover {
+.wide .share-container .sharing .sharing-container .share-card .buttons .save:hover {
   background-color: #2f52e0;
   cursor: pointer;
 }
-.sharing .right {
+.wide .share-container .sharing .right {
   flex: 1;
   flex-direction: column;
 }
@@ -854,9 +856,10 @@ rect {
 }
 .vizzy-nav h3 {
   padding: 15px;
+  transition: all .2s;
 }
 .vizzy-nav h3:hover {
-  color: #f9cb40;
+  background-color: #f9cb40;
   cursor: pointer;
 }
 .vizzy-nav h3.selected {

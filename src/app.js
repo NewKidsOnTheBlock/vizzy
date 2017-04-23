@@ -59,6 +59,10 @@ var app = new Vue({
             renaming: false,
             saving: false,
         },
+        navState: {
+            home: true,
+            feed: false
+        },
         selectedShape: {
             shape: null,
             typ: null,

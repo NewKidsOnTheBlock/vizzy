@@ -16,9 +16,9 @@
 <body>
 
     <div class="app">
-        <div v-if="!state.editor" class="vizzy-nav panel-shadow">
-            <h3 v-on:click="home = true; feed = false" v-bind:class="{selected: home}">Home</h3>
-            <h3 v-on:click="feed = true; home = false" v-bind:class="{selected: feed}">Feed</h3>
+        <div v-if="!state.editor && !state.player" class="vizzy-nav panel-shadow">
+            <h3 v-on:click="navState.home = true; navState.feed = false; moveState('home')" v-bind:class="{selected: navState.home}">Home</h3>
+            <h3 v-on:click="navState.feed = true; navState.home = false; moveState('sharing')" v-bind:class="{selected: navState.feed}">Feed</h3>
         </div>
 
         <!-- POP-UP MENUS -->
@@ -76,7 +76,6 @@
                 <div v-if="state.home" class="home">
                     <div class="vizzy-select-options">
                         <h1 class="blue">Your Vizzies</h1>
-                        <h1 class="blue" v-on:click="moveState('sharing')">Share</h1>
                     </div>
                     <div class="vizzies">
                         <div class="vizzy-container">
@@ -111,13 +110,6 @@
             <!-- SHARING FEED -->
             <transition name="slide">
                 <div v-if="state.sharing" class="wide">
-                    <div class="sharing-nav">
-                        <div class="path">
-                            <h3 v-on:click="moveState('home')">Home </h3>
-                            <i class="fa fa-caret-right blue" aria-hidden="true"></i>
-                            <h3>Sharing</h3>
-                        </div>
-                    </div>
                     <div class="share-container">
                         <div class="sharing">
                             <div class="left">
