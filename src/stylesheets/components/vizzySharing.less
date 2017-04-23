@@ -1,110 +1,111 @@
-.share-container{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
 
-    .sharing-nav {
-        background-color: white;
-        border-bottom: 1px solid @vizzy-lightBlack;
-        padding: 15px;
-        position: relative;
-        z-index: 50;
 
-        .path {
-            h3 {
-                display: inline-block;
-                color: @vizzy-blue;
-            }
+.sharing-nav {
+    background-color: white;
+    border-bottom: 1px solid @vizzy-lightBlack;
+    padding: 15px;
+    position: relative;
+    z-index: 50;
 
-            h3:hover {
-                cursor: pointer;
-                text-decoration: underline;
-            }
+    .path {
+        h3 {
+            display: inline-block;
+            color: @vizzy-blue;
+        }
+
+        h3:hover {
+            cursor: pointer;
+            text-decoration: underline;
         }
     }
 }
-
-
-.sharing {
-    box-sizing: border-box;
+.wide{
     width: 100%;
-    height: 100%;
-    display: flex;
-    padding-top: 50px;
-    flex-direction: row;
-
-    .left {
-        flex: 1;
-        flex-direction: column;
-    }
-
-    .sharing-container {
+    .share-container{
         display: flex;
-        flex: 2;
         flex-direction: column;
+        width: 100%;
 
-
-        .share-card {
-            background-color: white;
-            border: 1px solid black;
-            border-radius: 3px;
+        .sharing {
+            box-sizing: border-box;
             display: flex;
-            flex-direction: column;
-            margin-bottom: 20px;
+            padding-top: 50px;
+            flex-direction: row;
 
-            .message {
-                padding: 10px 0;
-
-                .msg{
-                    font-size: 25px;
-                    font-family: "Raleway", sans-serif;
-                    line-height: 1.5;
-                }
-                .date{
-                    font-size: 10px;
-                    font-family: "Raleway", sans-serif;
-                    line-height: 1.5;
-                    margin-top: 2%;
-                }
-
+            .left {
+                flex: 1;
+                flex-direction: column;
             }
 
-            .buttons {
-                    padding: 10px 0;
-                    text-align: center;
+            .sharing-container {
+                display: flex;
+                flex: 2;
+                flex-direction: column;
 
-                    .play {
-                      background-color: #bced09;
-                      border-radius: 5px;
-                      color: white;
-                      display: inline-block;
-                      padding: 10px 15px;
-                      margin: auto;
-                    }
-                    .play:hover {
-                      background-color: #a9d408;
-                      cursor: pointer;
+
+                .share-card {
+                    background-color: white;
+                    border: 1px solid black;
+                    border-radius: 3px;
+                    display: flex;
+                    flex-direction: column;
+                    margin-bottom: 20px;
+
+                    .message {
+                        padding: 10px 0;
+
+                        .msg{
+                            font-size: 25px;
+                            font-family: "Raleway", sans-serif;
+                            line-height: 1.5;
+                        }
+                        .date{
+                            font-size: 10px;
+                            font-family: "Raleway", sans-serif;
+                            line-height: 1.5;
+                            margin-top: 2%;
+                        }
+
                     }
 
-                    .save {
-                      background-color: #385ae0;
-                      border-radius: 5px;
-                      color: white;
-                      display: inline-block;
-                      padding: 10px 15px;
-                      margin: auto;
+                    .buttons {
+                            padding: 10px 0;
+                            text-align: center;
+
+                            .play {
+                              background-color: #bced09;
+                              border-radius: 5px;
+                              color: white;
+                              display: inline-block;
+                              padding: 10px 15px;
+                              margin: auto;
+                            }
+                            .play:hover {
+                              background-color: #a9d408;
+                              cursor: pointer;
+                            }
+
+                            .save {
+                              background-color: #385ae0;
+                              border-radius: 5px;
+                              color: white;
+                              display: inline-block;
+                              padding: 10px 15px;
+                              margin: auto;
+                            }
+                            .save:hover {
+                              background-color: @vizzy-blue;
+                              cursor: pointer;
+                            }
                     }
-                    .save:hover {
-                      background-color: @vizzy-blue;
-                      cursor: pointer;
-                    }
+
+                }
             }
 
+            .right {
+                flex: 1;
+                flex-direction: column;
+            }
         }
-    }
-
-    .right {
-        flex: 1;
-        flex-direction: column;
     }
 }

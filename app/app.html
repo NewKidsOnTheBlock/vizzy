@@ -110,7 +110,7 @@
 
             <!-- SHARING FEED -->
             <transition name="slide">
-                <div v-if="state.sharing" class="share-container">
+                <div v-if="state.sharing" class="wide">
                     <div class="sharing-nav">
                         <div class="path">
                             <h3 v-on:click="moveState('home')">Home </h3>
@@ -118,22 +118,24 @@
                             <h3>Sharing</h3>
                         </div>
                     </div>
-                    <div class="sharing">
-                        <div class="left">
-                        </div>
-                        <div class="sharing-container">
-                            <div class="share-card" v-for="share in shares">
-                                <div class="message">
-                                    <p class="msg">{{share.message}}</p>
-                                    <p class="date">Posted on: {{share.posted}}</p>
-                                </div>
-                                <div class="buttons">
-                                    <h3 class="play" v-on:click="playShare(share.vizzy)">play <i class="fa fa-play-circle" aria-hidden="true"></i></h3>
-                                    <h3 class="save" v-on:click="saveShare(share.vizzy)">save <i class="fa fa-download" aria-hidden="true"></i></h3>
+                    <div class="share-container">
+                        <div class="sharing">
+                            <div class="left">
+                            </div>
+                            <div class="sharing-container">
+                                <div class="share-card" v-for="share in shares">
+                                    <div class="message">
+                                        <p class="msg">{{share.message}}</p>
+                                        <p class="date">Posted on: {{share.posted}}</p>
+                                    </div>
+                                    <div class="buttons">
+                                        <h3 class="play" v-on:click="playShare(share.vizzy)">play <i class="fa fa-play-circle" aria-hidden="true"></i></h3>
+                                        <h3 class="save" v-on:click="saveShare(share.vizzy)">save <i class="fa fa-download" aria-hidden="true"></i></h3>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="right">
+                            <div class="right">
+                            </div>
                         </div>
                     </div>
                 </div>
