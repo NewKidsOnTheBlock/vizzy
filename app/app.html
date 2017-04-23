@@ -16,6 +16,10 @@
 <body>
 
     <div class="app">
+        <div v-if="!state.editor" class="vizzy-nav panel-shadow">
+            <h3 v-on:click="home = true; feed = false" v-bind:class="{selected: home}">Home</h3>
+            <h3 v-on:click="feed = true; home = false" v-bind:class="{selected: feed}">Feed</h3>
+        </div>
 
         <!-- POP-UP MENUS -->
         <div v-if="musicInit" class="vizzy">

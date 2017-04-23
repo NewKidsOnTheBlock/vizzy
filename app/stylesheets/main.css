@@ -846,6 +846,22 @@ rect {
 .vizzy textarea {
   text-align: left;
 }
+.vizzy-nav {
+  background-color: #2f52e0;
+  color: white;
+  display: flex;
+  flex-direction: row;
+}
+.vizzy-nav h3 {
+  padding: 15px;
+}
+.vizzy-nav h3:hover {
+  color: #f9cb40;
+  cursor: pointer;
+}
+.vizzy-nav h3.selected {
+  background-color: #f9cb40;
+}
 .panel-shadow {
   box-shadow: 0 0 10px -1px rgba(0, 0, 0, 0.75);
 }

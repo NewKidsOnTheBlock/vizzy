@@ -67,6 +67,26 @@ rect {
     }
 }
 
+.vizzy-nav {
+    background-color: @vizzy-blue;
+    color: white;
+    display: flex;
+    flex-direction: row;
+
+    h3 {
+        padding: 15px;
+
+        &:hover {
+            color: @vizzy-yellow;
+            cursor: pointer;
+        }
+
+        &.selected {
+            background-color: @vizzy-yellow;
+        }
+    }
+}
+
 //Helper styles ---------------------------------------------------
 
 .panel-shadow {
