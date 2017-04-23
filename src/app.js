@@ -147,7 +147,8 @@ var app = new Vue({
             let req = new XMLHttpRequest();
             req.open("POST", "http://138.197.12.154:1729/api/posts");
             req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            let params = "message="+this.shareMessage+"&vizzy="+JSON.stringify(this.posting);
+            let params = "message="+this.shareMessage+"&vizzy="+JSON.stringify(this.popupState.posting);
+            console.log(JSON.stringify(this.popupState.posting));
 
             //this function is asynchronously called upon req.response
             req.onload = function(){
@@ -162,6 +163,7 @@ var app = new Vue({
         saveShare: function(vizzy){
             //parse shared vizzy to json, then write
             Promise.resolve(JSON.parse(vizzy)).then((json) => {
+                console.log(json);
                 let save = true;
                 for (let i=0; i<this.vizzies.length; i++){
                     if (this.vizzies[i].id === json.id){
@@ -228,7 +230,7 @@ var app = new Vue({
         //deletes selected vizzy, this.vizzy is determined by which box is clicked
         deleteVizzy: function() {
             //Remove our existing file, and save the new one
-            jetpack.remove(VIZZY_PATH + SLASH + this.deleting + '.json');
+            jetpack.remove(VIZZY_PATH + SLASH + this.popupState.deleting + '.json');
             this.updateVizzyList();
             this.popupState.deleting = false;
         },
