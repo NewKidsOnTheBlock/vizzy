@@ -56,6 +56,7 @@ p {
     border-radius: 5px;
     color: @vizzy-blue;
     display: inline-block;
+    margin: 0;
     padding: 10px 30px;
 }
 
@@ -112,5 +113,11 @@ p {
 }
 
 .small {
-    padding: 0px 5px;
+    border: none;
+    padding: 0px 10px;
+
+    &:hover {
+        background-color: transparent;
+        color: @vizzy-yellow;
+    }
 }
