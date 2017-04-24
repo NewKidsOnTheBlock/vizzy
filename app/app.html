@@ -16,7 +16,7 @@
 <body>
 
     <div class="app">
-        <div v-if="!state.editor && !state.player" class="vizzy-nav panel-shadow">
+        <div v-if="!state.editor && !state.player && musicInit" class="vizzy-nav panel-shadow">
             <h3 v-on:click="navState.home = true; navState.feed = false; moveState('home')" v-bind:class="{selected: navState.home}">Home</h3>
             <h3 v-on:click="navState.feed = true; navState.home = false; moveState('sharing')" v-bind:class="{selected: navState.feed}">Feed</h3>
         </div>

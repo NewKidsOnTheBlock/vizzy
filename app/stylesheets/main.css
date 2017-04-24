@@ -87,6 +87,7 @@ p {
   border-radius: 5px;
   color: white;
   padding: 10px 15px;
+  text-align: center;
 }
 .wide {
   padding: 10px 30px;
@@ -293,10 +294,11 @@ p {
 }
 .editor .shape-selector {
   height: 100%;
-  width: 200px;
+  width: 250px;
   border-right: 1px solid #ced2d2;
   background-color: white;
   z-index: 2;
+  overflow: auto;
 }
 .editor .shape-selector .create-container {
   padding: 15px 15px;
@@ -354,7 +356,7 @@ p {
 }
 .editor .shape-editor-container {
   height: 100%;
-  width: 200px;
+  width: 250px;
   border-left: solid #ced2d2 1px;
   background-color: white;
   z-index: 2;
